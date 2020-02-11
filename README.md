@@ -3,5 +3,5 @@ El directorio /src contiene el código fuente LaTeX. El archivo <i>Apuntes_LM.pd
 
 ## Autores
 - Eduardo González Vaquero
-- Saúl Rodríguez Martínez
+- Saúl Rodríguez Martín
 - Miguel Muñoz Pérez
