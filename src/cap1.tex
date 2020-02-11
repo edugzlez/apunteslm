@@ -1,0 +1,427 @@
+\chapter{Lógica proposicional}
+\\
+\section{Introducción}
+Antes de comenzar con definiciones rigurosas, conviene dar una breve explicación sobre la motivación de la lógica proposicional, a la que dedicaremos este capítulo. Un aspecto común de los lenguajes naturales (como el español o el chino) es la ambigüedad de ciertas expresiones, lo cual dificulta las intenciones usuales de la ciencia, a saber, la precisión en la comunicación y la distinción clara de aquello que se comunica. De aquí nace una necesidad evidente, que es cubierta por los lenguajes artificiales y, entre ellos, la lógica formal. \
+
+Debemos aclarar entonces cuál es nuestro objeto de estudio. Fijémonos en lo siguiente: existen ciertos elementos del lenguaje que no cambian si los traducimos a otro idioma, por ejemplo. Nos referimos a lo que se denomina como \textit{conectivas lógicas}, es decir, `no' (negación), `o' (disyunción), `y' (conjunción), `si... entonces' (implicación material) y `si y solo si' (equivalencia). Obviamente, podemos usar múltiples expresiones distintas para referirnos a cada una de ellas, pero su función en el lenguaje natural no cambia. Por esto mismo podemos formalizarlas y estudiarlas desde el punto de vista matemático.  
+
+Ahora bien, a fin de sistematizar nuestro lenguaje, introducimos una serie de símbolos que se referirán a las entidades correspondientes del lenguaje natural. Conviene puntualizar de nuevo que estas traducciones, es decir, estas `asignaciones de significados' \textit{no} son únicas. Esto lo veremos más adelante. Entonces tenemos: $\neg$ (negación), $\lor$ (disyunción), $\land$ (conjunción), $\rightarrow$ (implicación material) y $\leftrightarrow$ (equivalencia). \
+
+Los otros elementos básicos que constituirán nuestro lenguaje formal son las \textit{proposiciones}. Con el fin de no entrar en cuestiones semánticas que exceden nuestro estudio, establecemos la siguiente:
+
+\begin{definition}\label{def: prop}
+    Una proposición es un enunciado que puede ser verdadero o falso. 
+\end{definition}
+Como con las conectivas, introducimos una serie de \textit{símbolos de proposición} para referirnos formalmente a las proposiciones. Denotamos por $SP$ al conjunto de todos estos símbolos.
+
+Así, el enunciado `Todos los solteros son hombres no casados' es una proposición, mientras que `¿Va a llover mañana?' no lo es. Por otro lado, `César conquistó las Galias y combatió contra Vercingétorix' admite una descomposición como conjunción de dos proposiciones. Evidentemente, esta reducción a proposiciones más simples tiene que parar eventualmente; así llegamos a lo que denominamos \textit{proposiciones atómicas}. Esto nos permitirá, una vez determinada la verdad o falsedad de estas proposiciones atómicas, hallar la de todas las proposiciones que se compongan de ellas mediante la aplicación de las conectivas lógicas (antiguamente llamadas \textit{proposiciones moleculares}). \
+
+Las proposiciones atómicas se representan entonces por los elementos de $SP$. Añadimos, por motivos que serán aclarados más adelante, dos elementos $\top$ y $\bot$, que se refieren a la \textit{proposición idénticamente verdadera} y a la \textit{proposición idénticamente falsa}, respectivamente. Es decir, 
+
+\begin{definition}\label{def : at}
+
+     Definimos el conjunto de las proposiciones atómicas como:
+    \[
+        AT := SP\cup \{\top, \bot\}
+    \]
+\end{definition}
+
+
+\begin{definition}(Alfabeto)
+    Dado un conjunto de símbolos de proposiciones $SP$, se denomina alfabeto a:
+    \[
+        A_{SP} = SP\cup\{\neg, \land, \lor, \rightarrow, \leftrightarrow, (, ),\top, \bot\},
+    \]
+    obtenido añadiendo a $SP$ las conectivas lógicas $\neg, \land, \lor, \rightarrow, \leftrightarrow$, y los paréntesis, $(,)$.
+\end{definition}    
+
+\begin{definition}(Cierre de Kleene)
+    Dado un conjunto de símbolos $A$, definimos el cierre de Kleene de $A$, $A^*$, como el conjunto de las concatenaciones de elementos de $A$ junto con $\epsilon$, el \textit{espacio vacío} o en blanco.
+\end{definition}
+
+\begin{example} Dado $A = \{a, b\}$, le corresponde 
+\[
+    A^* = \{\epsilon, a, b, ab, ba, aab, baa, aba, ...\}
+\]
+\end{example}
+\begin{example}
+    $A_{SP}^*$ será el conjunto de todas las concatenaciones de elementos de $A_{SP}$, junto con $\epsilon$.
+\end{example}
+
+Una vez que disponemos de los elementos básicos de la sintaxis del lenguaje y sus sucesivas combinaciones, nos interesa definir las expresiones que están `bien formadas', es decir, queremos excluir de nuestro lenguaje  concatenaciones de símbolos como `$)) \leftrightarrow \varphi$'.
+
+\begin{definition}\label{def:PROP_{SP}}(Proposiciones posibles)
+Se define el conjunto de proposiciones posibles,  $PROP_{SP}$, como la intersección de todos los subconjuntos de $A_{SP}^*$ que verifican:
+\begin{enumerate}
+    \item $SP \subseteq PROP_{SP}$.
+    \item Si $\phi\in PROP_{SP}$, entonces $(\neg \phi) \in PROP_{SP} $.
+    \item Si $\phi_1, \phi_2 \in PROP_{SP}$ y $\square\in \{\land, \lor, \rightarrow, \leftrightarrow\}$, entonces $(\phi_1 \square\  \phi_2) \in PROP_{SP}$.
+\end{enumerate}
+\end{definition}
+Es fácil comprobar que $PROP_{SP}$ también cumple estas tres propiedades, por tanto decimos que es el mínimo subconjunto que las verifica.
+
+\begin{prop} Se define $P_0 := SP$ y para cada $n\in\N$:
+\[
+    P_n := P_{n-1} \cup \{(\neg \phi): \phi\in P_{n-1}\}\cup \{ (\phi_1 \square\  \phi_2): \phi_1, \phi_2\in P_{n-1},  \square\in \{\land, \lor, \rightarrow, \leftrightarrow\}\}.
+\]
+Entonces $P := \bigcup_{n=0}^\infty P_n$ coincide con $PROP_{SP}$.
+\begin{proof} 
+Comenzamos comprobando $P\subseteq PROP_{SP}$. Para ello, comprobamos por inducción que $P_n\subseteq PROP_{SP}$ $\forall n \in \mathbb{N}$. \\ \\
+Está claro que $P_0\subseteq PROP_{SP}$, ya que $PROP_{SP}$ cumple la propiedad 1.
+Ahora, suponiendo que $P_n\subseteq PROP_{SP}$, por las propiedades 2 y 3, $\{(\neg \phi): \phi\in P_{n-1}\}\cup \{ (\phi_1 \square\  \phi_2): \phi_1, \phi_2\in P_{n-1},  \square\in \{\land, \lor, \rightarrow, \leftrightarrow\}\}$ también estarán  contenidos en $PROP_{SP}$. Por tanto, $P_{n+1}\subseteq PROP_{SP}$, y hemos acabado la inducción. \\ \\
+Veamos ahora que $PROP_{SP}\subseteq P$. Para ello nos basta comprobar que $P$ cumple las tres propiedades de la definición ~\ref{def:PROP_{SP}}. La propiedad $1$ es directa, pasamos a comprobar las propiedades 2 y 3. \\ \\
+Dado $\varphi \in P$, existe $n\in \N\cup\{0\}$ tal que $\varphi \in P_n$ luego $(\neg \varphi) \in P_{n+1}$ por lo que $(\neg\varphi) \in P$. \\ \\
+Sean $\varphi_1, \varphi_2 \in P$ y sea $\square\in \{\land, \lor, \rightarrow, \leftrightarrow\}$. Tomamos $n\in\N$ tal que $\varphi_1, \varphi_2 \in P_n$ (para cada uno existe al menos un natural: basta tomar el mayor). Luego $(\phi_1 \square\  \phi_2)\in P_{n+1}$ y por lo tanto también pertenece a $P$. \\ \\
+\end{proof}
+\end{prop}
+A partir de ahora, usaremos para mayor brevedad el símbolo $\square$ como intercambiable por $\land, \lor, \rightarrow$ o $\leftrightarrow$.\\
+\section{Inducción estructural y recursión}
+
+El método de inducción nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.$\\$
+
+\begin{prop} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$ para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera) entonces basta comprobar que:
+\begin{enumerate}
+    \item $P(\varphi)$ para toda $\varphi\in AT$.
+    \item Si $P(\varphi)$ entonces $P((\neg \varphi))$.
+    \item Si $P(\varphi_1)$ y $P(\varphi_2)$ entonces $P((\varphi_1 \square \varphi_2))$.
+\end{enumerate}
+\begin{proof}
+Si una propiedad $P$ cumple estas tres propiedades, entonces el conjunto de proposiciones que cumplen $P$ cumple las tres propiedades de ~\ref{def:PROP_{SP}}, por tanto contiene a $PROP_{SP}$. \\
+\end{proof}
+\end{prop}
+
+\begin{example} Definamos $P(\varphi)$ como la propiedad de $|\varphi|_) = |\varphi|_($ siendo $|\varphi|_)$ la cantidad de $)$ en la fórmula $\varphi$ y $|\varphi|_($ la cantidad de $($. Vamos a comprobar por inducción estructural que todas las proposiciones cumplen esta propiedad:
+\begin{enumerate}
+    \item Para cualquier $\varphi\in AT$ se verifica trivialmente $|\varphi|_) = |\varphi|_( = 0$, luego $P(\varphi)$.
+    \item Supongamos $P(\varphi)$ con $\varphi\in PROP_{SP}$, entonces $|\varphi|_( = |\varphi|_)$ y por tanto:
+    \[
+        |(\neg\varphi)|_( = |\varphi|_(+1 = |\varphi|_)+1 = |(\neg\varphi)|_)
+    \]
+    luego $P((\neg\varphi))$.
+    \item Supongamos $P(\varphi),P(\psi)$ con $\varphi,\psi\in PROP_{SP}$, entonces:
+    \[
+        |(\varphi\square\psi)|_(=|\varphi|_(+|\psi|_(+1=|\varphi|_)+|\psi|_)+1=|(\varphi\square\psi)|_)
+    \]
+    luego $P((\varphi\square\psi))$.
+\end{enumerate}
+\end{example}
+
+\begin{definition} (Prefijos) Sea $A$ un alfabeto y sea $w\in A^*$. Decimos que $w'$ es prefijo de $w$ si existe $w''$ tal que $w = w' w''$, es decir, si $w = w_1 w_2 ... w_n$ entonces existe $0\leq k\leq n$ tal que $w' = w_1 ... w_k$.$\\$
+Decimos además que un prefijo $w'$ es prefijo propio de $w$ si es distinto de $w$ y $\epsilon$.
+\end{definition}
+
+\begin{example} Sea $A := \{a, b\}$ y sea $w := aababb$. Entonces sus prefijos son $\epsilon,a,aa,aab,aaba,aabab,aababb$, correspondientes a $k=0,1,2,3,4,5,6$, respectivamente, y sus prefijos propios son $a,aa,aab,aaba,aabab$.
+\end{example}
+
+\begin{prop} Si $\varphi'$ es prefijo propio de $\varphi$, entonces $|\varphi'|_) < |\varphi'|_($.
+\begin{proof} Se demuestra por inducción estructural.
+\begin{enumerate}
+    \item Si $\varphi\in AT$ no tiene prefijos propios luego se cumple la afirmación.
+    \item Sea $\varphi\in PROP_{SP}$ cumpliendo la propiedad del enunciado y sea $\varphi'$ un prefijo propio de $(\neg \varphi)$. Existen cuatro casos:
+    \begin{enumerate}
+        \item $\varphi' = ($, entonces $|\varphi'|_( = 1 > 0 = |\varphi'|_)$-
+        \item $\varphi' = (\neg$, ocurre lo mismo que antes.
+        \item $\varphi' = (\neg \varphi''$ con $\varphi''$ prefijo propio de $\varphi$ entonces por inducción se verifica $|\varphi''|_) < |\varphi''|_($. Ahora bien, $|\varphi'|_( = |\varphi''|_(+1$  y $|\varphi'|_) = |\varphi''|_)$ luego:
+        \[
+            |\varphi'|_) < |\varphi'|_(
+        \]
+        \item $\varphi' = (\neg \varphi$, que es directo. 
+    \end{enumerate}
+    \item Se hace de forma similar al apartado anterior. Basta probar con los prefijos $(,\ (\varphi_1',\ (\varphi_1,\ (\varphi_1\square,\ (\varphi_1\square\varphi_2'$ y $(\varphi_1\square\varphi_2$.
+\end{enumerate}
+    
+\end{proof}
+\end{prop}
+
+ En breve nos será útil, dado un conjunto $A$, poder definir una función $H: PROP_{SP} \rightarrow A$ conociendo su restricción a $AT$, y suponiendo que podemos calcular $H((\neg \varphi))$ y $H((\varphi\square\psi))$ en función de $H(\varphi)$ y $H(\psi)$.
+ Si la función $H$ queda bien definida así, diremos que está \textit{definida de forma recursiva}. La siguiente proposición nos garantiza que podemos definir funciones de esta forma:
+ 
+ \begin{prop} El esquema de definición recursiva da como resultado una única función, es decir, dadas:
+\begin{enumerate}
+    \item $H_{AT}: AT \rightarrow A$.
+    \item $H_{\neg}: A \rightarrow A$.
+    \item $H_{\square}: A \times A \rightarrow A$.
+\end{enumerate}
+existe una única función $H: PROP_{SP} \rightarrow A$ tal que:
+\begin{enumerate}
+    \item $H(\varphi) = H_{AT}(\varphi)$, para toda $\varphi \in AT$.
+    \item $H((\neg \varphi)) = H_{\neg}(H(\varphi))$.
+    \item $H((\varphi_1 \square \varphi_2)) = H_{\square}(H(\varphi_1), H(\varphi_2))$, para cada $\square\in \{\land, \lor, \rightarrow, \leftrightarrow\}$.
+\end{enumerate}
+\begin{proof}
+     Se omite la demostración.
+\end{proof}
+\end{prop}
+
+\begin{example} Sea $H: PROP_{SP} \rightarrow \mathbb{N}$ la función $|.|_($ definida anteriormente. Podemos definirla de manera recursiva:
+\begin{enumerate}
+    \item $H(\varphi) = 0$, para toda $\varphi \in AT$.
+    \item $H((\neg \varphi)) = H(\varphi) + 1$.
+    \item $H((\varphi_1 \square \varphi_2)) = H(\varphi_1) + H(\varphi_2) + 1$.
+\end{enumerate}
+Nótese como en ocasiones omitimos las funciones auxiliares y usamos la notación $H$ para referirnos a $H$, $H_{AT}$, $H_{\neg}$ y $H_{\square}$. Este abuso de notación no suele dar lugar a confusión.
+\end{example}
+
+\begin{ex} Definir resursivamente una función que nos lleve cada fórmula al número de veces que $\land$ aparece en ella. 
+\end{ex}
+
+\begin{example} Podemos definir una función que nos lleve cada fórmula al conjunto de todas sus subfórmulas, es decir,  $\text{\textit{\text{\textit{SUB}}}}: PROP_{SP} \rightarrow \mathcal{P} (PROP_{SP})$\footnote{Dado un conjunto X, denotamos por $\mathcal{P}(X)$ a su potencia, es decir, el conjunto de subconjuntos de X.} tal que:
+\begin{enumerate}
+    \item $\text{\textit{SUB}}(\varphi) = \{\varphi\}$, para toda $\varphi \in AT$.
+    \item $\text{\textit{SUB}}((\neg \varphi)) = \text{\textit{SUB}}(\varphi) \cup \{(\neg \varphi)\}$.
+    \item $\text{\textit{SUB}}((\varphi_1 \square \varphi_2)) = \text{\textit{SUB}}(\varphi_1) \cup \text{\textit{SUB}}(\varphi_2) \cup \{(\varphi_1 \square \varphi_2)\}$.
+\end{enumerate}
+\end{example} 
+
+\section{Eliminación de paréntesis}
+Para conseguir una notación más compacta, podemos establecer una notación que use menos paréntesis cuando nos convenga. Sin embargo, la omisión de paréntesis puede dar lugar a ambigüedades en las fórmulas, por ejemplo:
+\[p\to q \to r\]
+podría simbolizar dos fórmulas distintas:
+\begin{enumerate}[label=\bullet]
+    \item $((p\to q)\to r)$
+    \item $(p\to (q\to r))$
+\end{enumerate}
+Para evitar este tipo de situaciones, necesitamos las siguientes reglas de omisión de paréntesis:
+\begin{enumerate}
+    \item Los paréntesis externos pueden omitirse. Esto no da lugar a ambigüedad.
+    \item Las conectivas se aplicarán en este orden: $\neg, \land, \lor, \to, \leftrightarrow$.
+    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre por la izquierda\footnote{Cuando veamos semántica, comprobaremos que todas las conectivas salvo $\rightarrow$ son asociativas, por tanto, en ese sentido, no importa el orden en que se asocien estas conectivas.}.
+\end{enumerate}
+Algunos ejemplos de aplicación de estas reglas:$\\[8pt]$
+\begin{equation*}
+\begin{array}{ccc}
+     \neg p\lor p  & \text{es} & ((\neg p)\lor p)\\
+     \neg p\land q\lor s\to t\leftrightarrow r & \text{es} & 
+     (((((\neg p)\land q)\lor s)\to t)\leftrightarrow r)\\
+     p\to q\to s & \text{es} & ((p\to q)\to s)\\
+     p\land q\leftrightarrow\neg s\to t\lor r & \text{es} & ((p\land q)\leftrightarrow((\neg s)\to (t\lor r))) \\
+     t\leftrightarrow p\to \neg q\lor p\to s & \text{es} & 
+     (t \leftrightarrow((p\to ((\neg q)\lor p))\to s))
+\end{array}
+\end{equation*}
+
+
+\section{Asignaciones de verdad}
+
+Hasta ahora hemos venido considerando cuestiones sintácticas sobre las fórmulas. Lo que queremos ahora es abordar su semántica, esto es, su comportamiento cuando les damos una interpretación determinada. Nos interesa, por tanto, estudiar qué significa que una proposición se siga de otra independientemente de la traducción que hagamos al lenguaje natural, esto es, la noción de \textit{consecuencia lógica}. Así, por ejemplo, queremos que $q$ se siga de $p \land (p \rightarrow q)$ independientemente de cómo se traduzcan $p$ y $q$ informalmente. Es decir, exigimos que, sea cual sea la traducción de $p \land (p \rightarrow q)$, si es verdadera entonces la de $q$ tiene que serlo también.  Siguiendo la definición ~\ref{def: prop}, 
+
+\begin{definition}
+Definimos el conjunto de valores de verdad, $Bool = \{V, F\}$, donde $V$ es \textit{la verdad} y $F$ es \textit{la falsedad}\footnote{Nada nos impide considerar casos en que $Bool$ sea infinito numerable, o incluso no numerable, pero la lógica concebida clásicamente es bivalente, esto es, solo consta de dos valores de verdad.}.
+\end{definition}
+
+Una vez que disponemos de $Bool$ podemos definir la aplicación que nos lleva cada proposición a su valor de verdad correspondiente. Vamos a definir esta aplicación de forma recursiva, es decir, primero lo haremos para las fórmulas atómicas y después describiremos reglas para deducirla en el resto de fórmulas.
+
+\begin{definition}(Valoración) Sea el conjunto $Bool = \{V, F\}$. Una valoración o evaluación es una función $v: SP \rightarrow Bool$. 
+\end{definition}
+
+\begin{definition}(Extensión) Se definen las siguientes aplicaciones:
+\begin{enumerate}
+    \item $v_{\neg}: Bool \rightarrow Bool$
+    \item $v_\land, v_\lor, v_\rightarrow, v_\leftrightarrow: Bool \times Bool \rightarrow Bool$.
+\end{enumerate}
+Definimos estas funciones caso a caso en formato de tabla de verdad:
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$\varphi$ & $v_{\neg}(\varphi)$ \\
+\hline \hline
+V & F \\ \hline
+F & V \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$\varphi_1$ & $\varphi_2$ & $v_{\land}(\varphi_1, \varphi_2)$ & $v_{\lor}(\varphi_1, \varphi_2)$ & $v_{\rightarrow}(\varphi_1, \varphi_2)$ & $v_{\leftrightarrow}(\varphi_1, \varphi_2)$ \\
+\hline \hline
+V & V & V & V & V & V\\ \hline
+V & F & F & V & F & F\\ \hline
+F & V & F & V & V & F\\ \hline
+F & F & F & F & V & V\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Dada la valoración $v: SP \rightarrow Bool$, definimos recursivamente su \textit{extensión}, $\hat{v}: PROP_{SP} \rightarrow Bool$, como:
+\begin{enumerate}
+    \item $\hat{v}(\bot) = F$.
+    \item $\hat{v}(\top) = V$.
+    \item $\hat{v}(\varphi) = v(\varphi)$, para toda $\varphi \in SP$.
+    \item $\hat{v}((\neg \varphi)) = v_{\neg}(\hat{v}(\varphi))$.
+    \item $\hat{v}((\varphi_1 \square \varphi_2)) = v_{\square}(\hat{v}(\varphi_1), \hat{v}(\varphi_2))$.
+\end{enumerate}
+\end{definition}
+
+Nótese que aquí es donde hemos dado sentido a la definición que dimos de $\top$ y $\bot$ en ~\ref{def : at}.
+
+\begin{definition}(Satisfacibilidad) Dada $v: SP \rightarrow Bool$ y $\varphi \in PROP_{SP}$ se dice que $v$ satisface $\varphi$, y se escribe como $v \vDash \varphi$, si y solo si $\hat{v}(\varphi) = V$. Si $\hat{v}(\varphi) = F$, escribimos $v \nvDash \varphi$.
+\end{definition}
+
+\begin{definition} $\varphi$ se dice \textit{satisfacible} si existe alguna valoración $v$ tal que $v \vDash \varphi$. Si $v \vDash \varphi$ para toda valoración $v$, se dice que $\varphi$ es una \textit{tautología}. Se dice que $\varphi$ es una \textit{contingencia} si es satisfacible pero no tautología. $\varphi$ es \textit{contradicción} si no es satisfacible. 
+\end{definition}
+
+\begin{example} La fórmula $p \land q \rightarrow r \leftrightarrow p \rightarrow q \rightarrow r$ es contingencia. Invitamos al lector a que realice la tabla de verdad correspondiente.
+\end{example}
+
+\begin{definition}(Conjunto de modelos) Dado $\Phi \subseteq PROP_{SP}$, el conjunto de modelos de $\Phi$ se define como:
+$$Mod(\Phi) := \{v: SP \rightarrow Bool \ | \ \forall \varphi \in \Phi \ v \vDash \varphi \}$$
+\end{definition}
+
+\begin{definition}(Satisfacibilidad) El conjunto $\Phi \subset PROP_{SP}$ se dice satisfacible, y se escribe $Sat(\Phi)$, si $Mod(\Phi) \neq \emptyset$.
+\end{definition}
+
+\begin{definition}(Insatisfacibilidad) El conjunto $\Phi \subset PROP_{SP}$ se dice insatisfacible, y se escribe $Insat(\Phi)$, si $Mod(\Phi) = \emptyset$. 
+\end{definition}
+
+Ahora llegamos a la definición del concepto que ha motivado nuestro estudio inicial de la semántica.
+
+\begin{definition}(Consecuencia lógica) Sea $\varphi \in PROP_{SP}$. Decimos que $\varphi$ es consecuencia lógica de $\Phi$, $\Phi \vDash \varphi$, si y solo si $Mod(\Phi) \subseteq Mod(\{\varphi\})$. \\ \\
+Esto equivale a decir que toda asignación de verdad que satisface todos los elementos de $\Phi$ también satisface $\varphi$.\\ \\
+\noindent De ahora en adelante, escribimos $Mod(\varphi)$ en vez de $Mod(\{\varphi\})$.
+\end{definition}
+
+\begin{example} Dado $\Phi$ tal que $Insat(\Phi)$, se sigue de la anterior definición que $\Phi \vDash \varphi$, para cualquier $\varphi$.
+\end{example}
+
+\begin{ex} Demostrar que si $\Phi = \emptyset$ y $\Phi \vDash \varphi$, entonces $\varphi$ es tautología. (Indicación: ¡los elementos del conjunto vacío verifican cualquier cosa!)
+\end{ex}
+
+\begin{prop} $\Phi \cup \{\varphi\} \vDash \psi$ si y solo si $\Phi \vDash \varphi \rightarrow \psi$.
+\end{prop}
+\begin{proof}
+Veamos que $Mod(\Phi) \subset Mod(\varphi \rightarrow \psi)$ suponiendo que $Mod(\Phi \cup \{\varphi\}) \subset Mod(\psi)$. Sea $v \in Mod(\Phi)$. Si $\hat{v}(\varphi) = V$ entonces $v \in Mod(\varphi)$. Por hipótesis, $v \in Mod(\psi)$, luego $\hat{v}(\psi) = V$ y entonces $\hat{v}(\varphi \rightarrow \psi) = V$, es decir, $v \in Mod(\varphi \rightarrow \psi)$. Si  $\hat{v}(\varphi) = F$, $\hat{v}(\varphi \rightarrow \psi) = V$ y de nuevo $v \in Mod(\varphi \rightarrow \psi)$. \\ \\
+Recíprocamente, si $v\in Mod(\Phi \cup \{\varphi\})$, entonces $\hat{v}(\varphi) = V$. Por hipótesis, al ser $v \in Mod(\Phi)$, $v \in Mod(\varphi \rightarrow \psi)$, es decir, $\hat{v}(\varphi \rightarrow \psi) = V$, luego $\hat{v}(\psi) = V$ y $v \in Mod(\psi)$.
+\end{proof}
+
+\begin{prop} $\Phi \vDash \varphi$ si y solo si $Insat(\Phi \cup \{\neg \varphi\})$
+\end{prop}
+\begin{proof}
+Supongamos que $\Phi \vDash \varphi$, esto es, que $Mod(\Phi) \subset Mod(\varphi)$. Sea $v \in Mod(\Phi \cup \{\neg \varphi\})$. Entonces, por definición, $v \vDash \chi$, para toda $\chi \in \Phi \cup \{\neg \varphi\}$. Luego en especial, $v \vDash \neg \varphi$, lo que contradice que $v \in Mod(\varphi)$ (¿por qué?). \\ \\
+Recíprocamente, si $Mod(\Phi \cup \{\neg \varphi\}) = \emptyset$, sea $v \in Mod(\Phi)$. Entonces $v\notin Mod(\neg \varphi)$, por tanto $\hat{v}(\neg \varphi)=F$, pero como $\hat{v}(\neg \varphi)=v_\neg(\hat{v}(\varphi))$, tenemos que $F=v_\neg(\hat{v}(\varphi))$, es decir, $\hat{v}(\varphi)=V$, así que $v\in Mod(\varphi)$. Como esto lo cumple cualquier $v \in Mod(\Phi)$, tenemos, como queríamos, que $Mod(\Phi)\subseteq Mod(\varphi)$
+
+
+\end{proof} 
+De ahora en adelante, escribiremos $\Phi, \varphi \vDash \psi$ en vez de $\Phi \cup \{\varphi\} \vDash \psi$.
+
+\begin{example} Consideremos $\Phi = \{\neg p \land q \rightarrow r, \ \neg p, \ \neg r \}$, $\varphi = \neg q$. Para demostrar que $\Phi \vDash \varphi$ basta realizar la tabla de verdad correspondiente y comparar los valores de verdad de las premisas del conjunto $\Phi$ con los de $\varphi$. Invitamos al lector a que verifique los detalles de esta afirmación.
+\end{example} \\
+
+\section{Equivalencia lógica y sustitución}
+
+El método descrito de las tablas de verdad aumenta de complejidad a medida que lo hace el número de proposiciones que estudiamos. Por ello, investigamos relaciones formales entre las fórmulas que simplifiquen tales cuestiones. 
+
+\begin{definition}(Equivalencia lógica) Sean $\varphi, \psi \in PROP_{SP}$. $\varphi$ se dice lógicamente equivalente a $\psi$, $\varphi \sim \psi$, si para toda valoración $v$, $\hat{v}(\varphi) = \hat{v}(\psi)$.
+\end{definition}
+
+\begin{prop} $\sim$ es relación de equivalencia. Además, $\sim$ es congruencia respecto de las conectivas lógicas, es decir:
+\begin{enumerate}
+    \item Si $\varphi \sim \psi$, entonces $\neg \varphi \sim \neg \psi$.
+    \item Si $\varphi_1 \sim \varphi_2$ y $\psi_1 \sim \psi_2$, entonces $\varphi_1 \square \psi_1 \sim \varphi_2 \square \psi_2 $.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+Que es relación de equivalencia es directo. \\
+Para la segunda parte, solo es necesaria una comprobación directa de los valores de verdad.
+\end{proof}
+
+Las siguientes reglas nos ayudarán a demostrar equivalencias entre fórmulas:
+
+\begin{theorem}(Leyes de equivalencia lógica)
+\begin{enumerate}
+    \item Conmutatividad: $$p \land q \sim q \land p, \quad p \lor q \sim q \lor p, \quad p \leftrightarrow q \sim q \leftrightarrow p$$
+    \item Asociatividad: $$(p \lor q) \lor r \sim p \lor (q \lor r), \quad (p \land q) \land r \sim p \land (q \land r)$$
+    \item Idempotencia: $$p \land p \sim p, \quad p \lor p \sim p$$
+    \item Distributiva: $$p \land (q  \lor r) \sim (p \land q) \lor (p \land r), \quad p \lor (q \land r) \sim (p \lor q) \land (p \lor r)$$
+    \item Absorción: $$p \land (p \lor q) \sim p, \quad p \lor (p \land q) \sim p$$
+    \item Cero y unidad: $$p \land \top \sim p, \quad p \lor \top \sim \top, \quad p \land \bot \sim \bot, \quad p \lor \bot \sim p$$
+    \item Contradicción: $$p \land \neg p \sim \bot$$
+    \item Tercio excluso: $$p \lor \neg p \sim \top$$
+    \item Negación: $$\neg \neg p \sim p$$
+    \item Leyes de De Morgan: $$\neg(p \land q) \sim \neg p \lor \neg q, \quad \neg(p \lor q) \sim \neg p \land \neg q$$
+    \item Simplificación de los condicionales: $$p \rightarrow q \sim \neg p \lor q, \quad p \leftrightarrow q \sim (p \rightarrow q) \land (q \rightarrow p)$$
+\end{enumerate}
+\end{theorem}
+\newpage
+\begin{proof}
+Las demostraciones de equivalencia consisten simplemente en comprobar que coinciden las tablas de verdad. Comprobamos las tres primeras:
+\begin{enumerate}
+\item Conmutatividad:
+\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|c|}\hline $p$&$q$&$p\land q$&$q\land p$&$p\lor q$&$q\lor p$&$p\leftrightarrow q$&$q\leftrightarrow p$ \\\hline \hline V&V&V&V&V&V&V&V \\ \hline V&F&F&F&V&V&F&F \\ \hline F&V&F&F&V&V&F&F \\ \hline F&F&F&F&F&F&V&V \\ \hline \end{tabular}\end{center} \end{table}
+$\\[-28pt]$
+\item Asociatividad:
+\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|}\hline $p$&$q$&$r$&$(p\lor q)\lor r$&$p\lor (q\lor r)$&$(p\land q)\land r$&$p\land( q\land r)$ \\\hline \hline V&V&V&V&V&V&V \\ \hline V&V&F&V&V&F&F \\ \hline V&F&V&V&V&F&F \\ \hline V&F&F&V&V&F&F \\ \hline F&V&V&V&V&F&F \\ \hline F&V&F&V&V&F&F \\ \hline F&F&V&V&V&F&F \\ \hline F&F&F&F&F&F&F \\ \hline \end{tabular}\end{center} \end{table}
+$\\[-28pt]$
+\item Idempotencia:
+\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|}\hline $p$&$p\land p$&$p\lor p$ \\\hline \hline V&V&V \\ \hline F&F&F \\ \hline \end{tabular}\end{center} \end{table}
+\end{enumerate}
+\end{proof}
+
+
+\begin{definition}\label{def:sust}(Sustitución) Sean $\varphi, \psi \in PROP_{SP}$ y sea $p \in SP$. Llamamos $\psi[\varphi / p]$ a la fórmula que resulta de sustituir en $\psi$ cada aparición de $p$ por $\varphi$. Dados $\varphi$ y $p$, podemos definir $\psi[\varphi / p]$ recursivamente del siguiente modo:
+\begin{enumerate}
+    \item $p[\varphi/p] = \varphi$.
+    \item $q[\varphi/p] = q$, para cualquier $q \in SP$ distinta de $p$.
+    \item $\top[\varphi/p] = \top$.
+    \item $\bot[\varphi/p] = \bot$.
+    \item $(\neg\psi)[\varphi/p] = \neg(\psi[\varphi/p])$.
+    \item $(\psi_1 \square \psi_2)[\varphi/p] = (\psi_1[\varphi/p] \square \psi_2[\varphi/p])$.
+\end{enumerate}
+\end{definition}
+
+Introducimos la siguiente notación que será de gran importancia: dada una función $f:A \rightarrow B$ y dados $a\in A$, $b \in B$, denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.
+
+\begin{example}
+Sea $X\in \{V,F\}$. Si con la notación anterior usamos como función una valoración $v$, $v[X/p]$ es una valoración de verdad que cumple:
+\begin{enumerate}[label=\bullet]
+\item $v[X/p](q)=v(q)$ si $q\neq p$
+\item $v[X/p](p)=X$.
+\end{enumerate}
+\end{example}
+
+
+\begin{prop}
+Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$ y $v: SP \rightarrow Bool$ valoración. Entonces:
+$$\hat{v}(\psi[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi)$$
+\end{prop}
+\begin{proof}
+Procedemos por inducción estructural. Dividimos las proposiciones atómicas en cuatro casos como en la definición ~\ref{def:sust}:
+\begin{enumerate}
+    \item Si $\psi = p$ entonces, por definición de sustitución $\psi[\varphi/p] = \varphi$. Por tanto, $\hat{v}(\psi[\varphi/p]) = \hat{v}(\varphi)$ y siguiendo la notación que hemos explicado arriba, $\reallywidehat{v[\hat{v}(\varphi)/p]}(\psi) = \reallywidehat{v[\hat{v}(\varphi)/p]}(p)= v[\hat{v}(\varphi)/p](p)=\hat{v}(\varphi)$.
+    \item Si $\psi = q \in SP$ y $q \neq p$ entonces $\psi[\varphi/p] = q$, con lo que $\hat{v}(\psi[\varphi/p]) = \hat{v}(q)$ y, como antes, $\reallywidehat{v[\hat{v}(\varphi)/p]}(q) =v[\hat{v}(\varphi)/p](q)= \hat{v}(q)$.
+    \item Si $\psi = \top$, $\psi[\varphi/p] = \top$, y $\reallywidehat{v[\hat{v}(\varphi)/p]}(\top) = v(\top) = V$. 
+    \item Si $\psi = \bot$, $\psi[\varphi/p] = \bot$, y $\reallywidehat{v[\hat{v}(\varphi)/p]}(\bot) = v(\bot) = F$. 
+    \item Si $\psi = \neg \psi_1$, entonces $\hat{v}((\neg\psi_1)[\varphi/p]) = \hat{v}(\neg(\psi_1[\varphi/p])) = v_{\neg}(\hat{v}(\psi_1[\varphi/p]))$, por las definiciones de sustitución y extensión de la valoración $v$. Aplicando la hipótesis de inducción, lo anterior es igual a $$v_{\neg}(\reallywidehat{v[\hat{v}(\varphi)/p]})(\psi_1) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\neg\psi_1).$$
+    \item Si $\psi = \psi_1 \square \psi_2$, entonces $$\hat{v}(\psi[\varphi/p]) = \hat{v}((\psi_1[\varphi/p] \ \square \ \psi_2[\varphi/p])) = v_{\square}(\hat{v}(\psi_1[\varphi/p]), \ \hat{v}(\psi_2[\varphi/p])).$$ Aplicando la hipótesis de inducción, esto es igual a  $$v_{\square}(\reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1), \ \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_2)) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1 \square \psi_2).$$
+\end{enumerate}
+\end{proof}
+
+\begin{lema}(De sustitución)
+Si $\varphi \sim \varphi'$, $\psi[\varphi/p] \sim \psi[\varphi'/p]$.
+\end{lema}
+\begin{proof}
+Sea $v$ valoración. Entonces, al ser $\hat{v}(\varphi) = \hat{v}(\varphi')$, se obtiene que
+$$\hat{v}(\psi[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi) = \reallywidehat{v[\hat{v}(\varphi')/p]}(\psi) = \hat{v}(\psi[\varphi'/p])$$
+Como esto sucede para cualquier valoración $v$, $\psi[\varphi/p] \sim \psi[\varphi'/p]$.
+\end{proof}
+
+
+Acabamos de ver que sustituir fórmulas equivalentes en una misma fórmula nos lleva a fórmulas equivalentes. A continuación vemos que sustituir la misma fórmula en fórmulas equivalentes da como resultado fórmulas equivalentes.
+
+\begin{lema}(De sustitución)\label{lemasust2}Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
+\end{lema}
+\begin{proof}
+Sea $v$ cualquier valoración. Tenemos que:
+$$\hat{v}(\psi_1[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1) = \hat{v}[\reallywidehat{v(\varphi)/p]}(\psi_2) =\hat{v}(\psi_2[\varphi/p])$$
+Lo que nos da el resultado.
+\end{proof}
+
+Los dos lemas de sustitución nos permiten extender a todas las proposiciones posibles las equivalencias lógicas que ya conocemos para proposiciones atómicas, tal y como muestra el siguiente:
+
+\begin{example}
+Consideremos las dos fórmulas $\psi_1 = p \lor q$ y $\psi_2 = q \lor p$. Sabemos que ambas son equivalentes, luego si consideramos $\varphi, \chi \in PROP_{SP}$ tenemos que, por el lema~\ref{lemasust2}, $\psi_1[\varphi/p]$ y $\psi_2[\varphi/p]$, es decir, $\varphi\lor q$ y $q\lor\varphi$, son equivalentes. Aplicando una vez más~\ref{lemasust2} para sustituir $q$ por $\chi$, obtenemos que $\varphi \lor \chi$ y $\chi \lor \varphi$ son equivalentes.
+\end{example}

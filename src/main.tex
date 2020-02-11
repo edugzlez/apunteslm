@@ -1,0 +1,136 @@
+\documentclass{report}
+\usepackage[spanish]{babel}
+\usepackage[utf8x]{inputenc}
+
+
+
+\usepackage{amsmath,amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsbsy}
+\usepackage{amsgen}
+\usepackage{amscd}
+\usepackage{amsopn}
+\usepackage{amstext}
+\usepackage{amsxtra}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage[all,cmtip]{xy}
+\usepackage{accents}
+\usepackage{sseq}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{makeidx}
+
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{lema}[theorem]{Lema}
+\newtheorem{cor}[theorem]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+\newtheorem{ex}[theorem]{Ejercicio}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Nota}
+
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\dv}[3]{\frac{\partial #1}{\partial #2}(#3)}
+\newcommand{\d}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\T}{\mathbb{T}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\tr}{\mathrm{tr}}
+
+\usepackage{scalerel,stackengine}
+\stackMath
+\newcommand\reallywidehat[1]{%
+\savestack{\tmpbox}{\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern.1pt\mathchar"0362\kern.1pt}%
+    {\rule{0ex}{\textheight}}%WIDTH-LIMITED CIRCUMFLEX
+  }{\textheight}% 
+}{2.4ex}}%
+\stackon[-6.9pt]{#1}{\tmpbox}%
+}
+
+
+
+
+
+
+
+
+
+
+
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+
+\makeindex
+
+\begin{document}
+
+\frontmatter
+
+\title{Apuntes de\\ Lógica Matemática}
+
+%    Remove any unused author tags.
+
+%    author one information
+\author{Eduardo González Vaquero\\ Saúl Rodríguez Martín\\ Miguel Muñoz Pérez}
+
+\maketitle
+
+%    Dedication.  If the dedication is longer than a line or two,
+%    remove the centering instructions and the line break.
+%\cleardoublepage
+%\thispagestyle{empty}
+%\vspace*{13.5pc}
+%\begin{center}
+%  Dedication text (use \\[2pt] for line break if necessary)
+%\end{center}
+%\cleardoublepage
+
+%    Change page number to 6 if a dedication is present.
+\setcounter{page}{4}
+
+\tableofcontents
+
+%    Include unnumbered chapters (preface, acknowledgments, etc.) here.
+
+
+\mainmatter
+%    Include main chapters here.
+\include{cap1}
+
+\appendix
+%    Include appendix "chapters" here.
+
+\backmatter
+%    Bibliography styles amsplain or harvard are also acceptable.
+\bibliographystyle{amsalpha}
+%    See note above about multiple indexes.
+\printindex
+
+\end{document}
+
+%-----------------------------------------------------------------------
+% End of amsbook-template.tex
+%-----------------------------------------------------------------------
