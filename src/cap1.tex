@@ -16,7 +16,7 @@ Como con las conectivas, introducimos una serie de \textit{símbolos de proposic
 
 Así, el enunciado `Todos los solteros son hombres no casados' es una proposición, mientras que `¿Va a llover mañana?' no lo es. Por otro lado, `César conquistó las Galias y combatió contra Vercingétorix' admite una descomposición como conjunción de dos proposiciones. Evidentemente, esta reducción a proposiciones más simples tiene que parar eventualmente; así llegamos a lo que denominamos \textit{proposiciones atómicas}. Esto nos permitirá, una vez determinada la verdad o falsedad de estas proposiciones atómicas, hallar la de todas las proposiciones que se compongan de ellas mediante la aplicación de las conectivas lógicas (antiguamente llamadas \textit{proposiciones moleculares}). \
 
-Las proposiciones atómicas se representan entonces por los elementos de $SP$. Añadimos, por motivos que serán aclarados más adelante, dos elementos $\top$ y $\bot$, que se refieren a la \textit{proposición idénticamente verdadera} y a la \textit{proposición idénticamente falsa}, respectivamente. Es decir, 
+Las proposiciones atómicas se representan entonces por los elementos de $SP$. Añadimos, por motivos que serán aclarados más adelante, dos elementos $\top$ y $\bot$, que se refieren a la \textit{proposición idénticamente verdadera} y a la \textit{proposición idénticamente falsa}, respectivamente\footnote{En realidad, como veremos, al igual que $\neg,\land,\lor,\to$ y $\leftrightarrow$ son conectivas binarias, $\top$ y $\bot$ pueden considerarse conectivas 0-arias.}. Es decir, 
 
 \begin{definition}\label{def : at}
 
@@ -214,7 +214,7 @@ Una vez que disponemos de $Bool$ podemos definir la aplicación que nos lleva ca
 \begin{definition}(Valoración) Sea el conjunto $Bool = \{V, F\}$. Una valoración o evaluación es una función $v: SP \rightarrow Bool$. 
 \end{definition}
 
-\begin{definition}(Extensión) Se definen las siguientes aplicaciones:
+\begin{definition}\label{def : ext}(Extensión) Se definen las siguientes aplicaciones:
 \begin{enumerate}
     \item $v_{\neg}: Bool \rightarrow Bool$
     \item $v_\land, v_\lor, v_\rightarrow, v_\leftrightarrow: Bool \times Bool \rightarrow Bool$.
@@ -306,7 +306,8 @@ Recíprocamente, si $Mod(\Phi \cup \{\neg \varphi\}) = \emptyset$, sea $v \in Mo
 
 
 \end{proof} 
-De ahora en adelante, escribiremos $\Phi, \varphi \vDash \psi$ en vez de $\Phi \cup \{\varphi\} \vDash \psi$.
+De ahora en adelante, escribiremos $\Phi, \varphi \vDash \psi$ en vez de $\Phi \cup \{\varphi\} \vDash \psi$.$\\\\$
+Dada una valoración $v$, para cualesquiera fórmulas $\varphi_1,\varphi_2$ en que aparecen los símbolos $p_1,\dots,p_n$ y $q_1,\dots,q_m$, respectivamente, está claro, por cómo hemos definido las valoraciones, que $\hat{v}(\varphi_1)$ depende de $v(p_1),\dots,v(p_n)$, y $\hat{v}(\varphi_2)$ depende de $v(q_1),\dots,v(q_m)$. De modo que para comprobar que $\varphi_2$ es consecuencia lógica de $\varphi_1$ nos basta con comprobar que, para cada una de las posibles valoraciones de $p_1,\dots,p_n,q_1,\dots,q_m$, $\hat{v}(\varphi_2)=V$ si $\hat{v}(\varphi_1)=V$. Este es nuestro primer procedimiento para demostrar equivalencias lógicas entre fórmulas, que resumiremos gráficamente en tablas de verdad.
 
 \begin{example} Consideremos $\Phi = \{\neg p \land q \rightarrow r, \ \neg p, \ \neg r \}$, $\varphi = \neg q$. Para demostrar que $\Phi \vDash \varphi$ basta realizar la tabla de verdad correspondiente y comparar los valores de verdad de las premisas del conjunto $\Phi$ con los de $\varphi$. Invitamos al lector a que verifique los detalles de esta afirmación.
 \end{example} \\
@@ -331,7 +332,7 @@ Para la segunda parte, solo es necesaria una comprobación directa de los valore
 
 Las siguientes reglas nos ayudarán a demostrar equivalencias entre fórmulas:
 
-\begin{theorem}(Leyes de equivalencia lógica)
+\begin{theorem}(Leyes de equivalencia lógica)\label{eq}
 \begin{enumerate}
     \item Conmutatividad: $$p \land q \sim q \land p, \quad p \lor q \sim q \lor p, \quad p \leftrightarrow q \sim q \leftrightarrow p$$
     \item Asociatividad: $$(p \lor q) \lor r \sim p \lor (q \lor r), \quad (p \land q) \land r \sim p \land (q \land r)$$
@@ -409,14 +410,13 @@ $$\hat{v}(\psi[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi) = \real
 Como esto sucede para cualquier valoración $v$, $\psi[\varphi/p] \sim \psi[\varphi'/p]$.
 \end{proof}
 
-
 Acabamos de ver que sustituir fórmulas equivalentes en una misma fórmula nos lleva a fórmulas equivalentes. A continuación vemos que sustituir la misma fórmula en fórmulas equivalentes da como resultado fórmulas equivalentes.
 
-\begin{lema}(De sustitución)\label{lemasust2}Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
+\begin{lema}(De sustitución) \label{lemasust2}Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
 \end{lema}
 \begin{proof}
 Sea $v$ cualquier valoración. Tenemos que:
-$$\hat{v}(\psi_1[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1) = \hat{v}[\reallywidehat{v(\varphi)/p]}(\psi_2) =\hat{v}(\psi_2[\varphi/p])$$
+$$\hat{v}(\psi_1[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_2) =\hat{v}(\psi_2[\varphi/p])$$
 Lo que nos da el resultado.
 \end{proof}
 
@@ -425,3 +425,103 @@ Los dos lemas de sustitución nos permiten extender a todas las proposiciones po
 \begin{example}
 Consideremos las dos fórmulas $\psi_1 = p \lor q$ y $\psi_2 = q \lor p$. Sabemos que ambas son equivalentes, luego si consideramos $\varphi, \chi \in PROP_{SP}$ tenemos que, por el lema~\ref{lemasust2}, $\psi_1[\varphi/p]$ y $\psi_2[\varphi/p]$, es decir, $\varphi\lor q$ y $q\lor\varphi$, son equivalentes. Aplicando una vez más~\ref{lemasust2} para sustituir $q$ por $\chi$, obtenemos que $\varphi \lor \chi$ y $\chi \lor \varphi$ son equivalentes.
 \end{example}
+
+
+\section{Completitud funcional}
+
+En~\ref{def : ext} definimos recursivamente una serie de asignaciones de verdad que correspondían a los símbolos de las conectivas lógicas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. Decimos que una conectiva es $n$-aria si se  escribe con $n$ símbolos de proposición, por ejemplo, las conectivas $\land, \lor,\rightarrow, \leftrightarrow$ son binarias (2-arias) y la conectiva $\neg$ es 1-aria. \\ \\
+En general, a cualquier tabla de verdad dada por $v_{*}: Bool^{n} \rightarrow Bool$ podemos asignarle un símbolo de conectiva n-aria, $*(p_1,\dots,p_n)$. Según esta definición, podemos interpretar los símbolos $\top,\bot$ como conectivas 0-arias, dadas por las tablas de verdad:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+$\top$ & $\bot$\\
+\hline \hline
+V & F\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\noindent Nótese que debemos distinguir cuidadosamente entre la sintaxis de una fórmula y su semántica, es decir, en $*(p_1, ..., p_n)$ no tenemos una función sobre las proposiciones $p_1, ..., p_n$ sino sobre sus valores de verdad. \\ \\
+Analizando con mayor detenimiento las conectivas binarias, es fácil observar que existen 16 de ellas distintas, una asociada a cada tabla de verdad\footnote{Decimos que dos conectivas n-arias son distintas cuando tienen distinta tabla de verdad. Para cada $n$, hay $2^{2^n}$ conectivas $n$-arias distintas.}. Por ejemplo, podemos definir mediante tablas de verdad las conectivas:
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$p$ & $q$ & $p \veebar q$ & $p\uparrow q$ & $p\downarrow q$\\
+\hline \hline
+V & V & F & F & F\\ \hline
+V & F & V & V & F\\ \hline
+F & V & V & V & F\\ \hline
+F & F & F & V & V\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\noindent $\veebar$ se conoce como \textit{disyunción excluyente}, mientras que $\uparrow$ y $\downarrow$ se llaman \textit{NAND} y \textit{NOR}, respectivamente.  \\ \\
+Sin embargo, en cierto sentido, estas nuevas conectivas son redundantes, ya que podemos expresarlas en función de nuestras cinco conectivas iniciales:
+\begin{itemize}
+    \item $p\veebar q \sim \neg(p\leftrightarrow q) $
+    \item $p\uparrow q \sim \neg(p\land q) $
+    \item $p\downarrow q \sim \neg(p\lor q) $
+\end{itemize}
+
+\noindent Es natural, por tanto, preguntarse si cualquier conectiva $n$-aria $*$ será expresable en función de nuestras conectivas, como lo son $\veebar,\downarrow y\uparrow$. Para formalizar esta cuestión, introducimos dos nociones de gran importancia:
+
+\begin{definition}
+Una conectiva $n$-aria $*$ dada por $v_{*}: Bool^{n} \rightarrow Bool$ se dice expresable en términos de un conjunto de conectivas $C$ si existe una fórmula $\varphi$ que tiene por conectivas a elementos de $C$ y por símbolos de proposición a $p_1, ..., p_n$, tal que $\varphi \sim *(p_1, ..., p_n)$. 
+\end{definition}
+
+
+\begin{definition}(Completitud funcional)
+Un conjunto de conectivas $C$ se dice funcionalmente completo si cualquier conectiva $*$ dada por $v_{*}: Bool^{n} \rightarrow Bool$ es expresable en términos de $C$.
+\end{definition}
+Ahora ya podemos dar respuesta a la pregunta que nos formulamos antes:
+\begin{prop}\label{comp}
+$\{\neg, \land, \lor\}$ es funcionalmente completo.
+\end{prop}
+\begin{proof}\label{def:compfunc}
+Sea $*$ conectiva $n$-aria. Procedamos por inducción sobre $n$. \\ \\
+Si $n = 1$, es fácil comprobar que tenemos cuatro conectivas posibles, y que éstas corresponden a la identidad (es decir, $*(p) \sim p$), $\neg$, $\top \sim p \lor \neg p$ y $\bot \sim p \land \neg p$, con lo que se verifica el enunciado.  \\ \\
+Supongamos que es válido para $n-1$ y veámoslo para $n$. Sea $*(p_1, ..., p_n)$ una conectiva dada por la siguiente tabla de verdad:
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c c c|c|}
+\hline
+$p_n$ & $p_1$ & $...$ & $p_{n-1}$ & $*(p_1, ..., p_n)$\\
+\hline \hline
+V & ... & ... & ... & X(1)\\ \hline
+... & ... & ... & ... & ...\\ \hline
+V & ... & ... & ... & X(2^{n-1})\\ \hline
+F & ... & ... & ... & X(2^{n-1}+1)\\ \hline
+... & ... & ... & ... & ...\\ \hline
+F & ... & ... & ... & X(2^{n})\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\noindent donde $X(i)$ denota el valor de verdad correspondiente a la fila $i$-ésima. De esta forma obtenemos dos tablas de verdad, cada una con $2^{n-1}$ filas: aquella en la que $p_n$ toma $V$ como valor de verdad (las primeras $2^{n-1}$ filas de la tabla anterior) y aquella en la que toma el valor $F$ (las filas restantes). Llamamos $*_{1}(p_1, ..., p_{n-1})$ y $*_{2}(p_1, ..., p_{n-1})$ a las conectivas inducidas por estas dos tablas de verdad. \\ \\
+Entonces tenemos: $$*(p_1, ..., p_n) \sim (p_n \land *_{1}(p_1, ..., p_{n-1})) \lor (\neg p_n \land *_{2}(p_1, ..., p_{n-1})).$$
+Aplicando la hipótesis de inducción, existen fórmulas $\varphi_1, \varphi_2$ construidas a partir de $\{\neg, \land, \lor\}$ tales que $\varphi_1 \sim *_{1}(p_1, ..., p_{n-1})$ y $\varphi_2 \sim *_{2}(p_1, ..., p_{n-1})$, con lo que obtenemos que $*(p_1, ..., p_n)$ es expresable en términos de $\{\neg, \land, \lor\}$.
+\end{proof}
+
+
+
+\begin{cor}
+\begin{enumerate}
+    \item $\{\neg, \land\}$ es funcionalmente completo.
+    \item $\{\neg, \lor\}$ es funcionalmente completo.
+    \item $\{\rightarrow, \bot \}$ es funcionalmente completo.
+    \item $\{\uparrow\}$ es funcionalmente completo.
+    \item $\{\downarrow\}$ es funcionalmente completo.
+\end{enumerate}
+\end{cor}
+\begin{proof}$\\[-10pt]$
+\begin{enumerate}
+    \item Sabemos, por ~\ref{comp}, que $\{\neg, \land, \lor\}$ es funcionalmente completo. Basta ver, entonces, que $\lor$ es expresable en términos de $\neg$ y $\land$. Esto es evidente por las leyes de De Morgan (\ref{eq}): $$p \lor q \sim \neg(\neg p \land \neg q).$$
+    \item Análogo al anterior, usando la otra ley de De Morgan:
+    $$p \land q \sim \neg(\neg p \lor \neg q).$$ 
+    \item Basta ver que $\neg, \lor$ son expresables en términos de $\rightarrow, \bot$. Esto se sigue de estas afirmaciones que se pueden comprobar con tablas de verdad: $$\neg p \sim p \rightarrow \bot.$$  $$p \lor q \sim (p \rightarrow \bot) \rightarrow q.$$
+    \item Expresamos $\neg,\land$ en términos de $\uparrow$:$$\neg p \sim p \uparrow p.$$ $$p\land q \sim (p\uparrow q)\uparrow(p\uparrow q).$$
+    \item Expresamos $\neg,\lor$ en términos de $\downarrow$: $$\neg p \sim p \downarrow p$$ $$p \lor q \sim (p \downarrow q) \downarrow (p \downarrow q).$$
+\end{enumerate}
+\end{proof}
