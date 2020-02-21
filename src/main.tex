@@ -27,6 +27,16 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{makeidx}
+%\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{tikz-cd}
+
+\usetikzlibrary{matrix}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
 \newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{prop}[theorem]{Proposición}
@@ -58,6 +68,8 @@
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\tr}{\mathrm{tr}}
 
+
+%Para poner gorritos:
 \usepackage{scalerel,stackengine}
 \stackMath
 \newcommand\reallywidehat[1]{%
@@ -70,9 +82,9 @@
 \stackon[-6.9pt]{#1}{\tmpbox}%
 }
 
-
-
-
+%Para poner diagramas:
+\usetikzlibrary{matrix,arrows,decorations.pathmorphing}
+\tikzset{commutative diagrams/.cd}
 
 
 
@@ -101,7 +113,6 @@
 %    Dedication.  If the dedication is longer than a line or two,
 %    remove the centering instructions and the line break.
 %\cleardoublepage
-%\thispagestyle{empty}
 %\vspace*{13.5pc}
 %\begin{center}
 %  Dedication text (use \\[2pt] for line break if necessary)
@@ -109,15 +120,18 @@
 %\cleardoublepage
 
 %    Change page number to 6 if a dedication is present.
-\setcounter{page}{4}
 
 \tableofcontents
+\pagenumbering{gobble}
 
 %    Include unnumbered chapters (preface, acknowledgments, etc.) here.
 
 
 \mainmatter
 %    Include main chapters here.
+
+
+
 \include{cap1}
 
 \appendix

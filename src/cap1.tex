@@ -1,5 +1,7 @@
 \chapter{Lógica proposicional}
-\\
+\pagenumbering{arabic}
+\setcounter{page}{1}
+$\\$
 \section{Introducción}
 Antes de comenzar con definiciones rigurosas, conviene dar una breve explicación sobre la motivación de la lógica proposicional, a la que dedicaremos este capítulo. Un aspecto común de los lenguajes naturales (como el español o el chino) es la ambigüedad de ciertas expresiones, lo cual dificulta las intenciones usuales de la ciencia, a saber, la precisión en la comunicación y la distinción clara de aquello que se comunica. De aquí nace una necesidad evidente, que es cubierta por los lenguajes artificiales y, entre ellos, la lógica formal. \
 
@@ -32,8 +34,9 @@ Las proposiciones atómicas se representan entonces por los elementos de $SP$. A
     \[
         A_{SP} = SP\cup\{\neg, \land, \lor, \rightarrow, \leftrightarrow, (, ),\top, \bot\},
     \]
-    obtenido añadiendo a $SP$ las conectivas lógicas $\neg, \land, \lor, \rightarrow, \leftrightarrow$, y los paréntesis, $(,)$.
+    obtenido añadiendo a $SP$ los símbolos $\top$ y $\bot$, las conectivas lógicas $\neg, \land, \lor, \rightarrow, \leftrightarrow$, y los paréntesis, $(,)$.
 \end{definition}    
+
 
 \begin{definition}(Cierre de Kleene)
     Dado un conjunto de símbolos $A$, definimos el cierre de Kleene de $A$, $A^*$, como el conjunto de las concatenaciones de elementos de $A$ junto con $\epsilon$, el \textit{espacio vacío} o en blanco.
@@ -58,7 +61,7 @@ Se define el conjunto de proposiciones posibles,  $PROP_{SP}$, como la intersecc
     \item Si $\phi_1, \phi_2 \in PROP_{SP}$ y $\square\in \{\land, \lor, \rightarrow, \leftrightarrow\}$, entonces $(\phi_1 \square\  \phi_2) \in PROP_{SP}$.
 \end{enumerate}
 \end{definition}
-Es fácil comprobar que $PROP_{SP}$ también cumple estas tres propiedades, por tanto decimos que es el mínimo subconjunto que las verifica.
+Es fácil comprobar que $PROP_{SP}$ también cumple estas tres propiedades, por tanto decimos que es el mínimo subconjunto que las verifica. También podemos obtener $PROP_{SP}$ de forma constructiva:
 
 \begin{prop} Se define $P_0 := SP$ y para cada $n\in\N$:
 \[
@@ -74,23 +77,38 @@ Dado $\varphi \in P$, existe $n\in \N\cup\{0\}$ tal que $\varphi \in P_n$ luego 
 Sean $\varphi_1, \varphi_2 \in P$ y sea $\square\in \{\land, \lor, \rightarrow, \leftrightarrow\}$. Tomamos $n\in\N$ tal que $\varphi_1, \varphi_2 \in P_n$ (para cada uno existe al menos un natural: basta tomar el mayor). Luego $(\phi_1 \square\  \phi_2)\in P_{n+1}$ y por lo tanto también pertenece a $P$. \\ \\
 \end{proof}
 \end{prop}
-A partir de ahora, usaremos para mayor brevedad el símbolo $\square$ como intercambiable por $\land, \lor, \rightarrow$ o $\leftrightarrow$.\\
+A partir de ahora, usaremos para mayor brevedad el símbolo $\square$ como intercambiable por $\land, \lor, \rightarrow$ o $\leftrightarrow$ a no ser que se indique lo contrario. $\\$
+
+
+Básicamente, el resultado anterior nos dice que podemos construir cualquier proposición partiendo de proposiciones atómicas y creando proposiciones más complicadas a partir de ellas usando las conectivas. Esta forma de verlo da lugar al siguiente concepto:
+
+\begin{definition}(Secuencia de formación)
+Definimos una \textit{secuencia de formación} para cierto $\varphi\in A_{SP}^*$ como una sucesión finita $\langle\varphi_1,\dots,\varphi_n\rangle$ de elementos de $A_{SP}^*$ tal que $\varphi_n=\varphi$ y para cada $i\leq n$, se da alguna de estas tres opciones:
+\begin{itemize}
+    \item $\varphi_i\in AT$.
+    \item $\varphi_i=(\neg \varphi_j)$, para cierto $j<i$.
+    \item $\varphi_i=(\varphi_j\square\varphi_k)$, para ciertos $j,k<i$.
+\end{itemize}
+\end{definition}
+
+Como veremos en los ejercicios, toda proposición puede construirse mediante una secuencia de formación, y recíprocamente si $\varphi$ tiene una secuencia de formación, entonces $\varphi\in PROP_{SP}$.
+
 \section{Inducción estructural y recursión}
 
-El método de inducción nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.$\\$
+Análogamente al método de inducción en los naturales, el método de inducción estructural nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.$\\$
 
-\begin{prop} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$ para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera) entonces basta comprobar que:
+\begin{prop} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$\footnote{Usamos la notación $P(\varphi)$ para decir que la fórmula $\varphi$ cumple la propiedad $p$.} para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera). Entonces basta comprobar que:
 \begin{enumerate}
     \item $P(\varphi)$ para toda $\varphi\in AT$.
     \item Si $P(\varphi)$ entonces $P((\neg \varphi))$.
     \item Si $P(\varphi_1)$ y $P(\varphi_2)$ entonces $P((\varphi_1 \square \varphi_2))$.
 \end{enumerate}
 \begin{proof}
-Si una propiedad $P$ cumple estas tres propiedades, entonces el conjunto de proposiciones que cumplen $P$ cumple las tres propiedades de ~\ref{def:PROP_{SP}}, por tanto contiene a $PROP_{SP}$. \\
+Si una propiedad $P$ cumple 1, 2 y 3, entonces el conjunto de proposiciones que cumplen $P$ cumple las tres propiedades de \ref{def:PROP_{SP}}, por tanto contiene a $PROP_{SP}$. \\
 \end{proof}
 \end{prop}
 
-\begin{example} Definamos $P(\varphi)$ como la propiedad de $|\varphi|_) = |\varphi|_($ siendo $|\varphi|_)$ la cantidad de $)$ en la fórmula $\varphi$ y $|\varphi|_($ la cantidad de $($. Vamos a comprobar por inducción estructural que todas las proposiciones cumplen esta propiedad:
+\begin{example} Definamos $P(\varphi)$ como la propiedad de $|\varphi|_) = |\varphi|_($, siendo $|\varphi|_)$ el número de símbolos $)$ en la fórmula $\varphi$ y $|\varphi|_($ el número de $($\footnote{En general, siendo $*$ un símbolo, podemos denotar $|\varphi|_*$ al número de símbolos $*$ en la fórmula $\varphi$.}. Vamos a comprobar por inducción estructural que todas las proposiciones cumplen esta propiedad:
 \begin{enumerate}
     \item Para cualquier $\varphi\in AT$ se verifica trivialmente $|\varphi|_) = |\varphi|_( = 0$, luego $P(\varphi)$.
     \item Supongamos $P(\varphi)$ con $\varphi\in PROP_{SP}$, entonces $|\varphi|_( = |\varphi|_)$ y por tanto:
@@ -133,7 +151,7 @@ Decimos además que un prefijo $w'$ es prefijo propio de $w$ si es distinto de $
 \end{proof}
 \end{prop}
 
- En breve nos será útil, dado un conjunto $A$, poder definir una función $H: PROP_{SP} \rightarrow A$ conociendo su restricción a $AT$, y suponiendo que podemos calcular $H((\neg \varphi))$ y $H((\varphi\square\psi))$ en función de $H(\varphi)$ y $H(\psi)$.
+ En próximas secciones será útil, dado un conjunto $A$, definir una función $H: PROP_{SP} \rightarrow A$ conociendo su restricción a $AT$, y suponiendo que podemos calcular $H((\neg \varphi))$ y $H((\varphi\square\psi))$ en función de $H(\varphi)$ y $H(\psi)$.
  Si la función $H$ queda bien definida así, diremos que está \textit{definida de forma recursiva}. La siguiente proposición nos garantiza que podemos definir funciones de esta forma:
  
  \begin{prop} El esquema de definición recursiva da como resultado una única función, es decir, dadas:
@@ -162,10 +180,9 @@ existe una única función $H: PROP_{SP} \rightarrow A$ tal que:
 Nótese como en ocasiones omitimos las funciones auxiliares y usamos la notación $H$ para referirnos a $H$, $H_{AT}$, $H_{\neg}$ y $H_{\square}$. Este abuso de notación no suele dar lugar a confusión.
 \end{example}
 
-\begin{ex} Definir resursivamente una función que nos lleve cada fórmula al número de veces que $\land$ aparece en ella. 
-\end{ex}
 
-\begin{example} Podemos definir una función que nos lleve cada fórmula al conjunto de todas sus subfórmulas, es decir,  $\text{\textit{\text{\textit{SUB}}}}: PROP_{SP} \rightarrow \mathcal{P} (PROP_{SP})$\footnote{Dado un conjunto X, denotamos por $\mathcal{P}(X)$ a su potencia, es decir, el conjunto de subconjuntos de X.} tal que:
+
+\begin{example} Podemos definir recursivamente una función que nos lleve cada fórmula al conjunto de todas sus subfórmulas, es decir,  $\text{\textit{\text{\textit{SUB}}}}: PROP_{SP} \rightarrow \mathcal{P} (PROP_{SP})$\footnote{Dado un conjunto X, denotamos por $\mathcal{P}(X)$ a su potencia, es decir, el conjunto de subconjuntos de X.} tal que:
 \begin{enumerate}
     \item $\text{\textit{SUB}}(\varphi) = \{\varphi\}$, para toda $\varphi \in AT$.
     \item $\text{\textit{SUB}}((\neg \varphi)) = \text{\textit{SUB}}(\varphi) \cup \{(\neg \varphi)\}$.
@@ -174,18 +191,18 @@ Nótese como en ocasiones omitimos las funciones auxiliares y usamos la notació
 \end{example} 
 
 \section{Eliminación de paréntesis}
-Para conseguir una notación más compacta, podemos establecer una notación que use menos paréntesis cuando nos convenga. Sin embargo, la omisión de paréntesis puede dar lugar a ambigüedades en las fórmulas, por ejemplo:
+Para conseguir una notación más compacta, podemos establecer una notación que use menos paréntesis cuando nos convenga. Sin embargo, la omisión de paréntesis puede dar lugar a ambigüedades en las fórmulas, por ejemplo,
 \[p\to q \to r\]
 podría simbolizar dos fórmulas distintas:
-\begin{enumerate}[label=\bullet]
+\begin{itemize}
     \item $((p\to q)\to r)$
     \item $(p\to (q\to r))$
-\end{enumerate}
+\end{itemize}
 Para evitar este tipo de situaciones, necesitamos las siguientes reglas de omisión de paréntesis:
 \begin{enumerate}
     \item Los paréntesis externos pueden omitirse. Esto no da lugar a ambigüedad.
     \item Las conectivas se aplicarán en este orden: $\neg, \land, \lor, \to, \leftrightarrow$.
-    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre por la izquierda\footnote{Cuando veamos semántica, comprobaremos que todas las conectivas salvo $\rightarrow$ son asociativas, por tanto, en ese sentido, no importa el orden en que se asocien estas conectivas.}.
+    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre por la izquierda.
 \end{enumerate}
 Algunos ejemplos de aplicación de estas reglas:$\\[8pt]$
 \begin{equation*}
@@ -200,6 +217,17 @@ Algunos ejemplos de aplicación de estas reglas:$\\[8pt]$
 \end{array}
 \end{equation*}
 
+Comprobaremos que las conectivas $\land$ y $\lor$ son asociativas y conmutativas, por tanto, en ese sentido, no importa el orden en que se asocien. De modo que, cuando una conectiva se repita varias veces seguidas, podemos usar la siguiente notación:
+\[\bigwedge\limits_{i\in I} p_i:=p_{i_1}\land\dots\land p_{i_n}\]
+\[\bigvee\limits_{i\in I} p_i:=p_{i_1}\lor\dots\lor p_{i_n},\]
+siendo $I=\{i_1,\dots,i_n\}$ un conjunto finito de índices.$\\$
+Establecemos además el siguiente convenio,
+
+\[\bigwedge\limits_{i\in \emptyset} p_i:=\top\]
+\[\bigvee\limits_{i\in \emptyset} p_i:=\bot,\]
+que será consistente con el comportamiento semántico de $\lor$ y $\land$.
+
+
 
 \section{Asignaciones de verdad}
 
@@ -213,6 +241,51 @@ Una vez que disponemos de $Bool$ podemos definir la aplicación que nos lleva ca
 
 \begin{definition}(Valoración) Sea el conjunto $Bool = \{V, F\}$. Una valoración o evaluación es una función $v: SP \rightarrow Bool$. 
 \end{definition}
+Un alfabeto de $n$ letras tiene $2^n$ valoraciones distintas.$\\$
+
+Para definir la valoración de proposiciones, vamos a necesitar una forma de interpretar las conectivas. Con este fin, a cada conectiva le asociaremos una aplicación, que definiremos caso a caso en formato de tabla de verdad:
+
+\begin{enumerate}
+\item $v_{\neg}: Bool \rightarrow Bool$;
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$\varphi$ & $v_{\neg}(\varphi)$ \\
+\hline \hline
+V & F \\ \hline
+F & V \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\item $v_\land, v_\lor, v_\rightarrow, v_\leftrightarrow: Bool \times Bool \rightarrow Bool$;
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$\varphi_1$ & $\varphi_2$ & $v_{\land}(\varphi_1, \varphi_2)$ & $v_{\lor}(\varphi_1, \varphi_2)$ & $v_{\rightarrow}(\varphi_1, \varphi_2)$ & $v_{\leftrightarrow}(\varphi_1, \varphi_2)$ \\
+\hline \hline
+V & V & V & V & V & V\\ \hline
+V & F & F & V & F & F\\ \hline
+F & V & F & V & V & F\\ \hline
+F & F & F & F & V & V\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\end{enumerate}
+Decimos que la conectiva binaria $\land$ es un operador conmutativo ya que $v_\land(V,F)=v_\land(F,V)$. $\lor$ y $\leftrightarrow$ también son conmutativas.
+\begin{definition}\label{def : ext}(Extensión) Dada la valoración $v: SP \rightarrow Bool$, definimos recursivamente su \textit{extensión}, $\hat{v}: PROP_{SP} \rightarrow Bool$:
+\begin{enumerate}
+    \item $\hat{v}(\bot) = F$.
+    \item $\hat{v}(\top) = V$.\footnote{Aquí es donde hemos dado sentido a la definición que dimos de $\top$ y $\bot$ en ~\ref{def : at}.}
+    \item $\hat{v}(\varphi) = v(\varphi)$, para toda $\varphi \in SP$.
+    \item $\hat{v}((\neg \varphi)) = v_{\neg}(\hat{v}(\varphi))$.
+    \item $\hat{v}((\varphi_1 \square \varphi_2)) = v_{\square}(\hat{v}(\varphi_1), \hat{v}(\varphi_2))$.
+\end{enumerate}
+\end{definition}
+
+
+\begin{comment}
 
 \begin{definition}\label{def : ext}(Extensión) Se definen las siguientes aplicaciones:
 \begin{enumerate}
@@ -220,7 +293,7 @@ Una vez que disponemos de $Bool$ podemos definir la aplicación que nos lleva ca
     \item $v_\land, v_\lor, v_\rightarrow, v_\leftrightarrow: Bool \times Bool \rightarrow Bool$.
 \end{enumerate}
 Definimos estas funciones caso a caso en formato de tabla de verdad:
-\begin{table}[htbp]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|}
 \hline
@@ -233,7 +306,7 @@ F & V \\ \hline
 \end{table}
 
 
-\begin{table}[htbp]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -247,35 +320,56 @@ F & F & F & F & V & V\\ \hline
 \end{center}
 \end{table}
 
-Dada la valoración $v: SP \rightarrow Bool$, definimos recursivamente su \textit{extensión}, $\hat{v}: PROP_{SP} \rightarrow Bool$, como:
+Dada la valoración $v: SP \rightarrow Bool$, definimos recursivamente su \textit{extensión}, $\hat{v}: PROP_{SP} \rightarrow Bool$:
 \begin{enumerate}
     \item $\hat{v}(\bot) = F$.
-    \item $\hat{v}(\top) = V$.
+    \item $\hat{v}(\top) = V$.\footnote{Aquí es donde hemos dado sentido a la definición que dimos de $\top$ y $\bot$ en ~\ref{def : at}.}
     \item $\hat{v}(\varphi) = v(\varphi)$, para toda $\varphi \in SP$.
     \item $\hat{v}((\neg \varphi)) = v_{\neg}(\hat{v}(\varphi))$.
     \item $\hat{v}((\varphi_1 \square \varphi_2)) = v_{\square}(\hat{v}(\varphi_1), \hat{v}(\varphi_2))$.
 \end{enumerate}
 \end{definition}
 
-Nótese que aquí es donde hemos dado sentido a la definición que dimos de $\top$ y $\bot$ en ~\ref{def : at}.
 
-\begin{definition}(Satisfacibilidad) Dada $v: SP \rightarrow Bool$ y $\varphi \in PROP_{SP}$ se dice que $v$ satisface $\varphi$, y se escribe como $v \vDash \varphi$, si y solo si $\hat{v}(\varphi) = V$. Si $\hat{v}(\varphi) = F$, escribimos $v \nvDash \varphi$.
-\end{definition}
+\end{comment}
+La propia definición nos da un método para calcular los valores de verdad de fórmulas en función de los de sus símbolos:
 
-\begin{definition} $\varphi$ se dice \textit{satisfacible} si existe alguna valoración $v$ tal que $v \vDash \varphi$. Si $v \vDash \varphi$ para toda valoración $v$, se dice que $\varphi$ es una \textit{tautología}. Se dice que $\varphi$ es una \textit{contingencia} si es satisfacible pero no tautología. $\varphi$ es \textit{contradicción} si no es satisfacible. 
-\end{definition}
+\begin{example}
+Encontremos el valor de verdad de $p\land \neg q \to r \lor s$, siendo $v$ una valoración que cumple $v(p)=v(q)=V,v(r)=v(s)=F$:
+\begin{enumerate}
+    \item $\hat{v}(\neg q)=v_\neg(\hat{v}(q))=v_\neg(V)=F$.
+    \item $\hat{v}(p\land \neg q)=v_\land(\hat{v}(p),\hat{v}(\neg q))=v_\land(V,F)=F$.
+    \item $\hat{v}(r\lor s)=v_\lor(\hat{v}(r),\hat{v}(s))=v_\lor(F,F)=F$.
+    \item Finalmente, $\hat{v}(p\land \neg q \to r\lor s)=v_\to(\hat{v}(p\land \neg q),\hat{v}(r\lor s))=v_\to(F,F)=V$.
+\end{enumerate}
 
-\begin{example} La fórmula $p \land q \rightarrow r \leftrightarrow p \rightarrow q \rightarrow r$ es contingencia. Invitamos al lector a que realice la tabla de verdad correspondiente.
+\end{example}
+
+
+
+\begin{definition}(satisfactibilidad) Dada $v: SP \rightarrow Bool$ y $\varphi \in PROP_{SP}$ se dice que $v$ satisface $\varphi$, y se escribe como $v \vDash \varphi$, si y solo si $\hat{v}(\varphi) = V$. Si $\hat{v}(\varphi) = F$, escribimos $v \nvDash \varphi$.
+\end{definition}$\\$
+En virtud de la definición anterior, podemos clasificar cada fórmula $\varphi$ como:
+\begin{itemize}
+    \item \textit{satisfactible}, si existe alguna valoración $v$ tal que $v \vDash \varphi$. 
+    \begin{itemize}
+        \item \textit{Tautología}, si $v \vDash \varphi$ para toda valoración $v$.
+        \item \textit{Contingencia}, si es satisfactible pero no tautología.
+    \end{itemize}
+    \item \textit{Contradicción}, si no es satisfactible. 
+\end{itemize}
+
+
+\begin{example} La fórmula $p \land q \rightarrow r \leftrightarrow (p \rightarrow q) \rightarrow r$ es contingencia. Invitamos al lector a que realice la tabla de verdad correspondiente.
 \end{example}
 
 \begin{definition}(Conjunto de modelos) Dado $\Phi \subseteq PROP_{SP}$, el conjunto de modelos de $\Phi$ se define como:
 $$Mod(\Phi) := \{v: SP \rightarrow Bool \ | \ \forall \varphi \in \Phi \ v \vDash \varphi \}$$
 \end{definition}
 
-\begin{definition}(Satisfacibilidad) El conjunto $\Phi \subset PROP_{SP}$ se dice satisfacible, y se escribe $Sat(\Phi)$, si $Mod(\Phi) \neq \emptyset$.
-\end{definition}
-
-\begin{definition}(Insatisfacibilidad) El conjunto $\Phi \subset PROP_{SP}$ se dice insatisfacible, y se escribe $Insat(\Phi)$, si $Mod(\Phi) = \emptyset$. 
+\begin{definition}(Satisfactibilidad) Sea $\Phi \subseteq PROP_{SP}$.$\\[5pt]$
+$\Phi$ se dice satisfactible, y se escribe $Sat(\Phi)$, si $Mod(\Phi) \neq \emptyset$.$\\[5pt]$
+$\Phi$ se dice insatisfactible, y se escribe $Insat(\Phi)$, si $Mod(\Phi) = \emptyset$. $\\$
 \end{definition}
 
 Ahora llegamos a la definición del concepto que ha motivado nuestro estudio inicial de la semántica.
@@ -287,18 +381,42 @@ Esto equivale a decir que toda asignación de verdad que satisface todos los ele
 
 \begin{example} Dado $\Phi$ tal que $Insat(\Phi)$, se sigue de la anterior definición que $\Phi \vDash \varphi$, para cualquier $\varphi$.
 \end{example}
+A continuación presentamos algunos resultados básicos de semántica.
 
-\begin{ex} Demostrar que si $\Phi = \emptyset$ y $\Phi \vDash \varphi$, entonces $\varphi$ es tautología. (Indicación: ¡los elementos del conjunto vacío verifican cualquier cosa!)
-\end{ex}
+\begin{prop} \mbox{}
+\begin{enumerate}
+    \item $Mod(\emptyset) = \{v | v: SP \rightarrow Bool\}$.
+    \item Si $\Phi = \emptyset$ y $\Phi \vDash \varphi$, entonces $\varphi$ es tautología. 
+    \item Demostrar que $Mod(PROP_{SP}) = \emptyset$.
+    \item Demostrar que $Mod(\Phi) \cap Mod(\Psi) = Mod(\Phi \cup \Psi)$.
+    \item Demostrar que $Mod(\Phi) \cup Mod(\Psi) \subseteq Mod(\Phi \cap \Psi)$. 
+\end{enumerate}
+\begin{proof} \mbox{}
+\begin{enumerate}
+    \item En efecto, toda valoración satisface todas las proposiciones del conjunto  vacío.
+    
+    \item $Mod(\emptyset)$ tiene a todas las valoraciones, por tanto si $Mod(\emptyset)\subseteq Mod(\varphi)$, cualquier valoración satisface $\varphi$.
+    \item Dada una valoración $v$, y cualquier proposición $\varphi$, no podemos tener a la vez $\hat{v}(\varphi)=T$ y $\hat{v}(\neg\varphi)=T$. Por tanto $v$ no satisface todos los elementos de $PROP_{SP}$.
+    \item Comprobamos los dos contenidos:$\\$
+    $\subseteq$: Si una valoración $v$ está en $\Mod(\Phi)\cap Mod(\Psi)$, satisface todos los elementos de $\Phi$ y de $\Psi$, por tanto satisface todos los elementos de $\Phi\cup\Psi$.$\\$
+    $\supseteq$: Si $v$ está en $Mod(\Phi\cup\Psi)$, $v$ satisface todos los elementos de $\Phi\cup\Psi$, por tanto satisface todos los elementos de $\Phi$ y todos los de $\Psi$, es decir, $v\in Mod(\Phi)\cap Mod(\Psi)$.
+    \item Dada $v\in Mod(\Phi)\cup Mod(\Psi)$, o bien $v$ verifica todos los elementos de $\Phi$ o los de $\Psi$. En ambos casos, $v$ verifica los elementos de $\Phi\cap\Psi$.
+    
+    
+\end{enumerate}
+En 5, el contenido opuesto no se cumple. Poniendo por ejemplo $\Phi=\{p\},\Psi=\{p\land p\}$, siendo $p\in SP$, tenemos $\Phi\cap\Psi=\emptyset$, por tanto $Mod(\Phi\cap\Psi)$ contiene a todas las valoraciones, pero cualquier valoración $v$ que cumpla $v(p)=F$ no estará en $Mod(\Phi)\cup Mod(\Psi)$.
+\end{proof}
+
+\end{prop}
 
 \begin{prop} $\Phi \cup \{\varphi\} \vDash \psi$ si y solo si $\Phi \vDash \varphi \rightarrow \psi$.
 \end{prop}
 \begin{proof}
-Veamos que $Mod(\Phi) \subset Mod(\varphi \rightarrow \psi)$ suponiendo que $Mod(\Phi \cup \{\varphi\}) \subset Mod(\psi)$. Sea $v \in Mod(\Phi)$. Si $\hat{v}(\varphi) = V$ entonces $v \in Mod(\varphi)$. Por hipótesis, $v \in Mod(\psi)$, luego $\hat{v}(\psi) = V$ y entonces $\hat{v}(\varphi \rightarrow \psi) = V$, es decir, $v \in Mod(\varphi \rightarrow \psi)$. Si  $\hat{v}(\varphi) = F$, $\hat{v}(\varphi \rightarrow \psi) = V$ y de nuevo $v \in Mod(\varphi \rightarrow \psi)$. \\ \\
+Veamos que $Mod(\Phi) \subseteq Mod(\varphi \rightarrow \psi)$ suponiendo que $Mod(\Phi \cup \{\varphi\}) \subseteq Mod(\psi)$. Sea $v \in Mod(\Phi)$. Si $\hat{v}(\varphi) = V$ entonces $v \in Mod(\varphi)$. Por hipótesis, $v \in Mod(\psi)$, luego $\hat{v}(\psi) = V$ y entonces $\hat{v}(\varphi \rightarrow \psi) = V$, es decir, $v \in Mod(\varphi \rightarrow \psi)$. Si  $\hat{v}(\varphi) = F$, $\hat{v}(\varphi \rightarrow \psi) = V$ y de nuevo $v \in Mod(\varphi \rightarrow \psi)$. \\ \\
 Recíprocamente, si $v\in Mod(\Phi \cup \{\varphi\})$, entonces $\hat{v}(\varphi) = V$. Por hipótesis, al ser $v \in Mod(\Phi)$, $v \in Mod(\varphi \rightarrow \psi)$, es decir, $\hat{v}(\varphi \rightarrow \psi) = V$, luego $\hat{v}(\psi) = V$ y $v \in Mod(\psi)$.
 \end{proof}
 
-\begin{prop} $\Phi \vDash \varphi$ si y solo si $Insat(\Phi \cup \{\neg \varphi\})$
+\begin{prop}\label{insat} $\Phi \vDash \varphi$ si y solo si $Insat(\Phi \cup \{\neg \varphi\})$
 \end{prop}
 \begin{proof}
 Supongamos que $\Phi \vDash \varphi$, esto es, que $Mod(\Phi) \subset Mod(\varphi)$. Sea $v \in Mod(\Phi \cup \{\neg \varphi\})$. Entonces, por definición, $v \vDash \chi$, para toda $\chi \in \Phi \cup \{\neg \varphi\}$. Luego en especial, $v \vDash \neg \varphi$, lo que contradice que $v \in Mod(\varphi)$ (¿por qué?). \\ \\
@@ -307,17 +425,22 @@ Recíprocamente, si $Mod(\Phi \cup \{\neg \varphi\}) = \emptyset$, sea $v \in Mo
 
 \end{proof} 
 De ahora en adelante, escribiremos $\Phi, \varphi \vDash \psi$ en vez de $\Phi \cup \{\varphi\} \vDash \psi$.$\\\\$
-Dada una valoración $v$, para cualesquiera fórmulas $\varphi_1,\varphi_2$ en que aparecen los símbolos $p_1,\dots,p_n$ y $q_1,\dots,q_m$, respectivamente, está claro, por cómo hemos definido las valoraciones, que $\hat{v}(\varphi_1)$ depende de $v(p_1),\dots,v(p_n)$, y $\hat{v}(\varphi_2)$ depende de $v(q_1),\dots,v(q_m)$. De modo que para comprobar que $\varphi_2$ es consecuencia lógica de $\varphi_1$ nos basta con comprobar que, para cada una de las posibles valoraciones de $p_1,\dots,p_n,q_1,\dots,q_m$, $\hat{v}(\varphi_2)=V$ si $\hat{v}(\varphi_1)=V$. Este es nuestro primer procedimiento para demostrar equivalencias lógicas entre fórmulas, que resumiremos gráficamente en tablas de verdad.
+Dada una valoración $v$, para cualesquiera fórmulas $\varphi_1,\varphi_2$ en que aparecen los símbolos $p_1,\dots,p_n$ y $q_1,\dots,q_m$, respectivamente, está claro, por cómo hemos definido las valoraciones, que $\hat{v}(\varphi_1)$ depende de $v(p_1),\dots,v(p_n)$, y $\hat{v}(\varphi_2)$ depende de $v(q_1),\dots,v(q_m)$. De modo que para comprobar que $\varphi_1\vDash\varphi_2$ nos basta con comprobar que, para cada una de las posibles valoraciones de $p_1,\dots,p_n,q_1,\dots,q_m$, $\hat{v}(\varphi_2)=V$ si $\hat{v}(\varphi_1)=V$. Este es nuestro primer procedimiento para demostrar consecuencias lógicas entre fórmulas, que resumiremos gráficamente en tablas de verdad.
 
-\begin{example} Consideremos $\Phi = \{\neg p \land q \rightarrow r, \ \neg p, \ \neg r \}$, $\varphi = \neg q$. Para demostrar que $\Phi \vDash \varphi$ basta realizar la tabla de verdad correspondiente y comparar los valores de verdad de las premisas del conjunto $\Phi$ con los de $\varphi$. Invitamos al lector a que verifique los detalles de esta afirmación.
-\end{example} \\
+\begin{example} Consideremos $\Phi = \{\neg p \land q \rightarrow r, \ \neg p, \ \neg r \}$, $\varphi = \neg q$. Para demostrar que $\Phi \vDash \varphi$ basta realizar la tabla de verdad correspondiente y comparar los valores de verdad de las premisas del conjunto $\Phi$ con los de $\varphi$. En $\Phi$ y $\varphi$ aparecen los símbolos $p$, $q$ y $r$, por tanto tenemos la siguiente tabla de verdad:
+\begin{table}[H] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|}\hline $p$&$q$&$r$&$(\neg p \land q) \rightarrow r$&$\neg p$&$\neg r$&$\neg q$ \\\hline \hline V&V&V&V&F&F&F \\ \hline V&V&F&V&F&V&F \\ \hline V&F&V&V&F&F&V \\ \hline V&F&F&V&F&V&V \\ \hline F&V&V&V&V&F&F \\ \hline F&V&F&F&V&V&F \\ \hline F&F&V&V&V&F&V \\ \hline F&F&F&V&V&V&V \\ \hline \end{tabular}\end{center} \end{table}
+En efecto, solo hay un caso en que se cumplen todas las proposiciones de $\Phi$ (la última fila) y en ese caso se cumple $\varphi$. Por tanto, $\Phi \vDash \varphi$.
 
-\section{Equivalencia lógica y sustitución}
+\end{example} $\\$
 
-El método descrito de las tablas de verdad aumenta de complejidad a medida que lo hace el número de proposiciones que estudiamos. Por ello, investigamos relaciones formales entre las fórmulas que simplifiquen tales cuestiones. 
+\section{Equivalencia lógica}
+
+El método descrito de las tablas de verdad aumenta de complejidad a medida que lo hace el número de proposiciones que estudiamos. Por ello, investigamos relaciones formales entre las fórmulas que simplifiquen tales cuestiones. Comenzamos por las proposiciones atómicas:
 
 \begin{definition}(Equivalencia lógica) Sean $\varphi, \psi \in PROP_{SP}$. $\varphi$ se dice lógicamente equivalente a $\psi$, $\varphi \sim \psi$, si para toda valoración $v$, $\hat{v}(\varphi) = \hat{v}(\psi)$.
 \end{definition}
+
+Esto equivale a decir que $\varphi_1\vDash\varphi_2$ y  $\varphi_2\vDash\varphi_1$.
 
 \begin{prop} $\sim$ es relación de equivalencia. Además, $\sim$ es congruencia respecto de las conectivas lógicas, es decir:
 \begin{enumerate}
@@ -326,8 +449,14 @@ El método descrito de las tablas de verdad aumenta de complejidad a medida que 
 \end{enumerate}
 \end{prop}
 \begin{proof}
-Que es relación de equivalencia es directo. \\
-Para la segunda parte, solo es necesaria una comprobación directa de los valores de verdad.
+Que es relación de equivalencia es directo. $\\\\$
+Supongamos $\varphi \sim \psi$, y sea $v$ cualquier valoración. Entonces 
+\[\hat{v}(\neg \varphi)=v_\neg(\hat{v}(\varphi))=v_\neg(\hat{v}(\psi))=\hat{v}(\neg \psi).\]
+
+De igual manera, supongamos $\varphi_1 \sim \varphi_2$ y $\psi_1 \sim \psi_2$, sea $v$ cualquier valoración. Entonces 
+\[\hat{v}(\varphi_1\square\psi_1)=v_\square(\hat{v}(\varphi_1),\hat{v}(\psi_1))=
+v_\square(\hat{v}(\varphi_2),\hat{v}(\psi_2))=\hat{v}(\varphi_2\square\psi_2).\]
+
 \end{proof}
 
 Las siguientes reglas nos ayudarán a demostrar equivalencias entre fórmulas:
@@ -347,26 +476,31 @@ Las siguientes reglas nos ayudarán a demostrar equivalencias entre fórmulas:
     \item Simplificación de los condicionales: $$p \rightarrow q \sim \neg p \lor q, \quad p \leftrightarrow q \sim (p \rightarrow q) \land (q \rightarrow p)$$
 \end{enumerate}
 \end{theorem}
-\newpage
+
 \begin{proof}
 Las demostraciones de equivalencia consisten simplemente en comprobar que coinciden las tablas de verdad. Comprobamos las tres primeras:
 \begin{enumerate}
 \item Conmutatividad:
-\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|c|}\hline $p$&$q$&$p\land q$&$q\land p$&$p\lor q$&$q\lor p$&$p\leftrightarrow q$&$q\leftrightarrow p$ \\\hline \hline V&V&V&V&V&V&V&V \\ \hline V&F&F&F&V&V&F&F \\ \hline F&V&F&F&V&V&F&F \\ \hline F&F&F&F&F&F&V&V \\ \hline \end{tabular}\end{center} \end{table}
+\begin{table}[H] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|c|}\hline $p$&$q$&$p\land q$&$q\land p$&$p\lor q$&$q\lor p$&$p\leftrightarrow q$&$q\leftrightarrow p$ \\\hline \hline V&V&V&V&V&V&V&V \\ \hline V&F&F&F&V&V&F&F \\ \hline F&V&F&F&V&V&F&F \\ \hline F&F&F&F&F&F&V&V \\ \hline \end{tabular}\end{center} \end{table}
 $\\[-28pt]$
 \item Asociatividad:
-\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|}\hline $p$&$q$&$r$&$(p\lor q)\lor r$&$p\lor (q\lor r)$&$(p\land q)\land r$&$p\land( q\land r)$ \\\hline \hline V&V&V&V&V&V&V \\ \hline V&V&F&V&V&F&F \\ \hline V&F&V&V&V&F&F \\ \hline V&F&F&V&V&F&F \\ \hline F&V&V&V&V&F&F \\ \hline F&V&F&V&V&F&F \\ \hline F&F&V&V&V&F&F \\ \hline F&F&F&F&F&F&F \\ \hline \end{tabular}\end{center} \end{table}
+\begin{table}[H] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|}\hline $p$&$q$&$r$&$(p\lor q)\lor r$&$p\lor (q\lor r)$&$(p\land q)\land r$&$p\land( q\land r)$ \\\hline \hline V&V&V&V&V&V&V \\ \hline V&V&F&V&V&F&F \\ \hline V&F&V&V&V&F&F \\ \hline V&F&F&V&V&F&F \\ \hline F&V&V&V&V&F&F \\ \hline F&V&F&V&V&F&F \\ \hline F&F&V&V&V&F&F \\ \hline F&F&F&F&F&F&F \\ \hline \end{tabular}\end{center} \end{table}
 $\\[-28pt]$
 \item Idempotencia:
-\begin{table}[htbp] \begin{center} \begin{tabular}{|c|c|c|}\hline $p$&$p\land p$&$p\lor p$ \\\hline \hline V&V&V \\ \hline F&F&F \\ \hline \end{tabular}\end{center} \end{table}
+\begin{table}[H] \begin{center} \begin{tabular}{|c|c|c|}\hline $p$&$p\land p$&$p\lor p$ \\\hline \hline V&V&V \\ \hline F&F&F \\ \hline \end{tabular}\end{center} \end{table}
 \end{enumerate}
 \end{proof}
+
+\section{Sustitución}
+
+Pasamos a estudiar los lemas de sustitución, que entre otras cosas nos permitirán generalizar las leyes de equivalencia lógica.
+Para ello es necesario estudiar el concepto de \textit{sustitución}:
 
 
 \begin{definition}\label{def:sust}(Sustitución) Sean $\varphi, \psi \in PROP_{SP}$ y sea $p \in SP$. Llamamos $\psi[\varphi / p]$ a la fórmula que resulta de sustituir en $\psi$ cada aparición de $p$ por $\varphi$. Dados $\varphi$ y $p$, podemos definir $\psi[\varphi / p]$ recursivamente del siguiente modo:
 \begin{enumerate}
     \item $p[\varphi/p] = \varphi$.
-    \item $q[\varphi/p] = q$, para cualquier $q \in SP$ distinta de $p$.
+    \item $q[\varphi/p] = q$, para cualquier $q \in SP \setminus \{p\}$.
     \item $\top[\varphi/p] = \top$.
     \item $\bot[\varphi/p] = \bot$.
     \item $(\neg\psi)[\varphi/p] = \neg(\psi[\varphi/p])$.
@@ -374,16 +508,22 @@ $\\[-28pt]$
 \end{enumerate}
 \end{definition}
 
-Introducimos la siguiente notación que será de gran importancia: dada una función $f:A \rightarrow B$ y dados $a\in A$, $b \in B$, denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.
+\begin{example}
+Si usamos las fórmulas $\psi=p\land q\to p$ y $\varphi=p_1\lor\neg p_2$, al sustituir $p$ por $\varphi$ en $\psi$ obtenemos la fórmula:
+\[\psi[\varphi/p]=(p_1\lor\neg p_2)\land q\to (p_1\lor\neg p_2).\]
+\end{example}
+
+Introducimos la siguiente notación que será de utilidad: dada una función $f:A \rightarrow B$ y dados $a\in A$, $b \in B$, denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.
 
 \begin{example}
 Sea $X\in \{V,F\}$. Si con la notación anterior usamos como función una valoración $v$, $v[X/p]$ es una valoración de verdad que cumple:
-\begin{enumerate}[label=\bullet]
+\begin{itemize}
 \item $v[X/p](q)=v(q)$ si $q\neq p$
 \item $v[X/p](p)=X$.
-\end{enumerate}
+\end{itemize}
 \end{example}
 
+La siguiente proposición muestra que obtenemos el mismo resultado tanto si sustituimos y posteriormente asignamos un valor de verdad como si hacemos el proceso inverso:
 
 \begin{prop}
 Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$ y $v: SP \rightarrow Bool$ valoración. Entonces:
@@ -401,8 +541,8 @@ Procedemos por inducción estructural. Dividimos las proposiciones atómicas en 
 \end{enumerate}
 \end{proof}
 
-\begin{lema}(De sustitución)
-Si $\varphi \sim \varphi'$, $\psi[\varphi/p] \sim \psi[\varphi'/p]$.
+\begin{lema}\label{sust1}(De sustitución)
+Sean $\varphi, \varphi', \psi \in PROP_{SP}$, $p \in SP$. Si $\varphi \sim \varphi'$, $\psi[\varphi/p] \sim \psi[\varphi'/p]$.
 \end{lema}
 \begin{proof}
 Sea $v$ valoración. Entonces, al ser $\hat{v}(\varphi) = \hat{v}(\varphi')$, se obtiene que
@@ -412,7 +552,7 @@ Como esto sucede para cualquier valoración $v$, $\psi[\varphi/p] \sim \psi[\var
 
 Acabamos de ver que sustituir fórmulas equivalentes en una misma fórmula nos lleva a fórmulas equivalentes. A continuación vemos que sustituir la misma fórmula en fórmulas equivalentes da como resultado fórmulas equivalentes.
 
-\begin{lema}(De sustitución) \label{lemasust2}Sean $\varphi, \psi \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
+\begin{lema}\label{sust2}(De sustitución) \label{sust2}Sean $\varphi, \psi_1, \psi_2 \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
 \end{lema}
 \begin{proof}
 Sea $v$ cualquier valoración. Tenemos que:
@@ -420,17 +560,36 @@ $$\hat{v}(\psi_1[\varphi/p]) = \reallywidehat{v[\hat{v}(\varphi)/p]}(\psi_1) = \
 Lo que nos da el resultado.
 \end{proof}
 
-Los dos lemas de sustitución nos permiten extender a todas las proposiciones posibles las equivalencias lógicas que ya conocemos para proposiciones atómicas, tal y como muestra el siguiente:
+El lema \ref{sust2} nos permite probar una versión más general de las leyes de equivalencia lógica, \ref{eq}, en las que en vez de símbolos de proposición podemos sustituir cualquier fórmula. En el siguiente ejemplo probamos la primera:
 
 \begin{example}
-Consideremos las dos fórmulas $\psi_1 = p \lor q$ y $\psi_2 = q \lor p$. Sabemos que ambas son equivalentes, luego si consideramos $\varphi, \chi \in PROP_{SP}$ tenemos que, por el lema~\ref{lemasust2}, $\psi_1[\varphi/p]$ y $\psi_2[\varphi/p]$, es decir, $\varphi\lor q$ y $q\lor\varphi$, son equivalentes. Aplicando una vez más~\ref{lemasust2} para sustituir $q$ por $\chi$, obtenemos que $\varphi \lor \chi$ y $\chi \lor \varphi$ son equivalentes.
+Consideremos las dos fórmulas $\psi_1 = p \lor q$ y $\psi_2 = q \lor p$. Sabemos que son equivalentes, luego si consideramos $\varphi, \chi \in PROP_{SP}$ tenemos que, por el lema~\ref{sust2}, $\psi_1[\varphi/p]$ y $\psi_2[\varphi/p]$, es decir, $\varphi\lor q$ y $q\lor\varphi$, son equivalentes. Aplicando una vez más~\ref{sust2} para sustituir $q$ por $\chi$, obtenemos que $\varphi \lor \chi$ y $\chi \lor \varphi$ son equivalentes.
 \end{example}
 
 
+\begin{example}
+Supongamos que queremos demostrar la equivalencia de estas dos fórmulas:
+\begin{itemize}
+    \item $p_1\lor p_2\lor p_3\to p_4\land (p_5\lor p_6)$
+    \item $\neg((p_4\lor p_5)\land(p_4\lor p_6))\to \neg(p_1\lor p_2\lor p_3)$
+\end{itemize}
+Desde luego podríamos hacerlo usando tablas de verdad, pero está claro que tardaríamos demasiado. Una forma más sencilla de hacerlo usando las leyes de equivalencia y los lemas de sustitución es comprobar las dos equivalencias lógicas:
+\begin{enumerate}
+    \item $p_1\lor p_2\lor p_3\to p_4\land (p_5\lor p_6) \sim p_1\lor p_2\lor p_3\to (p_4\lor p_5)\land(p_4\lor p_6)$
+    \item $p_1\lor p_2\lor p_3\to (p_4\lor p_5)\land(p_4\lor p_6) \sim \neg((p_4\lor p_5)\land(p_4\lor p_6))\to \neg(p_1\lor p_2\lor p_3)$
+\end{enumerate}
+En efecto: 
+\begin{itemize}
+\item 1 se obtiene aplicando el lema~\ref{sust1} con $\psi=p_1\lor p_2\lor p_3\to p$, $\varphi_1=p_4\land (p_5\lor p_6)$,$\varphi_2=(p_4\lor p_5)\land(p_4\lor p_6)$.
+\item 2 se obtiene en dos pasos: $\\$
+Aplicando el lema~\ref{sust2} con $\psi_1=p\to q$, $\psi_2=\neg q\to\neg p$ y $p=p_1\lor p_2\lor p_3$, obtenemos: $p_1\lor p_2\lor p_3\to q \sim \neg q\to \neg(p_1\lor p_2\lor p_3)$.$\\$
+Y aplicando de nuevo el lema~\ref{sust2} con $\psi_1=p_1\lor p_2\lor p_3\to q$, $\psi_2=\neg q\to \neg(p_1\lor p_2\lor p_3)$ y $q=(p_4\lor p_5)\land(p_4\lor p_6)$, obtenemos 2.
+\end{itemize}
+\end{example}
+
 \section{Completitud funcional}
 
-En~\ref{def : ext} definimos recursivamente una serie de asignaciones de verdad que correspondían a los símbolos de las conectivas lógicas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. Decimos que una conectiva es $n$-aria si se  escribe con $n$ símbolos de proposición, por ejemplo, las conectivas $\land, \lor,\rightarrow, \leftrightarrow$ son binarias (2-arias) y la conectiva $\neg$ es 1-aria. \\ \\
-En general, a cualquier tabla de verdad dada por $v_{*}: Bool^{n} \rightarrow Bool$ podemos asignarle un símbolo de conectiva n-aria, $*(p_1,\dots,p_n)$. Según esta definición, podemos interpretar los símbolos $\top,\bot$ como conectivas 0-arias, dadas por las tablas de verdad:
+En~\ref{def : ext} definimos recursivamente una serie de asignaciones de verdad que correspondían a los símbolos de las conectivas lógicas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. En general, a cualquier tabla de verdad dada por $v_{\$}: Bool^{n} \rightarrow Bool$ podemos asignarle un símbolo de conectiva $n$-aria\footnote{Decimos que una conectiva es $n$-aria si se  escribe con $n$ símbolos de proposición, por ejemplo, las conectivas $\land, \lor,\rightarrow, \leftrightarrow$ son binarias (2-arias) y la conectiva $\neg$ es 1-aria.}, $\$(p_1,\dots,p_n)$\footnote{Aunque sintácticamente escribiremos las conectivas como $\$(p_1,\dots,p_n)$, semánticamente el valor de verdad de $\$(p_1,\dots,p_n)$ solo dependerá de los valores de verdad de $p_1,\dots,p_n$, no de $p_1,\dots,p_n$, al igual que con las conectivas conocidas anteriormente.}. Según esta definición, podemos interpretar los símbolos $\top,\bot$ como conectivas 0-arias, dadas por las tablas de verdad:
 
 \begin{table}[H]
 \begin{center}
@@ -442,10 +601,10 @@ V & F\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-\noindent Nótese que debemos distinguir cuidadosamente entre la sintaxis de una fórmula y su semántica, es decir, en $*(p_1, ..., p_n)$ no tenemos una función sobre las proposiciones $p_1, ..., p_n$ sino sobre sus valores de verdad. \\ \\
+
 Analizando con mayor detenimiento las conectivas binarias, es fácil observar que existen 16 de ellas distintas, una asociada a cada tabla de verdad\footnote{Decimos que dos conectivas n-arias son distintas cuando tienen distinta tabla de verdad. Para cada $n$, hay $2^{2^n}$ conectivas $n$-arias distintas.}. Por ejemplo, podemos definir mediante tablas de verdad las conectivas:
 
-\begin{table}[htbp]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -466,47 +625,63 @@ Sin embargo, en cierto sentido, estas nuevas conectivas son redundantes, ya que 
     \item $p\downarrow q \sim \neg(p\lor q) $
 \end{itemize}
 
-\noindent Es natural, por tanto, preguntarse si cualquier conectiva $n$-aria $*$ será expresable en función de nuestras conectivas, como lo son $\veebar,\downarrow y\uparrow$. Para formalizar esta cuestión, introducimos dos nociones de gran importancia:
+\noindent Es natural, por tanto, preguntarse si cualquier conectiva $n$-aria será expresable en función de nuestras conectivas, como lo son $\veebar,\downarrow y\uparrow$. Para formalizar esta cuestión, introducimos dos nociones de gran importancia:
 
 \begin{definition}
-Una conectiva $n$-aria $*$ dada por $v_{*}: Bool^{n} \rightarrow Bool$ se dice expresable en términos de un conjunto de conectivas $C$ si existe una fórmula $\varphi$ que tiene por conectivas a elementos de $C$ y por símbolos de proposición a $p_1, ..., p_n$, tal que $\varphi \sim *(p_1, ..., p_n)$. 
+Una conectiva $n$-aria $\$$ dada por $v_{\$}: Bool^{n} \rightarrow Bool$ se dice expresable en términos de un conjunto de conectivas $C$ si existe una fórmula $\varphi$ que tiene por conectivas a elementos de $C$ y por símbolos de proposición a $p_1, ..., p_n$, tal que $\varphi \sim \$(p_1, ..., p_n)$. 
 \end{definition}
 
 
 \begin{definition}(Completitud funcional)
-Un conjunto de conectivas $C$ se dice funcionalmente completo si cualquier conectiva $*$ dada por $v_{*}: Bool^{n} \rightarrow Bool$ es expresable en términos de $C$.
+Un conjunto de conectivas $C$ se dice funcionalmente completo si cualquier conectiva $\$$ dada por $v_{\$}: Bool^{n} \rightarrow Bool$ es expresable en términos de $C$.
 \end{definition}
+
+\begin{example}
+Si $C$ es funcionalmente completo, cualquier proposición $\varphi$ con símbolos $p_1,\dots,p_n$ y cualesquiera conectivas $\$_1,\dots,\$_m$ es equivalente a una expresión con símbolos $p_1,\dots,p_n$ y conectivas en $C$. 
+
+En efecto, $\varphi$ tiene una tabla de verdad en función de $p_1,\dots,p_n$, de modo que se puede expresar como una conectiva $n$-aria $\$_\varphi$ con esa misma tabla de verdad, es decir, $\$_\varphi(p_1,\dots,p_n)\sim\varphi$. Ahora, como $C$ es funcionalmente completo, $\$_\varphi$ es  expresable en términos de $C$, por tanto hay una expresión $\psi$ de conectivas elementos de $C$ y símbolos de proposición $p_1,\dots,p_n$ tal que $\psi\sim\$_\varphi\sim\varphi$.
+\end{example}
+
+
+
 Ahora ya podemos dar respuesta a la pregunta que nos formulamos antes:
 \begin{prop}\label{comp}
 $\{\neg, \land, \lor\}$ es funcionalmente completo.
 \end{prop}
 \begin{proof}\label{def:compfunc}
-Sea $*$ conectiva $n$-aria. Procedamos por inducción sobre $n$. \\ \\
-Si $n = 1$, es fácil comprobar que tenemos cuatro conectivas posibles, y que éstas corresponden a la identidad (es decir, $*(p) \sim p$), $\neg$, $\top \sim p \lor \neg p$ y $\bot \sim p \land \neg p$, con lo que se verifica el enunciado.  \\ \\
-Supongamos que es válido para $n-1$ y veámoslo para $n$. Sea $*(p_1, ..., p_n)$ una conectiva dada por la siguiente tabla de verdad:
+Sea $\$$ conectiva $n$-aria. Procedamos por inducción sobre $n$. \\ \\
+Si $n = 1$, es fácil comprobar que tenemos cuatro conectivas posibles, y que éstas corresponden a la identidad (es decir, $\$(p) \sim p$), $\neg$, $\top \sim p \lor \neg p$ y $\bot \sim p \land \neg p$, con lo que se verifica el enunciado.  \\ \\
+Supongamos que es válido para $n-1$ y veámoslo para $n$. Sea $\$(p_1, ..., p_n)$ una conectiva dada por la siguiente tabla de verdad:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c c c|c|}
 \hline
-$p_n$ & $p_1$ & $...$ & $p_{n-1}$ & $*(p_1, ..., p_n)$\\
+$p_n$ & $p_1$ & $...$ & $p_{n-1}$ & $\$(p_1, ..., p_n)$\\
 \hline \hline
-V & ... & ... & ... & X(1)\\ \hline
+V & ... & ... & ... & $X(1)$\\ \hline
 ... & ... & ... & ... & ...\\ \hline
-V & ... & ... & ... & X(2^{n-1})\\ \hline
-F & ... & ... & ... & X(2^{n-1}+1)\\ \hline
+V & ... & ... & ... & $X(2^{n-1})$\\ \hline
+F & ... & ... & ... & $X(2^{n-1}+1)$\\ \hline
 ... & ... & ... & ... & ...\\ \hline
-F & ... & ... & ... & X(2^{n})\\ \hline
+F & ... & ... & ... & $X(2^{n})$\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-\noindent donde $X(i)$ denota el valor de verdad correspondiente a la fila $i$-ésima. De esta forma obtenemos dos tablas de verdad, cada una con $2^{n-1}$ filas: aquella en la que $p_n$ toma $V$ como valor de verdad (las primeras $2^{n-1}$ filas de la tabla anterior) y aquella en la que toma el valor $F$ (las filas restantes). Llamamos $*_{1}(p_1, ..., p_{n-1})$ y $*_{2}(p_1, ..., p_{n-1})$ a las conectivas inducidas por estas dos tablas de verdad. \\ \\
-Entonces tenemos: $$*(p_1, ..., p_n) \sim (p_n \land *_{1}(p_1, ..., p_{n-1})) \lor (\neg p_n \land *_{2}(p_1, ..., p_{n-1})).$$
-Aplicando la hipótesis de inducción, existen fórmulas $\varphi_1, \varphi_2$ construidas a partir de $\{\neg, \land, \lor\}$ tales que $\varphi_1 \sim *_{1}(p_1, ..., p_{n-1})$ y $\varphi_2 \sim *_{2}(p_1, ..., p_{n-1})$, con lo que obtenemos que $*(p_1, ..., p_n)$ es expresable en términos de $\{\neg, \land, \lor\}$.
-\end{proof}
+\noindent donde $X(i)$ denota el valor de verdad correspondiente a la fila $i$-ésima. De esta forma obtenemos dos tablas de verdad, cada una con $2^{n-1}$ filas: aquella en la que $p_n$ toma $V$ como valor de verdad (las primeras $2^{n-1}$ filas de la tabla anterior) y aquella en la que toma el valor $F$ (las filas restantes). Llamamos $\$_{1}(p_1, ..., p_{n-1})$ y $\$_{2}(p_1, ..., p_{n-1})$ a las conectivas inducidas por estas dos tablas de verdad. \\ \\
+Entonces tenemos: $$\$(p_1, ..., p_n) \sim (p_n \land \$_{1}(p_1, ..., p_{n-1})) \lor (\neg p_n \land \$_{2}(p_1, ..., p_{n-1})).$$
+Aplicando la hipótesis de inducción, existen fórmulas $\varphi_1, \varphi_2$ construidas a partir de $\{\neg, \land, \lor\}$ tales que $\varphi_1 \sim \$_{1}(p_1, ..., p_{n-1})$ y $\varphi_2 \sim \$_{2}(p_1, ..., p_{n-1})$, con lo que obtenemos que $\$(p_1, ..., p_n)$ es expresable en términos de $\{\neg, \land, \lor\}$.
+\end{proof} $\\$
+
+\begin{definition}(Formas normales)
+Decimos que una fórmula está en \textit{Forma Normal Conjuntiva} (FNC) si es de la forma: 
+$$\bigwedge\limits_{i\leq n} \bigvee\limits_{j \leq m_{i}} \varphi_{ij}$$
+y se dice que está en \textit{Forma Normal Disyuntiva} (FND) si es de la forma:
+$$\bigvee\limits_{i\leq n} \bigwedge\limits_{j \leq m_{i}} \varphi_{ij}$$
+donde cada $\varphi_{ij}$ es una proposición atómica o la negación de una proposición atómica \footnote{Ya veremos en un ejercicio que, para cada fórmula $\varphi$, existen dos fórmulas $\varphi^{c}, \varphi^{d}$ en FNC y en FND, respectivamente, tales que $\varphi \sim \varphi^{c}$ y $\varphi \sim \varphi^{d}$.}.
+\end{definition}
 
 
-
-\begin{cor}
+\begin{cor} \mbox{}
 \begin{enumerate}
     \item $\{\neg, \land\}$ es funcionalmente completo.
     \item $\{\neg, \lor\}$ es funcionalmente completo.
@@ -525,3 +700,315 @@ Aplicando la hipótesis de inducción, existen fórmulas $\varphi_1, \varphi_2$ 
     \item Expresamos $\neg,\lor$ en términos de $\downarrow$: $$\neg p \sim p \downarrow p$$ $$p \lor q \sim (p \downarrow q) \downarrow (p \downarrow q).$$
 \end{enumerate}
 \end{proof}
+
+
+\section{Método de los tableaux}
+
+Dado un conjunto finito de fórmulas $\Psi$, nos interesa encontrar un método sistemático para determinar si $Insat(\Psi)$. Este procedimiento nos permitirá también deducir si, dados un conjunto de fórmulas $\Phi= \{\varphi_1, ..., \varphi_n\}$ y una fórmula $\varphi$, $\Phi \vDash \varphi$, pues por \ref{insat} esto es equivalente a $Insat(\Phi \cup \{\neg \varphi\})$ o, alternativamente, a que $\bigwedge\limits_{i = 1}^{n}\varphi_i \land \neg\varphi \sim \bot$. Es decir, aplicaremos el método a $\Psi:=\Phi \cup \{\neg \varphi\}$. $\\$
+
+Nuestro objetivo es tomar los datos anteriores como vértices de un grafo y construir un \textit{árbol}, es decir, un diagrama (llamado `\textit{tableau}') en el que conectaremos las distintas fórmulas mediante aristas, formando \textit{ramas} y de modo que, dados dos elementos del árbol, si pertenecen a la misma rama entonces se encuentran en conjunción y, si son de ramas distintas, se encuentran en disyunción. De esta forma, y a partir de una serie de reglas de construcción, el problema de la insatisfactibilidad de $\Psi$ quedará reducido a comprobar que un \textit{tableau} suyo tiene todas las ramas \textit{cerradas}, esto es, contienen una contradicción. $\\$
+
+Construiremos nuestro diagrama de árbol, cuyos vértices serán proposiciones, de arriba hacia abajo. Llamaremos \textit{rama} a una sucesión de vértices 
+$\langle v_1, \dots, v_n\rangle$ en que:
+\begin{itemize}
+    \item $v_1$ es el vértice de más arriba del árbol.
+    \item $v_{i+1}$ está debajo de $v_i$ $\forall i$.
+    \item $v_n$ no tiene ningún vértice debajo.
+\end{itemize}
+ Por ejemplo, en el diagrama:
+\begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAnEAX1PU1z5CKMsWp0mrdmgA6MxhA4ACAI48+IDNjwEi5UgCZxDFm0Sb1-bUKIHDxyWZBru4mFADm8IqABmHCABbJH0QHAgkMhBGegAjGEYABQEdYWiYXxxLEH8gyJpwpANePwDgxCjCxABmV24gA
+\begin{tikzcd}
+  & r \arrow[d, no head]                            &   \\
+  & p\lor q \arrow[ld, no head] \arrow[rd, no head] &   \\
+p &                                                 & q
+\end{tikzcd}
+\end{center}
+tendríamos estas dos ramas:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRACcQBfU9TXfIRQBGclVqMWbTjz7Y8BImWHj6zVohBoAOtoYR2AAgCO3Xlv4KhyUSupqpmnXoMmzcgYpRkATKskaIKayFvKCRKJ+9gFsaNziMFAA5vBEoABm7BAAtkhkIDgQSD7R6khgTAwM1Ax0AEYwDAAKluGaDDDpOO4gmTlIogVFiADMpY4VVTX1jS1hXiAdXT19uYglQ0gALOMak9WLM82tC0vdIatIY5uIAKy75ZUHtQ3H80KLnecUXEA
+\begin{tikzcd}
+r \arrow[d, no head]       & r \arrow[d, no head]       \\
+p\lor q \arrow[d, no head] & p\lor q \arrow[d, no head] \\
+q                          & p                         
+\end{tikzcd}
+\end{center}
+
+
+
+
+
+Al hacer el \textit{tableau} podemos encontrarnos fórmulas que se pueden simplificar, llamadas $\sigma$\textit{-fórmulas} o \textit{simplificables}. Estas simplificaciones se podrán hacer de acuerdo a la siguiente tabla:
+\begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    $\sigma$ & $\sigma_1$ \\
+    \hline \hline
+    $\neg \top$ & $\bot$ \\ \hline
+    $\neg \bot$ & $\top$ \\ \hline
+    $\neg \neg \varphi$ & $\varphi$ \\ \hline
+    \end{tabular}
+    \end{center}
+\end{table}
+
+Está claro que, en cada fila, $\sigma\sim\sigma_1$.$\\$
+
+Ahora bien, en el proceso de extender el \textit{tableau}, nos conviene distinguir dos tipos de fórmulas, que llamaremos $\alpha$\textit{-fórmulas} y $\beta$\textit{-fórmulas}.
+En las siguientes tablas, la primera columna servirá como definición de $\alpha$-fórmulas y $\beta$-fórmulas, es decir, habrá cuatro tipos de $\alpha$-fórmulas y cuatro tipos de $\beta$-fórmulas. En las otras dos columnas aparecerán sus descomposiciones, que usaremos al construir los \textit{tableaux}.
+
+
+\begin{itemize}
+    \item $\alpha$-\textit{fórmulas}:
+    \begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    $\alpha$ & $\alpha_1$ & $\alpha_2$ \\
+    \hline \hline
+    $\varphi_1 \land \varphi_2$ & $\varphi_1$ & $\varphi_2$\\ \hline
+    $\neg(\varphi_1 \lor \varphi_2)$ & $\neg \varphi_1$ & $\neg \varphi_2$\\ \hline
+    $\neg (\varphi_1 \rightarrow \varphi_2)$ & $\varphi_1$ & $\neg \varphi_2$\\ \hline
+    $\varphi_1 \leftrightarrow \varphi_2$ & $\varphi_1 \rightarrow \varphi_2$ & $\varphi_2 \rightarrow \varphi_1$\\ \hline
+
+    \end{tabular}
+    \end{center}
+    \end{table}
+    \item $\beta$-\textit{fórmulas}:
+    \begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    $\beta$ & $\beta_1$ & $\beta_2$ \\
+    \hline \hline
+    $\varphi_1 \lor \varphi_2$ & $\varphi_1$ & $\varphi_2$\\ \hline
+    $\neg(\varphi_1 \land \varphi_2)$ & $\neg \varphi_1$ & $\neg \varphi_2$\\ \hline
+    $\varphi_1 \rightarrow \varphi_2$ & $\neg \varphi_1$ & $\varphi_2$\\ \hline
+    $\neg(\varphi_1 \leftrightarrow \varphi_2)$ & $\neg(\varphi_1 \rightarrow \varphi_2)$ & $\neg(\varphi_2 \rightarrow \varphi_1)$\\ \hline
+    \end{tabular}
+    \end{center}
+    \end{table}
+\end{itemize}
+
+Podemos comprobar que para cada fila de la primera tabla, se cumple $\alpha \sim \alpha_1\land\alpha_2$, y para cada fila de la segunda tabla, se cumple $\beta\sim\beta_1\lor\beta_2$.$\\$
+
+
+No es difícil probar el siguiente resultado, que justifica la anterior clasificación:
+
+\begin{prop}
+Sea $\varphi \in PROP_{SP}$. Entonces $\varphi$ verifica una de las siguientes condiciones:
+\begin{enumerate}
+    \item Es de la forma $p$, $\neg p$, $\bot$ o $\top$, con $p \in SP$.
+    \item Es $\sigma$-fórmula.
+    \item Es $\alpha$-fórmula.
+    \item Es $\beta$-fórmula.
+\end{enumerate}
+\end{prop} 
+
+Debido a esto, nuestro método nos permitirá descomponer un conjunto de proposiciones múltiples veces hasta obtener proposiciones de tipo $p_i$, $\neg p_i$, $\bot$ o $\top$, con $p_i \in SP$. $\\$                         
+
+Ahora pasamos a describir las reglas de construcción de \textit{tableaux} asociados a un conjunto $\Psi$ de proposiciones. 
+\begin{itemize}
+    \item \textit{Regla inicial}, $R_{ini}$: Sean $\varphi_1, ..., \varphi_n \in \Psi$. Entonces
+\begin{center}
+\begin{tikzcd}
+\varphi_1 \arrow[d, no head]          \\
+\varphi_2 \arrow[dd, no head, dotted] \\
+                                      \\
+\varphi_n                            
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Psi$.
+
+    \item \textit{Regla de hipótesis}, $R_{hip}$: Sea 
+\begin{center}
+\begin{tikzcd}
+                                           & {} \arrow[d, no head] &                        \\
+{} \arrow[ru, no head] \arrow[rr, no head] & {}                    & {} \arrow[lu, no head]
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Psi$. Entonces 
+\begin{center}
+\begin{tikzcd}
+                                           & {} \arrow[d, no head] &                        \\
+{} \arrow[ru, no head] \arrow[rr, no head] & {} \arrow[d, no head] & {} \arrow[lu, no head] \\
+                                           & \varphi               &                       
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Psi$, con $\varphi\in \Psi$.$\\$
+Es decir, siempre podemos añadir un elemento de $\Psi$ a una rama.
+
+    \item \textit{Regla} $\sigma$, $R_{\sigma}$: Sea 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \sigma \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head]                                           & {}
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Psi$, donde $\sigma$ es fórmula simplificable y $\sigma_1$ la versión simplificada de $\sigma$. Entonces 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \sigma \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head] \arrow[d, no head]                        & {} \\
+                      & \sigma_1                                                        &   
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Psi$.$\\$
+Es decir, siempre podemos añadir a una rama una versión simplificada de cualquier elemento de la rama y seguimos teniendo un tableau de $\Psi$.
+
+    \item \textit{Regla} $\alpha$, $R_{\alpha}$: Sea 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \alpha \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head]                                           & {}
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Psi$, donde $\alpha$ es una $\alpha$-fórmula y $\alpha_1$, $\alpha_2$ su descomposición. Entonces 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \alpha \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head] \arrow[d, no head]                        & {} \\
+                      & \alpha_1 \arrow[d, no head]                                     &    \\
+                      & \alpha_2                                                        &   
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Psi$.$\\$
+Es decir, si hay una $\alpha$-fórmula $\alpha$ en una rama, podemos añadir a la rama los dos elementos de su descomposición, $\alpha_1$ y $\alpha_2$.
+
+    \item \textit{Regla} $\beta$, $R_{\beta}$: Sea 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \beta \arrow[d, no head]                                        &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head]                                           & {}
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Psi$, donde $\beta$ es una $\beta$-fórmula y $\beta_1$,$\beta_2$ su descomposición. Entonces
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &         \\
+                      & \beta \arrow[d, no head]                                        &         \\
+{} \arrow[r, no head] & {} \arrow[r, no head] \arrow[ld, no head] \arrow[rd, no head]   & {}      \\
+\beta_1               &                                                                 & \beta_2
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Psi$.$\\$
+Es decir, si  hay una $\beta$-fórmula de descomposición $\beta_1$, $\beta_2$ en una rama, podemos dividir esa rama en dos ramificaciones, una que contiene a $\beta_1$ y otra que contiene a $\beta_2$.
+\end{itemize}
+
+Precisemos las nociones que describimos al inicio de esta sección. Dado un \textit{tableau} $T$ y una rama $r$, consideremos los siguientes conjuntos:
+$$\Gamma_{T} := \{\varphi \in PROP_{SP} | \varphi \ \text{está en} \ T \}$$
+$$\Gamma_{r} := \{\varphi \in PROP_{SP} | \varphi \ \text{está en} \ r \}$$
+Esto nos permite establecer la siguiente
+\begin{definition}
+Una rama $r$ de un \tableau{T} se dice \textit{cerrada} si se da al menos uno de los siguientes casos:
+\begin{itemize}
+    \item $\bot \in \Gamma_{r}$.
+    \item Existe $\varphi$ tal que $\varphi, \neg \varphi \in \Gamma_{r}$.
+\end{itemize}
+Si todas las ramas de $T$ son cerradas, $T$ se dice \textit{cerrado}. Si existe un \textit{tableau} cerrado para $\Phi \cup \{\neg \varphi\}$ lo denotamos por $\Phi \vdash_{tb} \varphi$.
+\end{definition}
+
+
+\begin{example}
+Supongamos que queremos comprobar $\{\neg p \land q \rightarrow r, \neg p, \neg r\} \vDash \neg q$. Como veremos en breve, para ello nos basta encontrar un \textit{tableau} cerrado para $\Psi=\{\neg p \land q \rightarrow r, \neg p, \neg r,\neg\neg q\}$. Enumeremos las premisas del siguiente modo: (1) $\neg p \land q \rightarrow r$, (2) $\neg p$, (3) $\neg r$, (4) $\neg \neg q$. La siguiente figura muestra un \textit{tableau} que obtenemos de $\Psi$, y a continuación explicamos cómo se ha desarrollado a partir de las reglas de construcción:
+\begin{center}
+    
+\includegraphics[scale = 0.63]{figures/tableau1.png}
+\end{center}
+
+
+Recordemos que el \textit{tableau} se construye de arriba hacia abajo. Por la regla $R_{ini}$, el grafo de un solo vértice $\neg p \land q \to r$ es un \textit{tableau} de $\Psi$, ya que $\neg p \land q \to r \in\Psi$. $\\$
+Ahora  bien, $\neg p \land q \to r$ es una $\beta$-fórmula de tipo $\beta=\varphi_1\to\varphi_2$, de modo que, atendiendo a la tabla de las $\beta$-fórmulas, se descompone en las fórmulas $\beta_1=\neg\varphi_1=\neg(\neg p\land q)$ y $\beta_2=\varphi_2=r$.$\\$
+Teniendo la descomposición de la $\beta$-fórmula, podemos aplicar la regla $R_\beta$, y obtenemos un \textit{tableau} con dos ramificaciones, una con $\neg(\neg p\land q)$ y otra con $r$:
+\begin{itemize}
+    \item Comenzamos con la segunda rama, que es la más sencilla. Usando la regla $R_{hip}$, podemos añadir a la rama cualquier elemento de $\Psi$, de modo que escogemos $\neg r$. Ahora bien, en esta rama tenemos las proposiciones $\neg p \land q \to r$, $r$ y $\neg r$. En concreto, tenemos las proposiciones $r$ y $\neg r$. Como en la rama hay dos proposiciones de tipo $\varphi$ y $\neg \varphi$, es cerrada y hemos acabado con ella. Simbolizaremos que una rama está cerrada escribieno $\#$ y señalando los vértices en los que se encuentran las proposiciones contradictorias.
+    \item Fijémonos ahora la rama de $\neg(\neg p\land q)$. De nuevo, tenemos una $\beta$-fórmula. Usando la tabla como  antes, vemos que se descompone en $\beta_1=\neg\neg p$, $\beta_2=\neg q$. De modo que, por la regla $R_\beta$, esta rama se divide a su vez en otras dos:
+    \begin{itemize}
+        \item La primera rama tiene los elementos $\neg p \land q \to r$, $\neg(\neg p\land q)$ y $\neg\neg p$. Usando la regla $R_{hip}$, podemos añadir a esta rama el elemento $\neg p$ de $\Psi$. Ahora, dos de los elementos de esta rama son $\neg\neg p$ y $\neg p$. Es decir, tenemos las fórmulas $\varphi$ y $\neg\varphi$, siendo $\varphi=\neg p$. Por tanto esta rama está cerrada.
+        \item La segunda rama tiene los elementos $\neg p \land q \to r$, $\neg(\neg p\land q)$ y $\neg q$. Usando la regla $R_{hip}$, podemos añadir a esta rama el elemento $\neg\neg q$ de $\Psi$. Ahora, dos de los elementos de esta rama son $\neg\neg q$ y $\neg q$. Como la rama contiene una fórmula y su negación, es cerrada.
+    \end{itemize}
+    
+\end{itemize}
+
+Como todas las ramas son cerradas, el \textit{tableau} es cerrado.$\\$
+\end{example}
+
+Vemos a continuación otro ejemplo en el que no se cumple que $\Phi\vDash\varphi$. Es decir, hay una valoración que cumple $\Phi$ y $\neg\varphi$. En estos casos, veremos que no se puede conseguir un \textit{tableau} cerrado de $\Phi\cup\{\neg\varphi\}$. Al intentar obtener un \textit{tableau} cerrado, la complicación del método aumentará considerablemente pero también nos dará indicaciones sobre qué valoración de verdad satisface a $\Phi$ y $\neg\varphi$.
+\begin{example}
+Sea $\varphi=\neg(p_3\to p_6)$ y $\Phi$ formado por estas seis proposiciones:
+\begin{enumerate}
+    \item $p_1\to(p_2\lor p_3)$
+    \item $\neg p_1\to(p_3\lor p_4)$
+    \item $p_1\to\neg p_6$
+    \item $\neg p_3\to (p_4\to p_1)$
+    \item $\neg(p_2\land p_5)$
+    \item $p_2\to p_5$
+\end{enumerate}
+Intentemos conseguir un \textit{tableau} cerrado de $\Phi\cup\{\neg\varphi\}$:
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQ0B9AZgAIAdfgCcsAcwAWOekKEQA7ry4A2EAF9S6TLnyEUZAEzU6TVu0FgYoxTzUaOWvASLlShmgxZtEHTivWbsR11kF24jD1NvLnIBYTFJaVkFc0trPzsMQJ1nUgAWcJMvEBSrZVsA7ScUfTyCzzN+C1LOcnL7LKrkGoBWOsiQWKbrGMERCSkZeV4ACi4+QUYIIWtcgEo2zMrgmqU+opKS4Y2HbJRuUl33QvY52MXlrlzjjuDzgHY9hqHb0fiJpJmj1iYwSkwU0XW-naWyI5wAHJ8opxcsC-okptFnjCULlSAirvVvIdDnMsUEiLiAJyInwjOLjdEKWacfR3JbWbiQjInTq48jEGlcVkLdmkqGbckoboUAUE-oklpk07IaXkKhy-aNVLM4X8Rj0MBQazdLkVSUqihuYyE4pa5rdJWdJSWmkK-SO4LO8hhDU3Fmohlg40eohe-K+pEO8U84JvCjh63yu3Wd3Rl5EOPkXoRnzcEN6UiyxOapolZnzemggHKSFGGBQUTwIigABmsgAtkgyCAcBAkC4QOIYPQoOxIBYQDR9QAjGCMAAKMfYIJwk+LDVnUjabYgncQNR7fcQ3Znc8X6e8K7XEU1m-o247SHOh6QB5v7HEWDQD93T5ovaQXFB2HUdvHHNgp3oWcFyXS8-mva4iX4O8fz3aUX0QZ9Txgi8QCvHNBBQqEdz3Z0MPQ99vE-b9iMfRA4X-I8yOw89sTw+CCOQmAt1o39EDIgDEDjYCRzHAgIJAFjYPY8YEJtQjuPvXi90pRikAY9cqK-VD+wHQTVMkqCz2k-DNNtIi7BIpADME-kaCHUSwPEuSkxQyDoNYyUZMkHTEHIA9bIHSjB205T+wCo9vXskCxInTi3MMjyTPgsK-KA2y30Q8zFLXKTcKvVKszUtL3OM3DGBgFtVxzajfKKjDyDIhzQPAZz4py0qcLYgrLLo8hhNsiisoUrdOs805vNXQqNNs4Tgtq1L9G7WyNOCkb7zG5LZOm4ryAM5rYokvLuo4sz1t8-Q9KPJbOOwUR2yU3q+OW67Mvk-g7oetRKFUIA
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12wYBzT7ngAo0AfQDMAAk4AnLDwAWOOtOkQA7hNEA2AJQgAvqXSZc+QijIBGKrUYs2oyTLmLlqjdoNGQGbHgJEZABMNvTMrIgcXLya4l7GfmZElqQh1GH2kZ6GCaYBKClioXYRPiKWUuyyCkoq6pUCsVrxPib+5sgpACzF4Wz8MdnevnkdQaQ96SX90Tyxli0j7UTjAKy9mVGNohXONW71wuKVDBDSsV16Oa2J+cjjWhulA3yz84ttSShipI9TfVljpxTudRF0PrcOj8AOxPGbbIFVFy1dwSI5dSrVVx1DzlK7DT53H4ADjhgIxe2xqJ2ENGRC6pFJ-02Lwagzi1yWX2QDIAnGSyrskfscWjREETmdYmJ8blligGZZKMzSuLJaCOQTIURVqQlQLWTTOYSOrrLNYVfCYkcJcC6GAoLFVrKbnSUGa0rYAVt2atafLkFo9Z6Ms83uL-dyg5YipbAbbhVT6qI-cbtSho5MvZsU5G7tC9VnQ1a5hG027kAXLOs42UxAYbDAoDx4ERQAAzVQAWyQKRAOAgSHG2dKACURJwAEYwJQgagMOjThgABRNbCxODnIHkMDoUDYkG4LU7EB7iD7A6QZBHbHHnGwPC7dC3C6Xq-TIAYMHbm+oO73SBgEwDAMNcJ5nj8-aDuetZ3uw06zvOi4wCua6RBux7dkgDJQUgkHFpE47APIWBoPoL7IahH5fj+mGnth1CXoguo3oRE7wTOz5IW+aEgBhf67vukSHqwYFYYgQa4YgOEESAcEIVxn6Ue+bp8cidFngWUmSbJREkWRFE8dR36bmJ9GIFpTHErB7EKYZKEqfKak1Fu-5CeABCid44FILyjHQVpum2Zx9lUapGFmWeSr+b5NnEaR5HcQ5vE0aZ3nidFUnmjZU4hUlYVOfx26CQenkab2w5MZlQW5YhSlGeF6mRb2kFVcOQXxQZ+WOV8n4meV56tdBlgydMbG1Ypr7JR+RVuaVR7NeeLFVfhY1ycFdVTQVvURel5mWJJVUsR1+mJfV02qalA0HTF56BWt8l5ed235M5iiuSVwllYtljWVlOkPRtk3Kbxu0dhlflZX9J0JaFPWvVdP2Q0xQTXjVHGbSDM3qQJAFfQte1nkEF7DZD6N2d1oNNYTQ6VdBxM5ewD5PnDKX9foFD6EAA
+\begin{comment}
+\begin{center}
+\begin{tikzcd}
+\neg\neg(p_3 \rightarrow p_6)                                            &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+p_3 \rightarrow p_6 \arrow[d, "R_\beta"', no head] \arrow[u, "R_\sigma"] &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+\neg p_3                                                                 & p_6 \arrow[lu, "R_\beta"']                                                   &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         & p_1 \rightarrow \neg p_6 \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         & \neg p_6                                                                     & \neg p_1 \arrow[lu, "R_\beta"']                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              & \neg p_1 \rightarrow (p_3 \lor p_4) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              & \neg\neg p_1                                                                            & p_3 \lor p_4 \arrow[lu, "R_\beta"']                                                            &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         & \neg p_3 \rightarrow (p_4 \rightarrow p_1) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                    &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         & p_4 \rightarrow p_1                                                                            & \neg \neg p_3 \arrow[lu, "R_\beta"']                                               &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                & p_1 \rightarrow (p_2 \lor p_3) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                          &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                & p_2 \lor p_3                                                                       & \neg p_1 \arrow[lu, "R_\beta"']                                          &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    & \neg (p_2 \land p_5) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                         &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    & \neg p_5                                                                 & \neg p_2 \arrow[lu, "R_\beta"']                                         &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          & p_2 \rightarrow p_5 \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                 \\
+                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          & p_5                                                                     & \neg p_2 \arrow[lu, "R_\beta"'] \\
+                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         & p_3 \arrow[u, "R_\sigma"]      
+\end{tikzcd}
+%Otra versión (la otra no cabe)
+\begin{tikzcd}
+1.\neg\neg(p_3 \rightarrow p_6)                                   &                                                           \\
+2.p_3 \rightarrow p_6 \arrow[u, "{\sigma,1}"]                     &                                                           \\
+4.p_6 \arrow[u, "{\beta,2}"]                                      & 3.\neg p_3 \arrow[lu, "{\beta,2}"', no head]              \\
+5.p_1 \rightarrow \neg p_6 \arrow[u, "hip(3)"]                    &                                                           \\
+7.\neg p_1 \arrow[u, "{\beta,5}"]                                 & {6.\neg p_6\#4,6} \arrow[lu, "{\beta,5}"', no head]       \\
+8.\neg p_1 \rightarrow (p_3 \lor p_4) \arrow[u, "hip(2)"]         &                                                           \\
+10.p_3 \lor p_4 \arrow[u, "{\beta,8}"]                            & {9.\neg\neg p_1\#7,9} \arrow[lu, "{\beta,8}"', no head]   \\
+11.\neg p_3 \rightarrow (p_4 \rightarrow p_1) \arrow[u, "hip(4)"] &                                                           \\
+13.\neg \neg p_3 \arrow[u, "{\beta,11}"]                          & 12.p_4 \rightarrow p_1 \arrow[lu, "{\beta,11}"', no head] \\
+14.p_1 \rightarrow (p_2 \lor p_3) \arrow[u, "hip(1)"]             &                                                           \\
+16.\neg p_1 \arrow[u, "{\beta,14}"]                               & 15.p_2 \lor p_3 \arrow[lu, "{\beta,14}"', no head]        \\
+17.\neg (p_2 \land p_5) \arrow[u, "hip(5)"]                       &                                                           \\
+19.\neg p_2 \arrow[u, "{\beta,17}"]                               & 18.\neg p_5 \arrow[lu, "{\beta,17}"', no head]            \\
+20.p_2 \rightarrow p_5 \arrow[u, "hip(6)"]                        &                                                           \\
+22.\neg p_2 \arrow[u, "{\beta,20}"]                               & 21.p_5 \arrow[lu, "{\beta,20}"', no head]                 \\
+23.p_3 \arrow[u, "{\sigma,13}"]                                   &                                                          
+\end{tikzcd}
+\end{center}
+\end{comment}
+
+\begin{figure}[H]
+\includegraphics[scale = 0.57]{figures/tableau2.png}
+\end{figure}
+
+Como podemos ver, no conseguimos cerrar las ramas. En la rama que hemos indicado con flechas, no parece haber forma de encontrar una contradicción, y además tenemos en esta rama las proposiciones $\neg p_1$, $\neg p_2$, $p_3$ y $p_6$. En este caso podemos imaginar que la rama no se puede cerrar y hay una valoración que cumple los elementos de esa rama. En efecto, solo tenemos 4 opciones en función de los valores de verdad que asociemos a $p_4$ y $p_5$, y encontramos que la valoración dada por $v(p_1)=v(p_2)=v(p_5)=F$,$v(p_3)=v(p_4)=v(p_6)=V$ cumple $\Phi$ y $\neg\varphi$. Es decir, $\Phi\nvDash\varphi$. Como veremos en breve, esto significa que no podemos encontrar un  tableau cerrado para $\Phi\cup\{\neg\varphi\}$.
+
+\end{example}
+
+
+
+Ahora bien, nuestro objetivo inicial era, dados un conjunto de fórmulas $\Phi$ y una fórmula $\varphi$, demostrar usando el método de los \textit{tableaux} que $\Phi\vDash\varphi$. Por tanto, para que el método nos permita alcanzar este objetivo tiene que cumplir dos propiedades:
+\begin{itemize}
+    \item \textit{Completitud:} $\Phi \vDash \varphi$ implica $\Phi \vdash_{tb} \varphi$.
+    Es decir, si se cumple que $\Phi\vDash\varphi$, entonces podemos encontrar un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$.
+    \item \textit{Corrección:} $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$.
+    Es decir, si encontramos un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$, entonces se cumple que $\Phi\vDash\varphi$. 
+\end{itemize}
