@@ -1,6 +1,8 @@
+\cleardoublepage
+
+
 \chapter{Lógica proposicional}
 \pagenumbering{arabic}
-\setcounter{page}{1}
 $\\$
 \section{Introducción}
 Antes de comenzar con definiciones rigurosas, conviene dar una breve explicación sobre la motivación de la lógica proposicional, a la que dedicaremos este capítulo. Un aspecto común de los lenguajes naturales (como el español o el chino) es la ambigüedad de ciertas expresiones, lo cual dificulta las intenciones usuales de la ciencia, a saber, la precisión en la comunicación y la distinción clara de aquello que se comunica. De aquí nace una necesidad evidente, que es cubierta por los lenguajes artificiales y, entre ellos, la lógica formal. \
@@ -38,7 +40,7 @@ Las proposiciones atómicas se representan entonces por los elementos de $SP$. A
 \end{definition}    
 
 
-\begin{definition}(Cierre de Kleene)
+\begin{definition}\label{klee}(Cierre de Kleene)
     Dado un conjunto de símbolos $A$, definimos el cierre de Kleene de $A$, $A^*$, como el conjunto de las concatenaciones de elementos de $A$ junto con $\epsilon$, el \textit{espacio vacío} o en blanco.
 \end{definition}
 
@@ -69,7 +71,7 @@ Es fácil comprobar que $PROP_{SP}$ también cumple estas tres propiedades, por 
 \]
 Entonces $P := \bigcup_{n=0}^\infty P_n$ coincide con $PROP_{SP}$.
 \begin{proof} 
-Comenzamos comprobando $P\subseteq PROP_{SP}$. Para ello, comprobamos por inducción que $P_n\subseteq PROP_{SP}$ $\forall n \in \mathbb{N}$. \\ \\
+Comenzamos comprobando $P\subseteq PROP_{SP}$. Para ello, comprobamos por inducción que $P_n\subseteq PROP_{SP}$ para todo $n \in \mathbb{N}$. \\ \\
 Está claro que $P_0\subseteq PROP_{SP}$, ya que $PROP_{SP}$ cumple la propiedad 1.
 Ahora, suponiendo que $P_n\subseteq PROP_{SP}$, por las propiedades 2 y 3, $\{(\neg \phi): \phi\in P_{n-1}\}\cup \{ (\phi_1 \square\  \phi_2): \phi_1, \phi_2\in P_{n-1},  \square\in \{\land, \lor, \rightarrow, \leftrightarrow\}\}$ también estarán  contenidos en $PROP_{SP}$. Por tanto, $P_{n+1}\subseteq PROP_{SP}$, y hemos acabado la inducción. \\ \\
 Veamos ahora que $PROP_{SP}\subseteq P$. Para ello nos basta comprobar que $P$ cumple las tres propiedades de la definición ~\ref{def:PROP_{SP}}. La propiedad $1$ es directa, pasamos a comprobar las propiedades 2 y 3. \\ \\
@@ -351,7 +353,7 @@ Encontremos el valor de verdad de $p\land \neg q \to r \lor s$, siendo $v$ una v
 \end{definition}$\\$
 En virtud de la definición anterior, podemos clasificar cada fórmula $\varphi$ como:
 \begin{itemize}
-    \item \textit{satisfactible}, si existe alguna valoración $v$ tal que $v \vDash \varphi$. 
+    \item \textit{Satisfactible}, si existe alguna valoración $v$ tal que $v \vDash \varphi$. 
     \begin{itemize}
         \item \textit{Tautología}, si $v \vDash \varphi$ para toda valoración $v$.
         \item \textit{Contingencia}, si es satisfactible pero no tautología.
@@ -364,7 +366,7 @@ En virtud de la definición anterior, podemos clasificar cada fórmula $\varphi$
 \end{example}
 
 \begin{definition}(Conjunto de modelos) Dado $\Phi \subseteq PROP_{SP}$, el conjunto de modelos de $\Phi$ se define como:
-$$Mod(\Phi) := \{v: SP \rightarrow Bool \ | \ \forall \varphi \in \Phi \ v \vDash \varphi \}$$
+$$Mod(\Phi) := \{v: SP \rightarrow Bool \ | \ \text{para toda } \varphi \in \Phi \ v \vDash \varphi \}$$
 \end{definition}
 
 \begin{definition}(Satisfactibilidad) Sea $\Phi \subseteq PROP_{SP}$.$\\[5pt]$
@@ -552,7 +554,7 @@ Como esto sucede para cualquier valoración $v$, $\psi[\varphi/p] \sim \psi[\var
 
 Acabamos de ver que sustituir fórmulas equivalentes en una misma fórmula nos lleva a fórmulas equivalentes. A continuación vemos que sustituir la misma fórmula en fórmulas equivalentes da como resultado fórmulas equivalentes.
 
-\begin{lema}\label{sust2}(De sustitución) \label{sust2}Sean $\varphi, \psi_1, \psi_2 \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
+\begin{lema}\label{sust2}(De sustitución) Sean $\varphi, \psi_1, \psi_2 \in PROP_{SP}$, $p \in SP$. Si $\psi_1 \sim \psi_2$, entonces $\psi_1[\varphi/p] \sim \psi_2[\varphi/p]$.
 \end{lema}
 \begin{proof}
 Sea $v$ cualquier valoración. Tenemos que:
@@ -702,18 +704,20 @@ donde cada $\varphi_{ij}$ es una proposición atómica o la negación de una pro
 \end{proof}
 
 
-\section{Método de los tableaux}
+\section{Método de los \textit{tableaux}}
 
 Dado un conjunto finito de fórmulas $\Psi$, nos interesa encontrar un método sistemático para determinar si $Insat(\Psi)$. Este procedimiento nos permitirá también deducir si, dados un conjunto de fórmulas $\Phi= \{\varphi_1, ..., \varphi_n\}$ y una fórmula $\varphi$, $\Phi \vDash \varphi$, pues por \ref{insat} esto es equivalente a $Insat(\Phi \cup \{\neg \varphi\})$ o, alternativamente, a que $\bigwedge\limits_{i = 1}^{n}\varphi_i \land \neg\varphi \sim \bot$. Es decir, aplicaremos el método a $\Psi:=\Phi \cup \{\neg \varphi\}$. $\\$
 
+\subsection{Nociones básicas y ejemplos}
+
 Nuestro objetivo es tomar los datos anteriores como vértices de un grafo y construir un \textit{árbol}, es decir, un diagrama (llamado `\textit{tableau}') en el que conectaremos las distintas fórmulas mediante aristas, formando \textit{ramas} y de modo que, dados dos elementos del árbol, si pertenecen a la misma rama entonces se encuentran en conjunción y, si son de ramas distintas, se encuentran en disyunción. De esta forma, y a partir de una serie de reglas de construcción, el problema de la insatisfactibilidad de $\Psi$ quedará reducido a comprobar que un \textit{tableau} suyo tiene todas las ramas \textit{cerradas}, esto es, contienen una contradicción. $\\$
 
-Construiremos nuestro diagrama de árbol, cuyos vértices serán proposiciones, de arriba hacia abajo. Llamaremos \textit{rama} a una sucesión de vértices 
+Construiremos nuestro diagrama de árbol, cuyos vértices serán proposiciones, de arriba hacia abajo. Llamamos al vértice de arriba del todo \textit{raíz}. Llamaremos \textit{hojas} a los vértices $v$ tales que no haya ningún vértice $v'$ debajo de $v$ y unido por una arista a $v$. Llamaremos \textit{rama} a una sucesión de vértices 
 $\langle v_1, \dots, v_n\rangle$ en que:
 \begin{itemize}
-    \item $v_1$ es el vértice de más arriba del árbol.
-    \item $v_{i+1}$ está debajo de $v_i$ $\forall i$.
-    \item $v_n$ no tiene ningún vértice debajo.
+    \item $v_1$ es la raíz.
+    \item $v_{i+1}$ está unido por una arista a $v_i$ y debajo de $v_i$ para todo $i$.
+    \item $v_n$ es una hoja.
 \end{itemize}
  Por ejemplo, en el diagrama:
 \begin{center}
@@ -795,7 +799,7 @@ Podemos comprobar que para cada fila de la primera tabla, se cumple $\alpha \sim
 
 No es difícil probar el siguiente resultado, que justifica la anterior clasificación:
 
-\begin{prop}
+\begin{prop}\label{clasprop}
 Sea $\varphi \in PROP_{SP}$. Entonces $\varphi$ verifica una de las siguientes condiciones:
 \begin{enumerate}
     \item Es de la forma $p$, $\neg p$, $\bot$ o $\top$, con $p \in SP$.
@@ -856,7 +860,7 @@ Es decir, siempre podemos añadir un elemento de $\Psi$ a una rama.
 \end{tikzcd}
 \end{center}
 es \textit{tableau} de $\Psi$.$\\$
-Es decir, siempre podemos añadir a una rama una versión simplificada de cualquier elemento de la rama y seguimos teniendo un tableau de $\Psi$.
+Es decir, siempre podemos añadir a una rama una versión simplificada de cualquier elemento de la rama y seguimos teniendo un \textit{tableau} de $\Psi$.
 
     \item \textit{Regla} $\alpha$, $R_{\alpha}$: Sea 
 \begin{center}
@@ -905,12 +909,13 @@ $$\Gamma_{T} := \{\varphi \in PROP_{SP} | \varphi \ \text{está en} \ T \}$$
 $$\Gamma_{r} := \{\varphi \in PROP_{SP} | \varphi \ \text{está en} \ r \}$$
 Esto nos permite establecer la siguiente
 \begin{definition}
-Una rama $r$ de un \tableau{T} se dice \textit{cerrada} si se da al menos uno de los siguientes casos:
+Una rama $r$ de un \textit{tableau} $T$ se dice \textit{cerrada} si se da al menos uno de los siguientes casos:
 \begin{itemize}
     \item $\bot \in \Gamma_{r}$.
     \item Existe $\varphi$ tal que $\varphi, \neg \varphi \in \Gamma_{r}$.
 \end{itemize}
-Si todas las ramas de $T$ son cerradas, $T$ se dice \textit{cerrado}. Si existe un \textit{tableau} cerrado para $\Phi \cup \{\neg \varphi\}$ lo denotamos por $\Phi \vdash_{tb} \varphi$.
+Si todas las ramas de $T$ son cerradas, $T$ se dice \textit{cerrado}. Si existe un \textit{tableau} cerrado para $\Phi \cup \{\neg \varphi\}$ lo denotamos por $\Phi \vdash_{tb} \varphi$.$\\$
+Decimos que una rama es \textit{abierta} cuando no es cerrada, y decimos que un tablero es \textit{abierto} cuando no es cerrada.
 \end{definition}
 
 
@@ -949,30 +954,12 @@ Sea $\varphi=\neg(p_3\to p_6)$ y $\Phi$ formado por estas seis proposiciones:
     \item $\neg(p_2\land p_5)$
     \item $p_2\to p_5$
 \end{enumerate}
-Intentemos conseguir un \textit{tableau} cerrado de $\Phi\cup\{\neg\varphi\}$:
+En la siguiente figura intentamos conseguir un \textit{tableau} cerrado de $\Phi\cup\{\neg\varphi\}$.$\\\\$
 
-% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQ0B9AZgAIAdfgCcsAcwAWOekKEQA7ry4A2EAF9S6TLnyEUZAEzU6TVu0FgYoxTzUaOWvASLlShmgxZtEHTivWbsR11kF24jD1NvLnIBYTFJaVkFc0trPzsMQJ1nUgAWcJMvEBSrZVsA7ScUfTyCzzN+C1LOcnL7LKrkGoBWOsiQWKbrGMERCSkZeV4ACi4+QUYIIWtcgEo2zMrgmqU+opKS4Y2HbJRuUl33QvY52MXlrlzjjuDzgHY9hqHb0fiJpJmj1iYwSkwU0XW-naWyI5wAHJ8opxcsC-okptFnjCULlSAirvVvIdDnMsUEiLiAJyInwjOLjdEKWacfR3JbWbiQjInTq48jEGlcVkLdmkqGbckoboUAUE-oklpk07IaXkKhy-aNVLM4X8Rj0MBQazdLkVSUqihuYyE4pa5rdJWdJSWmkK-SO4LO8hhDU3Fmohlg40eohe-K+pEO8U84JvCjh63yu3Wd3Rl5EOPkXoRnzcEN6UiyxOapolZnzemggHKSFGGBQUTwIigABmsgAtkgyCAcBAkC4QOIYPQoOxIBYQDR9QAjGCMAAKMfYIJwk+LDVnUjabYgncQNR7fcQ3Znc8X6e8K7XEU1m-o247SHOh6QB5v7HEWDQD93T5ovaQXFB2HUdvHHNgp3oWcFyXS8-mva4iX4O8fz3aUX0QZ9Txgi8QCvHNBBQqEdz3Z0MPQ99vE-b9iMfRA4X-I8yOw89sTw+CCOQmAt1o39EDIgDEDjYCRzHAgIJAFjYPY8YEJtQjuPvXi90pRikAY9cqK-VD+wHQTVMkqCz2k-DNNtIi7BIpADME-kaCHUSwPEuSkxQyDoNYyUZMkHTEHIA9bIHSjB205T+wCo9vXskCxInTi3MMjyTPgsK-KA2y30Q8zFLXKTcKvVKszUtL3OM3DGBgFtVxzajfKKjDyDIhzQPAZz4py0qcLYgrLLo8hhNsiisoUrdOs805vNXQqNNs4Tgtq1L9G7WyNOCkb7zG5LZOm4ryAM5rYokvLuo4sz1t8-Q9KPJbOOwUR2yU3q+OW67Mvk-g7oetRKFUIA
-% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12wYBzT7ngAo0AfQDMAAk4AnLDwAWOOtOkQA7hNEA2AJQgAvqXSZc+QijIBGKrUYs2oyTLmLlqjdoNGQGbHgJEZABMNvTMrIgcXLya4l7GfmZElqQh1GH2kZ6GCaYBKClioXYRPiKWUuyyCkoq6pUCsVrxPib+5sgpACzF4Wz8MdnevnkdQaQ96SX90Tyxli0j7UTjAKy9mVGNohXONW71wuKVDBDSsV16Oa2J+cjjWhulA3yz84ttSShipI9TfVljpxTudRF0PrcOj8AOxPGbbIFVFy1dwSI5dSrVVx1DzlK7DT53H4ADjhgIxe2xqJ2ENGRC6pFJ-02Lwagzi1yWX2QDIAnGSyrskfscWjREETmdYmJ8blligGZZKMzSuLJaCOQTIURVqQlQLWTTOYSOrrLNYVfCYkcJcC6GAoLFVrKbnSUGa0rYAVt2atafLkFo9Z6Ms83uL-dyg5YipbAbbhVT6qI-cbtSho5MvZsU5G7tC9VnQ1a5hG027kAXLOs42UxAYbDAoDx4ERQAAzVQAWyQKRAOAgSHG2dKACURJwAEYwJQgagMOjThgABRNbCxODnIHkMDoUDYkG4LU7EB7iD7A6QZBHbHHnGwPC7dC3C6Xq-TIAYMHbm+oO73SBgEwDAMNcJ5nj8-aDuetZ3uw06zvOi4wCua6RBux7dkgDJQUgkHFpE47APIWBoPoL7IahH5fj+mGnth1CXoguo3oRE7wTOz5IW+aEgBhf67vukSHqwYFYYgQa4YgOEESAcEIVxn6Ue+bp8cidFngWUmSbJREkWRFE8dR36bmJ9GIFpTHErB7EKYZKEqfKak1Fu-5CeABCid44FILyjHQVpum2Zx9lUapGFmWeSr+b5NnEaR5HcQ5vE0aZ3nidFUnmjZU4hUlYVOfx26CQenkab2w5MZlQW5YhSlGeF6mRb2kFVcOQXxQZ+WOV8n4meV56tdBlgydMbG1Ypr7JR+RVuaVR7NeeLFVfhY1ycFdVTQVvURel5mWJJVUsR1+mJfV02qalA0HTF56BWt8l5ed235M5iiuSVwllYtljWVlOkPRtk3Kbxu0dhlflZX9J0JaFPWvVdP2Q0xQTXjVHGbSDM3qQJAFfQte1nkEF7DZD6N2d1oNNYTQ6VdBxM5ewD5PnDKX9foFD6EAA
+Como podemos ver, no conseguimos cerrar las ramas. En la rama que hemos indicado con flechas, no parece haber forma de encontrar una contradicción, y además tenemos en esta rama las proposiciones $\neg p_1$, $\neg p_2$, $p_3$ y $p_6$. En este caso podemos imaginar que la rama no se puede cerrar y hay una valoración que cumple los elementos de esa rama. En efecto, solo tenemos 4 opciones en función de los valores de verdad que asociemos a $p_4$ y $p_5$, y encontramos que la valoración dada por $v(p_1)=v(p_2)=v(p_5)=F$,$v(p_3)=v(p_4)=v(p_6)=V$ cumple $\Phi$ y $\neg\varphi$. Es decir, $\Phi\nvDash\varphi$. Como veremos en breve, esto significa que no podemos encontrar un  \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$.
+
 \begin{comment}
 \begin{center}
-\begin{tikzcd}
-\neg\neg(p_3 \rightarrow p_6)                                            &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-p_3 \rightarrow p_6 \arrow[d, "R_\beta"', no head] \arrow[u, "R_\sigma"] &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-\neg p_3                                                                 & p_6 \arrow[lu, "R_\beta"']                                                   &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         & p_1 \rightarrow \neg p_6 \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         & \neg p_6                                                                     & \neg p_1 \arrow[lu, "R_\beta"']                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              & \neg p_1 \rightarrow (p_3 \lor p_4) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                                &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              & \neg\neg p_1                                                                            & p_3 \lor p_4 \arrow[lu, "R_\beta"']                                                            &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         & \neg p_3 \rightarrow (p_4 \rightarrow p_1) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                                    &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         & p_4 \rightarrow p_1                                                                            & \neg \neg p_3 \arrow[lu, "R_\beta"']                                               &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                & p_1 \rightarrow (p_2 \lor p_3) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                          &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                & p_2 \lor p_3                                                                       & \neg p_1 \arrow[lu, "R_\beta"']                                          &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    & \neg (p_2 \land p_5) \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                                                         &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    & \neg p_5                                                                 & \neg p_2 \arrow[lu, "R_\beta"']                                         &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          & p_2 \rightarrow p_5 \arrow[u, "R_{hip}"] \arrow[d, "R_\beta"', no head] &                                 \\
-                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          & p_5                                                                     & \neg p_2 \arrow[lu, "R_\beta"'] \\
-                                                                         &                                                                              &                                                                                         &                                                                                                &                                                                                    &                                                                          &                                                                         & p_3 \arrow[u, "R_\sigma"]      
-\end{tikzcd}
 %Otra versión (la otra no cabe)
 \begin{tikzcd}
 1.\neg\neg(p_3 \rightarrow p_6)                                   &                                                           \\
@@ -995,20 +982,213 @@ p_3 \rightarrow p_6 \arrow[d, "R_\beta"', no head] \arrow[u, "R_\sigma"] &      
 \end{center}
 \end{comment}
 
+\begin{center}
 \begin{figure}[H]
-\includegraphics[scale = 0.57]{figures/tableau2.png}
+\includegraphics[scale = 0.70]{figures/tableau2.png}
 \end{figure}
+\end{center}
 
-Como podemos ver, no conseguimos cerrar las ramas. En la rama que hemos indicado con flechas, no parece haber forma de encontrar una contradicción, y además tenemos en esta rama las proposiciones $\neg p_1$, $\neg p_2$, $p_3$ y $p_6$. En este caso podemos imaginar que la rama no se puede cerrar y hay una valoración que cumple los elementos de esa rama. En efecto, solo tenemos 4 opciones en función de los valores de verdad que asociemos a $p_4$ y $p_5$, y encontramos que la valoración dada por $v(p_1)=v(p_2)=v(p_5)=F$,$v(p_3)=v(p_4)=v(p_6)=V$ cumple $\Phi$ y $\neg\varphi$. Es decir, $\Phi\nvDash\varphi$. Como veremos en breve, esto significa que no podemos encontrar un  tableau cerrado para $\Phi\cup\{\neg\varphi\}$.
 
 \end{example}
 
+El último ejemplo muestra que hay muchas formas de intentar conseguir un \textit{tableau} cerrado para un conjunto de fórmulas. Además, puede que dos formas distintas den lugar a \textit{tableaux} con distinto número de proposiciones. Para obtener \textit{tableaux} pequeños, nos conviene usar las reglas de construcción con la siguiente prioridad:
+\begin{enumerate}
+    \item $R_\sigma$
+    \item $R_\alpha$
+    \item $R_\beta$
+\end{enumerate}
+Es decir, nos conviene aplicar siempre que sea posible la regla $R_\sigma$. Cuando no sea posible, aplicaremos la regla $R_\alpha$. Si esta tampoco es posible, usaremos $R_\beta$.$\\$
 
+\subsection{Corrección y completitud}
 
-Ahora bien, nuestro objetivo inicial era, dados un conjunto de fórmulas $\Phi$ y una fórmula $\varphi$, demostrar usando el método de los \textit{tableaux} que $\Phi\vDash\varphi$. Por tanto, para que el método nos permita alcanzar este objetivo tiene que cumplir dos propiedades:
+Recordemos que lo que motivó esta sección fue, dados un conjunto de fórmulas $\Phi$ y una fórmula $\varphi$, el demostrar que $\Phi\vDash\varphi$, usando el método de los \textit{tableaux}. Por tanto, para que el método nos permita alcanzar este objetivo tiene que cumplir dos propiedades:
 \begin{itemize}
     \item \textit{Completitud:} $\Phi \vDash \varphi$ implica $\Phi \vdash_{tb} \varphi$.
     Es decir, si se cumple que $\Phi\vDash\varphi$, entonces podemos encontrar un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$.
     \item \textit{Corrección:} $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$.
     Es decir, si encontramos un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$, entonces se cumple que $\Phi\vDash\varphi$. 
 \end{itemize}
+
+El siguiente resultado condensa las ideas expuestas hasta ahora:
+
+\begin{theorem}\label{sat}
+Sean $\Phi \subseteq PROP_{SP}$ tal que $Sat(\Phi)$ y $T$ \textit{tableau} finito para $\Phi$. Entonces existe una rama de $T$, $r$, tal que $Sat(\Gamma_{r})$. Es más: si una valoración $v$ cumple $v\vDash\Phi$, hay una rama $r$ que cumple $v \vDash \Gamma_{r}$.
+\end{theorem}
+\begin{proof}
+Todo \textit{tableau} finito $T$ se construye partiendo de 
+\begin{tikzcd}
+\varphi_1 \arrow[d, no head]          \\
+\varphi_2 \arrow[dd, no head, dotted] \\
+                                      \\
+\varphi_k                            
+\end{tikzcd} 
+y aplicando reglas de construcción de \textit{tableaux} $R_1, ..., R_n$. Nos interesa hacer inducción sobre el número de reglas empleadas, $n$.$\\$
+
+Así pues, sea una valoración $v$ tal que $v\vDash\Phi$.
+
+Si $n=0$, por la regla inicial tenemos una única rama $r$ tal que  $\Gamma_r = \{\varphi_1, ..., \varphi_k\} \subseteq \Phi$. Como $v\vDash\Phi$, tenemos que $v\vDash\Gamma_r$.
+
+Ahora sea $n>0$, supongamos que el resultado se cumple para $n-1$. 
+
+Sea $\Phi$ satisfactible, y sea $T$ un \textit{tableau} obtenido aplicando la regla inicial y otras reglas $R_1,\dots,R_n$. Es decir, $T$ se obtiene aplicando la regla $R_n$ al \textit{tableau} $T'$ obtenido aplicando las reglas $R_1,\dots,R_{n-1}$. Por hipótesis de inducción, tenemos una rama $r$ de $T'$ tal que $v\vDash\Gamma_r$. Al aplicar la regla $R_n$ extendemos una rama de $T'$ para obtener $T$. $\\$
+
+Si la rama que extendemos no es $r$, entonces $r$ también es una rama de $T$, por tanto, como dice el enunciado, $v\vDash\Gamma_r$ para una rama $r$ de $T$.$\\$
+
+Si la rama que extendemos es $r$, distinguimos los siguientes casos:
+\begin{itemize}
+    \item $R_n = R_\sigma$. Para cierta fórmula $\sigma \in \Gamma_r$, añadimos $\sigma_1$ tal que $\sigma \sim \sigma_1$. Por tanto, como $v \vDash \Gamma_r$, en particular $v \vDash \sigma$ y así $v \vDash \sigma_1$. Entonces $v \vDash \Gamma_r\cup \{\sigma_1$\}, es decir, la rama $r'$ formada al añadir $\sigma_1$ a $r$ es la buscada.
+    \item $R_n = R_\alpha$. Para cierta fórmula $\alpha \in \Gamma_r$, añadimos $\alpha_1, \alpha_2$ tales que $\alpha \sim  \alpha_1 \land \alpha_2$. Por tanto, como $v \vDash \Gamma_r$, en particular $v \vDash \alpha$ y así $v \vDash \alpha_1$ y $v \vDash \alpha_2$. Entonces $v \vDash \Gamma_r\cup\{\alpha_1, \alpha_2\}$, es decir, la rama $r'$ formada al añadir $\alpha_1$ y $\alpha_2$ a $r$ es la buscada.
+    \item $R_n = R_\beta$. Para cierta fórmula $\beta\in\Gamma_r$, añadimos  $\beta_1,\beta_2$ tales que $\beta \sim \beta_1\lor\beta_2$, formando dos nuevas ramas. Como $v\vDash\Gamma_r$, en particular $v \vDash\beta$. Esto quiere decir que o bien $v\vDash\beta_1$ o bien $v\vDash\beta_2$. En el primer caso, $v\vDash\Gamma_r\cup\{\beta_1\}$, por tanto la rama $r_1$ formada añadiendo $\beta_1$ a $r$ cumple que $v\vDash\Gamma_{r_1}$. En el segundo caso, $v\vDash\Gamma_r\cup\{\beta_2\}$, por tanto la rama $r_2$ formada añadiendo $\beta_2$ a $r$ cumple que $v\vDash\Gamma_{r_2}$. En ambos casos, tenemos una rama $r'$ de $T$ tal que $v\vDash r'$, por tanto se cumple el enunciado.
+    \item $R_n = R_{hip}$. Añadimos a la rama $r$ cierta $\varphi \in \Phi$. Por hipótesis, tenemos que $v \vDash \Phi$ y $v \vDash \Gamma_r$, luego en especial $v \vDash \Gamma_r\cup\{\varphi\}$. Es decir, la rama $r'$ formada al añadir a $r$ la hipótesis cumple $v\vDash r'$.
+\end{itemize}
+\end{proof}
+
+\begin{cor}\label{corr}
+Sea $\Phi \subseteq PROP_{SP}$. Si $\Phi$ tiene un \textit{tableau} cerrado, entonces $Insat(\Phi)$.
+\end{cor}
+\begin{proof}
+Se trata de la forma contrapositiva del enunciado \ref{sat}.
+\end{proof}
+
+\begin{cor}(Corrección)\label{corrección}
+Sean $\Phi \in PROP_{SP}, \varphi \in PROP_{SP}$. Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \vDash \varphi$.
+\end{cor}
+\begin{proof}
+Si $\Phi \vdash_{tb} \varphi$ entonces $\Phi \cup \{\neg \varphi\}$ tiene un \textit{tableau} cerrado. Por \ref{corr} se sigue que $Insat(\Phi \cup \{\neg \varphi \})$, es decir,  aplicando \ref{insat}, $\Phi \vDash \varphi$.
+\end{proof}
+
+Ahora pasamos a estudiar la completitud. Para ello es necesario introducir previamente varias nociones:
+
+\begin{definition}
+$\Phi \subseteq PROP_{SP}$ se dice \textit{coherente} si no existe $\varphi$ tal que $\varphi, \neg \varphi \in \Phi$ y $\bot \notin \Phi$.
+\end{definition}
+
+\begin{definition}
+$\Phi \subseteq PROP_{SP}$ se dice \textit{saturado} si, usando la notación de las $\sigma$, $\alpha$ y $\beta$-fórmulas:
+\begin{itemize}
+    \item $\sigma \in \Phi$ implica que $\sigma_1 \in \Phi$.
+    \item $\alpha \in \Phi$ implica que $\alpha_1, \alpha_2 \in \Phi$.
+    \item $\beta \in \Phi$ implica que $\beta_1 \in \Phi$ o $\beta_2 \in \Phi$.
+\end{itemize}
+Por ejemplo, si a un \textit{tableau} $T$ no le podemos aplicar más reglas de forma que se añadan nuevas proposiciones al \textit{tableau}, entonces $\Gamma_T$ es saturado.
+\end{definition}
+
+\begin{definition}
+$\Phi \subseteq PROP_{SP}$ se dice \textit{de Hintikka} si es coherente y saturado.
+\end{definition}
+
+En relación a los \textit{tableaux}, nos gustaría poder tratar la `complejidad' de las distintas fórmulas. Esto nos lleva a la siguiente:
+
+\begin{definition}
+Definimos la norma $||.||: PROP_{SP} \rightarrow \mathbb{N}$ dada recursivamente por:
+\begin{itemize}
+    \item $||\varphi|| = 0$, para toda $\varphi \in AT$.
+    \item $||\neg \varphi|| = 1 + ||\varphi||$.
+    \item $||\varphi_1 \land \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
+    \item $||\varphi_1 \lor \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
+    \item $||\varphi_1 \rightarrow \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
+    \item $||\varphi_1 \leftrightarrow \varphi_2|| = 5 + 2||\varphi_1|| + 2||\varphi_2||$.
+\end{itemize}
+\end{definition}
+
+La siguiente proposición es fácil de demostrar por casos y justifica nuestro tratamiento de las descomposiciones de las $\sigma$, $\alpha$ y $\beta$-fórmulas como expresiones reducidas de las fórmulas originales:
+
+\begin{prop}\label{norma}
+Sean $\sigma$, $\alpha$ y $\beta$ $\sigma$, $\alpha$ y $\beta$-fórmulas, respectivamente, con $\sigma \sim \sigma_1$, $\alpha \sim \alpha_1 \land \alpha_2$, $\beta \sim \beta_1 \lor \beta_2$. Entonces:
+\begin{enumerate}
+    \item $||\sigma|| > ||\sigma_1||$.
+    \item $||\alpha|| > ||\alpha_1||+||\alpha_2||$. En concreto, $||\alpha||>||\alpha_1||$ y $||\alpha||>||\alpha_2||$.
+    \item $||\beta|| > ||\beta_1||+||\beta_2||$. En concreto, $||\beta||>||\beta_1||$ y $||\beta||>||\beta_2||$.
+\end{enumerate}
+\end{prop}
+
+\begin{definition}(Valoración de Hintikka)
+Sea $H \subseteq PROP_{SP}$ de Hintikka. Definimos la valoración $v_H:SP\to\{V,F\}$ como:
+\begin{itemize}
+    \item $v_H(p) = V$, si $p \in H$.
+    \item $v_H(p) = F$, si $\neg p \in H$.
+\end{itemize}
+En caso de que $p, \neg p \notin H$, va a ser para nuestros propósitos indiferente el valor que toma $v_H$. Para que $v_H$ esté bien definida, podemos suponer por ejemplo $v_H(p)=V$ si $p, \neg p \notin H$.
+\end{definition}
+
+\begin{prop}\label{hintisatis}
+Si $H \subseteq PROP_{SP}$ es de Hintikka, $v_H \vDash H$. En particular, $H$ es satisfactible.
+\end{prop}
+\begin{proof}
+Tenemos que demostrar que para toda $\varphi\in H$, $v_H \vDash \varphi$. Para ello procedemos por inducción sobre $||\varphi||$. Es necesario distinguir dos casos base primero.
+
+Si $||\varphi|| = 0$ entonces $\varphi \in AT$ y, al ser $H$ coherente, $\varphi \in SP$ o $\varphi = \top$. Si se da lo primero, entonces se da el resultado por la definición de $v_H$. Lo segundo es trivial, porque toda valoración satisface a $\top$.
+
+Si $||\varphi|| = 1$ entonces solo puede ocurrir, por la coherencia de $H$, que $\varphi = \neg p$, para $p \in SP$; o que $\varphi = \top \lor \bot$. En el primer caso obtenemos que $v_H(p) = F$ y por tanto que $\hat{v}_H(\neg p) = V$. En el segundo caso se tiene claramente que $\hat{v}_H(\top \lor \bot) = V$.
+
+Sea $\varphi$ con $||\varphi|| > 1$, supongamos que el resultado se cumple para todo $ n<||\varphi||$. Por la proposición \ref{clasprop} tenemos las siguientes posibilidades:
+\begin{itemize}
+    \item $\varphi = \sigma$ es $\sigma$-fórmula, con $\sigma \sim \sigma_1$. Al ser $H$ saturado, $\sigma_1 \in H$. Sabemos de \ref{norma} que $||\sigma|| > ||\sigma_1||$, luego podemos aplicar la hipótesis de inducción y así $\hat{v}_H(\sigma_1) = V$, de lo que se sigue que $\hat{v}_H(\sigma_1) = \hat{v}_H(\sigma) = V$.
+    \item $\varphi = \alpha$ es $\alpha$-fórmula, con $\alpha \sim \alpha_1 \land \alpha_2$. Al ser $H$ saturado, $\alpha_1, \alpha_2 \in H$ y, por \ref{norma},  $||\alpha|| > ||\alpha_1||$ y $||\alpha|| > ||\alpha_2||$. Aplicando la hipótesis de inducción, $\hat{v}_H(\alpha_1) = \hat{v}_H(\alpha_2)  = V$, luego $\hat{v}_H(\alpha) = \hat{v}_H(\alpha_1 \land \alpha_2) = V$.
+    \item $\varphi = \beta$ es $\beta$-fórmula, con $\beta \sim \beta_1 \lor \beta_2$. Por \ref{norma},  $||\beta|| > ||\beta_1||$ y $||\beta|| > ||\beta_2||$. Además, como $H$ es saturado, o bien $\beta_1\in H$ y, por hipótesis de inducción, $\hat{v}(\beta_1)=V$, o bien $\beta_2\in H$ y, por hipótesis de inducción, $\hat{v}(\beta_2)=V$. En ambos casos, $\hat{v}(\beta)=\hat{v}(\beta_1\lor\beta_2)=V$.
+\end{itemize}
+\end{proof}
+
+
+\begin{cor}\label{hintitabli}
+Sean $\Phi \subseteq PROP_{SP}$, $T$ \textit{tableau} abierto de $\Phi$. Si:
+\begin{enumerate}
+    \item Existe una rama abierta de $T$, $r$, tal que $\Phi \subseteq \Gamma_r$.
+    \item $\Gamma_r$ es de Hintikka.
+\end{enumerate}
+entonces $\Phi$ es satisfactible.
+\end{cor}
+
+\begin{proof}
+Como $\Gamma_r$ es de Hintikka, por \ref{hintisatis} es satisfactible, por tanto como $\Phi\subseteq\Gamma_r$, $\Phi$ es satisfactible.
+
+\end{proof}
+
+
+
+Esto motiva la siguiente definición:
+
+\begin{definition}
+Sean $\Phi \subseteq PROP_{SP}$, $T$ \textit{tableau} de $\Phi$. $T$ se dice \textit{completo} si toda rama abierta de $T$, $r$, verifica:
+\begin{itemize}
+    \item $\Phi \subseteq \Gamma_r$.
+    \item $\Gamma_r$ es de Hintikka.
+\end{itemize}
+\end{definition}
+
+\begin{prop}\label{compi}
+Sea $\Phi \subseteq PROP_{SP}$ finito\footnote{Se puede prescindir de esta hipótesis, es decir, el enunciado sigue siendo cierto si $\Phi$ es infinito.}. Entonces existe un \textit{tableau} completo para $\Phi$.
+\end{prop}
+\begin{proof}
+En el siguiente capítulo probaremos una generalización de este teorema.
+
+\begin{comment}
+De todas formas, esta es una posible demostración de \ref{compi}:$\\\\$
+Para encontrar este tableau, basta con introducir en la regla inicial todas las proposiciones de $\Phi$ y ver que, si aplicamos las reglas de construcción de \textit{tableaux}, llegaremos a un punto en que todo vértice del \textit{tableau} cumple que o bien es una fórmula atómica, o bien le habremos aplicado ya una regla de construcción. Ya que si esto se cumple, cada rama del \textit{tableau} contendrá todas las hipótesis, y además será saturada, ya que habremos aplicado alguna regla a todos sus vértices salvo los atómicos. Por tanto, o bien contendrá contradicciones y será cerrada, o no las contendrá y será de Hintikka. De modo que en ese momento habremos comprobado que el \textit{tableau} es completo.$\\$
+
+De modo que, como decíamos, iniciamos el árbol con $R_{ini}$ aplicada a todas las premisas de $\Phi = \{\varphi_1, ..., \varphi_n\}$. Esto nos da un primer \textit{tableau} $T_0$. A este \textit{tableau} le aplicaremos una serie de reglas $R_1,R_2,...$, obteniendo una sucesión de \textit{tableaux} $T_1,T_2,\dots$. Para cada \textit{tableau} $T_n$, llamaremos $\Phi_n$ al conjunto de vértices del \textit{tableau} al que no hemos aplicado todavía ninguna regla. Es decir, en el caso 0, $\Phi_0=\Phi$.$\\$
+
+Ahora, para cada $n$, crearemos el \textit{tableau} $T_{n+1}$ aplicando una regla de construcción a algún vértice de $\Phi_n$, es decir, un vértice al que no hayamos aplicado ninguna regla antes. Por su definición, $\Phi_{n+1}$ será de la siguiente forma:
+\begin{itemize}
+    \item $(\Phi_n\cup\{\sigma_1\})\setminus\{\sigma\}$, si hemos aplicado $R_\sigma$.
+    \item $(\Phi_n\cup\{\alpha_1,\alpha_2\})\setminus\{\alpha\}$, si hemos aplicado $R_\alpha$.
+    \item $(\Phi_n\cup\{\beta_1,\beta_2\})\setminus\{\beta\}$, si hemos aplicado $R_\beta$.
+\end{itemize}
+Para demostrar el enunciado, nos basta con ver que para cierto $n$, $\Phi_n$ contendrá solamente fórmulas atómicas, ya que entonces no podremos aplicar ninguna regla a vértices a los que no hayamos aplicado reglas anteriormente. Para esto nos bastará usar el siguiente concepto:$\\$
+Sea $\displaystyle S_n:=\sum_{\varphi\in\Phi_n}||\varphi||$.$\\$
+Está claro que, que $\Phi_n$ tenga solo fórmulas atómicas es equivalente a que $S_n=0$. Pero, por la proposición \ref{norma}, dando igual la regla que usemos se cumplirá que $S_{n+1}<S_n$. Por tanto, como $S_0$ es cierto $k$ finito, al cabo de como máximo $k$ pasos tendremos un \textit{tableau} $T_n$ con $S_n=0$, es decir, tendremos un \textit{tableau} completo para $\Phi$.
+
+\end{comment}
+\end{proof}
+
+\begin{cor}(Completitud)
+Sea $\Phi \subseteq PROP_{SP}$ finito. Si $\Phi \vDash \varphi$ entonces $\varphi \vdash_{tb} \varphi$.
+\end{cor}
+\begin{proof}
+$\Phi \vDash \varphi$ equivale por \ref{insat} a $Insat(\Phi \cup \{\neg \varphi\})$. Se sigue de \ref{compi} que podemos considerar un \textit{tableau} $T$ completo para $\Phi \cup \{\neg \varphi\}$. Veamos que $T$ no puede tener ramas abiertas:$\\$ 
+
+Si $T$ tiene una rama abierta $r$, por definición de \textit{tableau} completo, $\Phi\cup\{\neg \varphi\}\subseteq\Gamma_r$ y $\Gamma_r$ es de Hintikka. 
+Pero entonces, por el corolario \ref{hintitabli}, $\Phi \cup \{\neg \varphi\}$ sería satisfactible, lo cual contradice el enunciado. $\\$
+
+Por tanto el \textit{tableau} es cerrado , es decir, $\Phi \vdash_{tb} \varphi$.
+\end{proof}

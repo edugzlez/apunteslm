@@ -1,0 +1,85 @@
+\chapter{Lógica de primer orden}
+
+\section{Introducción}
+
+En el anterior capítulo, construímos con éxito un lenguaje formal que nos permitía traducir frases informales del español a expresiones formales, además de formalizar los conceptos de implicación y equivalencia lógica. Sin embargo, se puede reprochar que la lógica proposicional es demasiado \textit{simple} en el sentido siguiente: $\\$
+
+Consideremos el silogismo compuesto por dos premisas `Todos los hombres son mortales', `Sócrates es un hombre' y la conclusión `Sócrates es mortal'. En este caso, podríamos pensar que la derivación se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo: `Para todo $x$, si $x$ es hombre entonces es mortal', `Sócrates es hombre' luego `Sócrates es mortal'. Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.
+
+A continuación vamos a definir, igual que en lógica proposicional, el alfabeto que usaremos para construir fórmulas en los lenguajes de primer orden. Pero además en este caso, habrá muchos lenguajes de primer orden, y cada uno tendrá unos ciertos elementos que lo caractericen, que resumimos en el concepto de `signatura':
+
+
+\begin{comment}
+En general, los componentes en los que se pueden reducir las proposiciones son de tres tipos: \textit{constantes}, como `Sócrates' en el ejemplo anterior; \textit{predicados}, como `hombre' y `mortal' en el silogismo anterior y \textit{funciones}, como la función `sucesor de $n$' en los números naturales. De forma similar a como hicimos con los símbolos de proposición, definimos una serie de símbolos para referirnos a las anteriores clases de elementos. Esto nos lleva a la siguiente
+\end{comment}
+
+\begin{definition}\label{sig}
+Una \textit{signatura} $S$ es una tupla $\langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ donde:
+\begin{itemize}
+    \item $Ct_{S}$ es el conjunto de símbolos de constante.
+    \item $Fn_{S}$ es el conjunto de símbolos de función con determinada aridad\footnote{Por ahora, nos referimos por \textit{aridad} de un símbolo de función o de predicado como el número de argumentos que admite. Más adelante especificaremos lo que significa esta idea.}.
+    \item $Pd_{S}$ es el conjunto de símbolos de predicado con determinada aridad.
+\end{itemize} 
+Dado un símbolo $\Gamma$ de función o predicado, denotamos por $\Gamma|_{n}$ que es $n$-ario.
+\end{definition}
+
+\begin{example}
+La signatura $Nat := \langle \{0, 1, 2, ... \}, \{+|_2, s|_1\}, \{<|_2\}\rangle$ para los números naturales. Es decir:\footnote{Las interpretaciones que damos a continuación a los símbolos tendrán sentido al estudiar semántica más adelante en este capítulo.}
+\begin{itemize}
+    \item Los símbolos de constante son $0,1,2,\dots$, que usaremos para representar los números naturales.
+    \item Los símbolos de función serán el símbolo de función binaria $+$, que usaremos para denotar la función `suma', y el símbolo de función 1-aria, $s$, que usaremos para denotar la función `sucesor'.
+    \item Tenemos un símbolo de predicado 2-ario, $<$, que se traducirá como `menor o igual que'.
+\end{itemize}
+\end{example}
+$\\$
+Una diferencia fundamental entre la lógica proposicional y la lógica de primer orden será la introducción de los dos \textit{cuantificadores lógicos}, $\forall$ (para todo) y $\exists$ (existe). Como hemos visto en el ejemplo de la introducción, estos cuantificadores nos servirán para incorporar a nuestro lenguaje frases informales que antes no podíamos formalizar satisfactoriamente.
+
+\begin{definition}
+Dada la signatura $S$, definimos el alfabeto asociado como:
+$$A_{S} := Ct_S \cup Fn_S \cup Pd_S \cup Var_S \cup \{\neg, \land, \lor, \rightarrow, \leftrightarrow, \top, \bot \} \cup \{(, )\} \cup \{\exists, \forall\} \cup \{ \doteq \},$$
+donde:
+\begin{itemize}
+    \item $Ct_S,Fn_S,Pd_S$ vienen dados por \ref{sig}.
+    \item $Var_S$ son los símbolos de variable.
+    \item $\neg, \land, \lor, \rightarrow, \leftrightarrow, \top, \bot,(,)$ son los símbolos de conectiva y los paréntesis, al igual que en lógica proposicional.
+    \item $\exists$ (para todo) y $\forall$ (existe) son los \textit{cuantificadores}. Llamamos a $\forall$ \textit{cuantificador universal} y a $\exists$ \textit{cuantificador existencial}.
+    \item $\doteq$, el símbolo de igualdad.
+\end{itemize}
+\end{definition}
+
+Como ocurría con las proposiciones, nos interesa distinguir las expresiones del alfabeto anterior que están bien formadas. Para ello, primero necesitaremos definir los términos, que podemos interpretar como las expresiones que usaremos para nombrar objetos, y después las fórmulas, expresiones que usaremos para denotar afirmaciones sobre los objetos.
+
+\begin{definition}
+Dada la signatura $S$, el \textit{conjunto de términos} de $S$, $TERM_S$, es el menor subconjunto de $A_{S}^*$ que verifica:\footnote{Recordemos que $A_{S}^*$ es el cierre de Kleene de $A_{S}$, como definimos en \ref{klee}.}
+\begin{enumerate}
+    \item $Ct_S\subseteq TERM_S$.
+    \item $Var_S\subseteq TERM_S$.
+    \item Si $f|_{n} \in Fn_S$ y $t_1, .., t_n \in TERM_S$, entonces $f(t_1, ..., t_n) \in TERM_S$. 
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+Siguiendo con la signatura $Nat$, algunos ejemplos de elementos de $TERM_{NAT}$ serían  $0, 1, 2, x, y, z,+(s(0), s(1))$ y $s(+(x,3))$.
+\end{example}
+
+Ahora podemos construir fórmulas a partir de estos elementos básicos que ya hemos definido. Comenzamos por 
+
+\begin{definition}
+Dada la signatura $S$, el \textit{conjunto de fórmulas atómicas} de $S$, $FORMAT_S$, es el menor subconjunto de $A_{S}^*$ que verifica:
+\begin{enumerate}
+    \item Si $t_1, t_2 \in TERM_S$, $t_1 \doteq t_2 \in FORMAT_S$.
+    \item Si $R|_{n} \in Pd_S$ y $t_1, \dots, t_n \in TERM_S$, $R(t_1, \dots, t_n) \in FORMAT_S$.
+    \item $\top, \bot \in FORMAT_S$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Dada la signatura $S$, el \textit{conjunto de fórmulas} de $S$, $FORM_S$, es el menor subconjunto de $A_{S}^*$ que verifica:
+\begin{enumerate}
+    \item $FORMAT_S \subseteq FORM_S$.
+    \item Si $\varphi_1, \varphi_2 \in FORM_S$, $(\neg \varphi_1), (\varphi_1 \square \varphi_2) \in FORM_S$.
+    \item Si $x \in Var_S$ y $\varphi \in FORM_S$, $(\forall x \varphi), (\exists x \varphi) \in FORM_S$. 
+\end{enumerate}
+\end{definition}
+    
+    
