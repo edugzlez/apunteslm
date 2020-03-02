@@ -65,7 +65,7 @@ Se define el conjunto de proposiciones posibles,  $PROP_{SP}$, como la intersecc
 \end{definition}
 Es fácil comprobar que $PROP_{SP}$ también cumple estas tres propiedades, por tanto decimos que es el mínimo subconjunto que las verifica. También podemos obtener $PROP_{SP}$ de forma constructiva:
 
-\begin{prop} Se define $P_0 := SP$ y para cada $n\in\N$:
+\begin{prop}\label{ind} Se define $P_0 := AT$ y para cada $n\in\N$:
 \[
     P_n := P_{n-1} \cup \{(\neg \phi): \phi\in P_{n-1}\}\cup \{ (\phi_1 \square\  \phi_2): \phi_1, \phi_2\in P_{n-1},  \square\in \{\land, \lor, \rightarrow, \leftrightarrow\}\}.
 \]
@@ -99,7 +99,7 @@ Como veremos en los ejercicios, toda proposición puede construirse mediante una
 
 Análogamente al método de inducción en los naturales, el método de inducción estructural nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.$\\$
 
-\begin{prop} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$\footnote{Usamos la notación $P(\varphi)$ para decir que la fórmula $\varphi$ cumple la propiedad $p$.} para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera). Entonces basta comprobar que:
+\begin{prop}\label{indest} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$\footnote{Usamos la notación $P(\varphi)$ para decir que la fórmula $\varphi$ cumple la propiedad $p$.} para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera). Entonces basta comprobar que:
 \begin{enumerate}
     \item $P(\varphi)$ para toda $\varphi\in AT$.
     \item Si $P(\varphi)$ entonces $P((\neg \varphi))$.
@@ -931,7 +931,7 @@ Recordemos que el \textit{tableau} se construye de arriba hacia abajo. Por la re
 Ahora  bien, $\neg p \land q \to r$ es una $\beta$-fórmula de tipo $\beta=\varphi_1\to\varphi_2$, de modo que, atendiendo a la tabla de las $\beta$-fórmulas, se descompone en las fórmulas $\beta_1=\neg\varphi_1=\neg(\neg p\land q)$ y $\beta_2=\varphi_2=r$.$\\$
 Teniendo la descomposición de la $\beta$-fórmula, podemos aplicar la regla $R_\beta$, y obtenemos un \textit{tableau} con dos ramificaciones, una con $\neg(\neg p\land q)$ y otra con $r$:
 \begin{itemize}
-    \item Comenzamos con la segunda rama, que es la más sencilla. Usando la regla $R_{hip}$, podemos añadir a la rama cualquier elemento de $\Psi$, de modo que escogemos $\neg r$. Ahora bien, en esta rama tenemos las proposiciones $\neg p \land q \to r$, $r$ y $\neg r$. En concreto, tenemos las proposiciones $r$ y $\neg r$. Como en la rama hay dos proposiciones de tipo $\varphi$ y $\neg \varphi$, es cerrada y hemos acabado con ella. Simbolizaremos que una rama está cerrada escribieno $\#$ y señalando los vértices en los que se encuentran las proposiciones contradictorias.
+    \item Comenzamos con la segunda rama, que es la más sencilla. Usando la regla $R_{hip}$, podemos añadir a la rama cualquier elemento de $\Psi$, de modo que escogemos $\neg r$. Ahora bien, en esta rama tenemos las proposiciones $\neg p \land q \to r$, $r$ y $\neg r$. En concreto, tenemos las proposiciones $r$ y $\neg r$. Como en la rama hay dos proposiciones de tipo $\varphi$ y $\neg \varphi$, es cerrada y hemos acabado con ella. Simbolizaremos que una rama está cerrada escribiendo $\#$ y señalando los vértices en los que se encuentran las proposiciones contradictorias.
     \item Fijémonos ahora la rama de $\neg(\neg p\land q)$. De nuevo, tenemos una $\beta$-fórmula. Usando la tabla como  antes, vemos que se descompone en $\beta_1=\neg\neg p$, $\beta_2=\neg q$. De modo que, por la regla $R_\beta$, esta rama se divide a su vez en otras dos:
     \begin{itemize}
         \item La primera rama tiene los elementos $\neg p \land q \to r$, $\neg(\neg p\land q)$ y $\neg\neg p$. Usando la regla $R_{hip}$, podemos añadir a esta rama el elemento $\neg p$ de $\Psi$. Ahora, dos de los elementos de esta rama son $\neg\neg p$ y $\neg p$. Es decir, tenemos las fórmulas $\varphi$ y $\neg\varphi$, siendo $\varphi=\neg p$. Por tanto esta rama está cerrada.
@@ -1084,8 +1084,8 @@ Definimos la norma $||.||: PROP_{SP} \rightarrow \mathbb{N}$ dada recursivamente
 \begin{itemize}
     \item $||\varphi|| = 0$, para toda $\varphi \in AT$.
     \item $||\neg \varphi|| = 1 + ||\varphi||$.
-    \item $||\varphi_1 \land \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
-    \item $||\varphi_1 \lor \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
+    \item $||\varphi_1 \land \varphi_2|| = 1 + ||\varphi_1|| + ||\varphi_2||$.
+    \item $||\varphi_1 \lor \varphi_2|| = 1 + ||\varphi_1|| + ||\varphi_2||$.
     \item $||\varphi_1 \rightarrow \varphi_2|| = 2 + ||\varphi_1|| + ||\varphi_2||$.
     \item $||\varphi_1 \leftrightarrow \varphi_2|| = 5 + 2||\varphi_1|| + 2||\varphi_2||$.
 \end{itemize}
@@ -1097,8 +1097,8 @@ La siguiente proposición es fácil de demostrar por casos y justifica nuestro t
 Sean $\sigma$, $\alpha$ y $\beta$ $\sigma$, $\alpha$ y $\beta$-fórmulas, respectivamente, con $\sigma \sim \sigma_1$, $\alpha \sim \alpha_1 \land \alpha_2$, $\beta \sim \beta_1 \lor \beta_2$. Entonces:
 \begin{enumerate}
     \item $||\sigma|| > ||\sigma_1||$.
-    \item $||\alpha|| > ||\alpha_1||+||\alpha_2||$. En concreto, $||\alpha||>||\alpha_1||$ y $||\alpha||>||\alpha_2||$.
-    \item $||\beta|| > ||\beta_1||+||\beta_2||$. En concreto, $||\beta||>||\beta_1||$ y $||\beta||>||\beta_2||$.
+    \item $||\alpha||>||\alpha_1||$ y $||\alpha||>||\alpha_2||$.
+    \item $||\beta||>||\beta_1||$ y $||\beta||>||\beta_2||$.
 \end{enumerate}
 \end{prop}
 
