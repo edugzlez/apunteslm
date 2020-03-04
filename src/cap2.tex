@@ -4,7 +4,7 @@
 
 En el anterior capítulo, construímos con éxito un lenguaje formal que nos permitía traducir frases informales del español a expresiones formales, además de formalizar los conceptos de implicación y equivalencia lógica. Sin embargo, se puede reprochar que la lógica proposicional es demasiado \textit{simple} en el sentido siguiente: $\\$
 
-Consideremos el silogismo compuesto por dos premisas `Todos los hombres son mortales', `Sócrates es un hombre' y la conclusión `Sócrates es mortal'. En este caso, podríamos pensar que la derivación se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo: `Para todo $x$, si $x$ es hombre entonces es mortal', `Sócrates es hombre' luego `Sócrates es mortal'. Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.
+Consideremos el silogismo compuesto por dos premisas `Todos los hombres son mortales', `Sócrates es un hombre' y la conclusión `Sócrates es mortal'. En este caso, podríamos pensar que la consecuencia lógica se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo: `Para todo $x$, si $x$ es hombre entonces es mortal', `Sócrates es hombre' luego `Sócrates es mortal'. Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.$\\$
 
 A continuación vamos a definir, igual que en lógica proposicional, el alfabeto que usaremos para construir fórmulas en los lenguajes de primer orden. Pero además, en este caso, habrá múltiples lenguajes de primer orden, y cada uno tendrá unos ciertos elementos que lo caractericen, que resumimos en el concepto de `signatura':
 
@@ -25,12 +25,13 @@ Dado un símbolo $\Gamma$ de función o predicado, denotamos por $\Gamma|_{n}$ q
 
 
 \begin{example}
-La signatura $Nat := \langle \{0, 1, 2, ... \}, \{+|_2, s|_1\}, \{<|_2\}\rangle$ para los números naturales. Es decir:\footnote{Las interpretaciones que damos a continuación a los símbolos tendrán sentido al estudiar semántica más adelante en este capítulo.}
+La signatura $Nat := \langle \{0\}, \{+|_2, s|_1\}, \{<|_2\}\rangle$ para los números naturales. Es decir:
 \begin{itemize}
-    \item Los símbolos de constante son $0,1,2,\dots$, que usaremos para representar los números naturales.
-    \item Los símbolos de función serán el símbolo de función binaria $+$, que usaremos para denotar la función `suma', y el símbolo de función 1-aria, $s$, que usaremos para denotar la función `sucesor'.
-    \item Tenemos un símbolo de predicado 2-ario, $<$, que se traducirá como `menor o igual que'.
+    \item Hay un símbolo de constante, $0$.
+    \item Los símbolos de función serán el símbolo de función binaria $+$, que llamaremos `suma', y el símbolo de función 1-aria, $s$, que llamaremos `sucesor'.
+    \item Tenemos un símbolo de predicado 2-ario, $<$.
 \end{itemize}
+A veces en la signatura $Nat$ incluiremos un otro símbolo de función 2-aria, $*$, que llamaremos `producto'.
 \end{example}
 
 \begin{definition}
@@ -39,10 +40,10 @@ $$A_{S} := Ct_S \cup Fn_S \cup Pd_S \cup Var \cup \{\neg, \land, \lor, \rightarr
 donde:
 \begin{itemize}
     \item $Ct_S,Fn_S,Pd_S$ vienen dados por \ref{sig}.
-    \item $Var$ son los símbolos de variable: 
+    \item $Var$ son los símbolos de variable.
     \item $\neg, \land, \lor, \rightarrow, \leftrightarrow, \top, \bot,(,)$ son los símbolos de conectiva y los paréntesis, al igual que en lógica proposicional.
     \item $\exists$ (para todo) y $\forall$ (existe) son los \textit{cuantificadores lógicos}. Llamamos a $\forall$ \textit{cuantificador universal} y a $\exists$ \textit{cuantificador existencial}.
-    \item $\doteq$, el símbolo de igualdad.
+    \item $\doteq$, el símbolo de igualdad. Usamos $\doteq$ en vez de $=$ para distinguirlo de la igualdad de fórmulas. Por ejemplo, si escribimos $\varphi = t \doteq s$ queremos decir que $\varphi$ es igual a $t \doteq s$.
 \end{itemize}
 
 \end{definition}
@@ -59,7 +60,7 @@ Dada la signatura $S$, el \textit{conjunto de términos} de $S$, $TERM_S$, es el
 \end{definition}
 
 \begin{example}
-Siguiendo con la signatura $Nat$, algunos ejemplos de elementos de $TERM_{NAT}$ serían  $0, 1, 2, x, y, z,+(s(0), s(1))$ y $s(+(x,3))$.
+Siguiendo con la signatura $Nat$, algunos ejemplos de elementos de $TERM_{NAT}$ serían  $0, s(s(0)), x, y, z,+(s(0), s(1))$ y $s(+(x,3))$.
 \end{example}
 
 La siguiente proposición nos da una definición constructiva de $TERM_S$: 
@@ -199,17 +200,37 @@ Extendamos la función $var$ al conjunto $FORM_S$. Por comodidad, omitimos las f
         \end{itemize} 
     \item Caso recursivo:
         \begin{itemize}
-            \item $var(\neg \varphi) = var(\varphi)$.
-            \item $var(\phi \square \psi) = var(\varphi) \cup var(\psi)$.
-            \item $var(Qx \, \varphi) = \{x\} \cup var(\varphi)$.
+            \item $var((\neg \varphi)) = var(\varphi)$.
+            \item $var((\phi \square \psi)) = var(\varphi) \cup var(\psi)$.
+            \item $var((Qx \, \varphi)) = \{x\} \cup var(\varphi)$.
         \end{itemize}
 \end{enumerate}
 \end{example}
 
+\section{Eliminación de paréntesis}
+Al igual que en lógica proposicional, nos serán útiles unas reglas de omisión de paréntesis:
+\begin{enumerate}
+    \item Los paréntesis externos pueden omitirse. Esto no da lugar a ambigüedad.
+    \item Conectivas y cuantificadores se aplicarán en este orden: $\neg, \land, \lor, \to, \leftrightarrow, \forall, \exists$.
+    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre por la izquierda.
+\end{enumerate}
+Un par de ejemplos de aplicación de estas reglas en fórmulas con cuantificadores:$\\[8pt]$
+\begin{equation*}
+\begin{array}{ccc}
+     \forall x \, \varphi\to\psi  & \text{es} & (\forall x \, (\varphi\to\psi))\\
+     \exists x \, \varphi \land \forall y \psi & \text{es} & 
+     (\exists x \, (\varphi \land (\forall y \psi)))\\
+\end{array}
+\end{equation*}
+
+
+
+
+
 \section{Variables libres y ligadas}
 Consideremos las siguientes fórmulas de primer orden:
 \begin{itemize}
-    \item $(\forall x\;x\doteq3)$
+    \item $\forall x\;x\doteq3$
     \item $x\doteq3$
 \end{itemize}
 La primera fórmula se puede traducir informalmente como `para todo $x$, $x$ es igual a 3'. Intuitivamente, podemos decir que el cuantificador $\forall$ está afectando al significado de $x$. Sin embargo, en la segunda fórmula, $x$ no aparece afectada por ningún cuantificador. En general, diremos que una variable es \textit{ligada} en una fórmula $\varphi$ si siempre aparece afectada por un cuantificador, como en el primer ejemplo, y diremos que es una variable \textit{libre} en $\varphi$ si aparece alguna vez sin estar afectada por un cuantificador. Formalicemos estos conceptos:
@@ -231,3 +252,179 @@ Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Definimos recursivame
 \begin{definition}
 Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Definimos el \textit{conjunto de sentencias}, $SENT_S$, como el formado por aquellas $\varphi \in FORM_S$ tales que $lib(\varphi) = \emptyset$.
 \end{definition}
+
+
+\section{Álgebras e interpretaciones}
+Hasta ahora hemos venido considerando cuestiones sintácticas sobre las fórmulas. Lo que queremos ahora es abordar su semántica, esto es, su comportamiento cuando les damos una interpretación determinada. Comenzamos definiendo la estructura de la que tomamos el significado de los símbolos de una signatura:
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ una signatura. Una \textit{S-álgebra} es una tupla 
+$$\mathcal{A} := \langle A, \{ c^{\mathcal{A}} \, | \, c \in Ct_S\}, \{f^{\mathcal{A}} \, | \, f \in Fn_S\}, \{p^{\mathcal{A}} \, | \, p \in Pd_S\}\rangle$$
+De modo que:
+\begin{itemize}
+    \item $A$, el \textit{conjunto soporte}, verifica que $A \neq \emptyset$.
+    \item Si $c \in Ct_S$, $c^{\mathcal{A}} \in A$.
+    \item Si $f|_k \in Fn_S$, $f^{\mathcal{A}}: A^{k} \rightarrow A$.
+    \item Si $p|_k \in Pd_S$, $p^{\mathcal{A}}: A^{k} \rightarrow Bool$.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+Consideremos la signatura $Nat := \langle \{0\}, \{+|_2,*|_2, s|_1\}, \{<|_2\}\rangle$ que presentamos previamente. La forma natural (aunque no la única) de asignar significados a estos símbolos sería la $S$-álgebra:
+$$\mathcal{A}_{Nat} := \langle \mathbb{N}, \{ 0^{\mathcal{A}_{Nat}}\}, \{+^{\mathcal{A}_{Nat}},*^{\mathcal{A}_{Nat}},s^{\mathcal{A}_{Nat}}\}, \{<^{\mathcal{A}_{Nat}}\}\rangle \text{, donde:}$$
+\begin{itemize}
+    \item $\mathbb{N}$ es el conjunto de los números naturales: $\{0,1,2,\dots\}$.
+    \item $0^{\mathcal{A}_{Nat}}$ será el número natural 0.
+    \item $+^{\mathcal{A}_{Nat}}$ será la función suma en los naturales, $+:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m+n$. $\\$
+    $*^{\mathcal{A}_{Nat}}$ será la función producto en los naturales, $*:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m*n$.$\\$
+    $s^{\mathcal{A}_{Nat}}$ será la función sucesor en los naturales, $s:\mathbb{N}\to\mathbb{N};n\mapsto n+1$.
+    \item $<^{\mathcal{A}_{Nat}}:\mathbb{N}^2\to Bool$ será la función que cumpla $<^{\mathcal{A}_{Nat}}(m,n)=V$ si $m<n$, y $<^{\mathcal{A}_{Nat}}(m,n)=F$ en caso contrario. Es decir, $<^{\mathcal{A}_{Nat}}(m,n)$ será verdadero si y solo sí $m<n$.
+\end{itemize}
+Es importante distinguir los símbolos de sus objetos asociados, ya que en algunos casos, como 0, suma y producto en este ejemplo, representamos igual ambas cosas. En el siguiente ejemplo habrá una clara distinción entre los símbolos y sus objetos asociados.
+\end{example}
+
+
+\begin{example}Vamos a ver otro ejemplo de álgebra para la signatura $Nat$.
+Sea $\mathcal{A} = \langle \{\bigtriangleup, \bigcirc \}, \{0^{\mathcal{A}}\}, \{+^{\mathcal{A}}, *^{\mathcal{A}}, s^{\mathcal{A}}\}, \{<^{\mathcal{A}}\}\rangle$ tal que:
+\begin{itemize}
+    \item $0^{\mathcal{A}} = \bigtriangleup$.
+    \item $s^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \} \rightarrow \{\bigtriangleup, \bigcirc\}$, $x \mapsto \bigtriangleup$.
+    \item $*^{\mathcal{A}}, +^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow \{\bigtriangleup, \bigcirc\}$, $(x, y) \mapsto \bigcirc$.
+    \item $<^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow Bool$, $(x, y) \mapsto V$.
+\end{itemize}
+Como veremos en interpretaciones, la expresión $$*(+(s(0), s(0)), s(s(s(0))))$$ en $\mathcal{A}$ se refiere a $\bigcirc$ ya que, desarrollando, esa expresión corresponde a:
+\begin{align*}
+&*^{\mathcal{A}}(+^{\mathcal{A}}(s^{\mathcal{A}}(0^{\mathcal{A}}), s^{\mathcal{A}}(0^{\mathcal{A}})), s^{\mathcal{A}}(s^{\mathcal{A}}(s^{\mathcal{A}}(0^{\mathcal{A}}))))\\
+&=*^{\mathcal{A}}(+^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup), s^{\mathcal{A}}(\bigtriangleup)), s^{\mathcal{A}}(s^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup))))\\
+&=*^{\mathcal{A}}(+^{\mathcal{A}}(\bigtriangleup, \bigtriangleup), s^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup)))\\
+&=*^{\mathcal{A}}(\bigcirc, s^{\mathcal{A}}(\bigtriangleup))\\
+&=*^{\mathcal{A}}(\bigcirc, \bigtriangleup)\\
+&=\bigcirc
+\end{align*}
+
+
+, mientras que en $\mathcal{A}_{Nat}$ podemos ver de forma similar que la expresión se refiere a $6$.$\\$
+Sin embargo, si intentamos ver a qué se refiere el término $+(s(x), s(0))$, tiene una variable que todavía no sabemos como interpretar. Informalmente, las variables suelen referirse a objetos que no hemos determinado. En nuestra segunda álgebra, $x$ podría referirse a $\bigtriangleup$ o a $\bigcirc$. En ambos casos, $+(s(x), s(0))$ se refiere a $\bigcirc$ en $\mathcal{A}$. Sin embargo, en $\mathcal{A}_{Nat}$, el valor que tome la expresión dependerá del valor que tome la $x$.
+\end{example}
+
+Lo anterior muestra que es necesario definir una función especial para dotar de significado a las variables:
+
+\begin{definition}
+Sea $S$ signatura. Una \textit{S-interpretación} es una tupla $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ con:
+\begin{itemize}
+    \item $\mathcal{A}$ es \textit{S-álgebra} de soporte $A$.
+    \item $\sigma : Var \rightarrow A$.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+Así, en el ejemplo anterior, tomando una $Nat$-interpretación $\sigma: Var \rightarrow \mathbb{N}$, podemos interpretar $+(s(x), s(0))$: si por ejemplo $\sigma(x) = 7$, estamos `asignando' a la variable $x$ el valor 7, por tanto a la expresión total le asignaríamos el valor:
+\begin{align*}
+&+^{\mathcal{A}_{Nat}}(s^{\mathcal{A}_{Nat}}(\sigma(x)), s^{\mathcal{A}_{Nat}}(0^{\mathcal{A}_{Nat}}))\\
+&=+^{\mathcal{A}_{Nat}}(s^{\mathcal{A}_{Nat}}(7), s^{\mathcal{A}_{Nat}}(0))\\
+&=+^{\mathcal{A}_{Nat}}(8,1)\\
+&=9
+\end{align*}
+\end{example}
+
+Ahora extendemos este concepto a términos, como ya hemos hecho intuitivamente en los dos últimos ejemplos:
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura, $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ $S$-interpretación. Definimos recursivamente la \textit{interpretación de los términos} $t \in TERM_S$, $t^{\mathcal{F}}$, como:
+\begin{itemize}
+    \item Caso base:
+        \begin{itemize}
+            \item Si $c \in Ct_S$, $c^{\mathcal{F}} = c^{\mathcal{A}}$.
+            \item Si $x \in Var$, $x^{\mathcal{F}} = \sigma(x)$.
+        \end{itemize}
+    \item Caso recursivo:
+        \begin{itemize}
+           \item Si $f|_k \in Fn_S$, $t_1, \dots, t_k \in TERM_S$, $f(t_1, \dots, t_k)^{\mathcal{F}} = f^{\mathcal{A}}(t_{1}^{\mathcal{F}}, \dots, t_{k}^{\mathcal{F}})$.
+        \end{itemize}
+\end{itemize}
+\end{definition}
+
+Antes de pasar a la interpretación de fórmulas, conviene establecer la siguiente notación: dada la $S$-interpretación $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$, por el símbolo $\mathcal{F}[a/x]$ designamos la $S$-interpretación determinada por $\langle \mathcal{A}, \sigma[a/x]\rangle$.\footnote{Recordemos que denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.}
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$, $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ $S$-interpretación, con $A$ conjunto soporte.  Definimos recursivamente la \textit{interpretación de las fórmulas} $\varphi \in FORM_S$, $\varphi^{\mathcal{F}}$, como:
+\begin{itemize}
+    \item Caso base:
+        \begin{itemize}
+            \item Si $\varphi = \top$, $\varphi^{\mathcal{F}} = V$.
+            \item Si $\varphi = \bot$, $\varphi^{\mathcal{F}} = F$.
+            \item Si $\varphi = t \doteq s$, con $t, s \in TERM_S$; entonces $\varphi^{\mathcal{F}} = V$ si $t^{\mathcal{F}} = s^{\mathcal{F}}$ y $\varphi^{\mathcal{F}} = F$ en otro caso.
+            \item Si $\varphi = p(t_1, \dots, t_k)$, con $t_1, \dots, t_k \in TERM_S$, $p|_k \in Pd_S$; entonces $\varphi^{\mathcal{F}} = V$ si $p^{\mathcal{A}}(t_{1}^{\mathcal{F}}, \dots, t_{k}^{\mathcal{F}}) = V$ y $\varphi^{\mathcal{F}} = F$ en otro caso. 
+        \end{itemize}
+    \item Caso recursivo:
+        \begin{itemize}
+            \item Si $\varphi = \neg \varphi_1$,  $\varphi^{\mathcal{F}} = v_{\neg}(\varphi_{1}^{\mathcal{F}})$.
+            \item Si $\varphi = \varphi_1 \square \varphi_2$,  $\varphi^{\mathcal{F}} = v_{\square}(\varphi_{1}^{\mathcal{F}}, \varphi_{2}^{\mathcal{F}})$.
+            \item Si $\varphi = \forall x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathcal{F}} = V$, si para todo $a \in A$, $\varphi_1^{\mathcal{F}[a/x]} = V$; y $\varphi^{\mathcal{F}} = F$ en otro caso.
+            \item Si $\varphi = \exists x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathcal{F}} = V$, si existe $a \in A$ tal que $\varphi_1^{\mathcal{F}[a/x]} = V$; y $\varphi^{\mathcal{F}} = F$ en otro caso.
+        \end{itemize}
+\end{itemize}
+\end{definition}
+
+Describamos el concepto de \textit{consecuencia lógica} para lógica de primer orden: 
+
+\begin{definition}
+Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$, $\mathcal{F}$ $S$-interpretación. Decimos que $\mathcal{F}$ \textit{satisface} $\varphi$, $\mathcal{F} \vDash \varphi$, si $\varphi^{\mathcal{F}} = V$. 
+Análogamemente, $\mathcal{\A}$ \textit{satisface} $\Phi$, $\mathcal{F} \vDash \Phi$, si $\psi^{\mathcal{F}} = V$, para cada $\psi \in \Phi$.
+\end{definition}
+
+\begin{definition}
+Sea $S$ signatura. Dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, decimos que $\varphi$ es \textit{consecuencia lógica} de $\Phi$ si toda $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F}\vDash \Phi$ verifica $\mathcal{F} \vDash \varphi$.
+\end{definition}
+
+\begin{definition}
+Sea $S$ signatura. $\Phi \subseteq FORM_S$ se dice \textit{satisfactible} si existe una $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F} \vDash \Phi$. $\Phi$ se dice \textit{insatisfactible} si no existe tal $S$-interpretación $\mathcal{F}$.
+\end{definition}
+$\\$
+Fijada una signatura $S$, podemos clasificar cada fórmula $\varphi$ como:
+\begin{itemize}
+    \item \textit{Satisfactible}, si existe alguna $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F} \vDash \varphi$. 
+    \begin{itemize}
+        \item \textit{Tautología}, si $\mathcal{F} \vDash \varphi$ para toda $S$-interpretación $\mathcal{F}$.
+        \item \textit{Contingencia}, si es satisfactible pero no tautología.
+    \end{itemize}
+    \item \textit{Contradicción}, si no es satisfactible. 
+\end{itemize}
+$\\$
+Veamos algunos ejemplos:
+
+\begin{example}
+La fórmula $\varphi=\exists x \, x \doteq x$ siempre es una tautología.
+En esta afirmación juega un papel importante que el conjunto soporte, $A$, no es vacío. Por tanto dada una signatura $S$ y una $S$-interpretación $\mathcal{F}$, existe un elemento $a\in A$. De modo que llamando $\varphi_1=x \doteq x$, tenemos que $\varphi_1^{\mathcal{F}[a/x]} = V$, ya que se cumple que $a=a$. Como hay un elemento $a\in A$ tal que $\varphi_1^{\mathcal{F}[a/x]} = V$, tenemos que $\varphi^{\mathcal{F}} = V$. De hecho, como esto sucede para todo elemento $a\in A$, también será una tautología la fórmula $\forall x \, x \doteq x$.
+\end{example}
+
+\begin{example}
+Consideremos la signatura $S:= \langle \emptyset, \emptyset, \{ R|_2\}\rangle$ y las fórmulas 
+$$\varphi := \exists x \, \forall y \, R(x, y)$$
+$$\psi := \forall y \, \exists x \, R(x, y)$$
+Veamos que $\varphi \vDash \psi$. Para ello, vamos a ver qué significan $\varphi$ y $\psi$ en términos del conjunto soporte.
+
+Sea $\mathcal{F}$ $S$-interpretación de soporte $A$ tal que $\mathcal{F} \vDash \varphi$. Entonces, existe un $a \in A$ tal que $\mathcal{F}[a/x] \vDash \forall y \, R(x, y)$. Por tanto, para todo $b \in A$ se cumple que $\mathcal{F}[a/x][b/y] \vDash R(x, y)$. 
+
+Es decir, $\mathcal{F} \vDash \varphi$ significa que existe un elemento $a\in A$ que está relacionado con todos los elementos del conjunto soporte $A$ mediante la relación $R$.$\\$
+
+Ahora, sea $\mathcal{F}$ $S$-interpretación de soporte $A$ tal que $\mathcal{F} \vDash \psi$. Entonces, para todo $c \in A$, $\mathcal{F}[c/y]\vDash \exists x \, R(x, y)$. De la misma forma, existe $d \in A$ tal que $\mathcal{F}[c/y][d/x] \vDash R(x, y)$. 
+
+Es decir, $\mathcal{F} \vDash \psi$ significa que para todo elemento $c\in A$ existe algún elemento $d$ del conjunto soporte $A$ tal que $d$ está relacionado con $c$.$\\$
+
+Claramente, si tenemos el primer caso tenemos el segundo, porque para todo elemento $c\in A$, $a$ está relacionado con $c$, por tanto existe algún elemento relacionado con $c$. Por tanto, $\varphi \vDash \psi$.$\\[5pt]$
+
+Veamos que la implicación recíproca, $\psi \vDash \varphi$, no es cierta en general. 
+
+Para ello damos el siguiente contraejemplo: sea el $S$-álgebra $\mathcal{A} := \langle A, \emptyset, \{R^{\mathcal{A}} \}\rangle$, con $A :=  \{1, 2, 3 \}$ y $R^{\mathcal{A}}: A^{2} \rightarrow Bool$ dada por $(1, 2), (2, 3), (3, 1) \mapsto V$, $(x, y) \mapsto F$ en otro caso\footnote{En ocasiones es más cómoda la notación conjuntista, es decir, en vez de dar $R^\mathcal{A}$ como una función $R^{\mathcal{A}}:A^n\to Bool$, podemos darla como el subconjunto $\{a\in\mathcal{A}^n\, | \, R^{\mathcal{A}}(a)=V\}$. Por ejemplo, en este caso, $R^{\mathcal{A}}$ sería el conjunto $\{(1, 2), (2, 3), (3, 1)\}$}.$\\$
+
+Sea $\mathcal{G}=\langle\mathcal{A},\sigma \rangle$ una $S$-interpretación. Evidentemente, para todo $a \in A$ existe $b \in A$ tal que $\mathcal{G}[a/y][b/x] \vDash R(x, y)$: si $a = 1$, $b = 3$; si $a = 2$, $b = 1$; si $a= 3$, $b = 2$. Por otro lado, es imposible que exista $c \in A$ tal que, para todo $d \in A$, $\mathcal{F}[c/x][d/y] \vDash R(x, y)$, ya que ningún elemento está relacionado con todos. Por tanto $\mathcal{G}$ satisface $\psi$ pero no satisface $\varphi$.
+\end{example}
+
+\begin{example}
+$\varphi_{=\infty} := (\exists z \, \forall x \, \neg f(x) \doteq z) \land (\forall x \, \forall y \, f(x) \doteq f(y) \rightarrow x \doteq y)$ es una contingencia. Nótese que nos dice que $f$ es (símbolo de) una función inyectiva y no sobreyectiva. En concreto, esto implica que el cardinal del conjunto soporte de cualquier $S$-álgebra inducida por una $S$-interpretación $\mathcal{F}$ que satisface $\varphi_{=\infty}$ tiene que ser infinito. Esto se debe a que el símbolo de función $f$ tiene asociada una función $f^\mathcal{A}:A\to A$ que es inyectiva y no sobreyectiva, lo cual no puede pasar si $A$ es finito.
+\end{example}
+
+\begin{example}
+$\varphi_{=2} := (\exists x \, \exists y \, \neg x \doteq y) \land \forall z \, (z \doteq y \lor z \doteq x)$ es una contingencia. Nos dice, en concreto, que el cardinal del conjunto soporte de cualquier $S$-álgebra inducida por una $S$-interpretación tiene que ser igual a 2.
+\end{example}
