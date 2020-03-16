@@ -20,11 +20,11 @@ Una \textit{signatura} $S$ es una tupla $\langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ 
     \item $Fn_{S}$ es el conjunto de símbolos de función con determinada aridad\footnote{Por ahora, nos referimos por \textit{aridad} de un símbolo de función o de predicado como el número de argumentos que admite. Más adelante especificaremos lo que significa esta idea.}.
     \item $Pd_{S}$ es el conjunto de símbolos de predicado con determinada aridad.
 \end{itemize} 
-Dado un símbolo $\Gamma$ de función o predicado, denotamos por $\Gamma|_{n}$ que es $n$-ario\footnote{Nótese que podríamos haber definido los símbolos de constante de nuestra signatura empleando símbolos de función 0-arios. Además, un predicado 0-ario se corresponde con un símbolo de proposición, lo que nos recuerda que al lógica de primer orden es más expresiva que la proposicional.}.
+Dado un símbolo $\Gamma$ de función o predicado, denotamos por $\Gamma|_{n}$ que es $n$-ario.
 \end{definition}
 
 
-\begin{example}
+\begin{example}\label{nat}
 La signatura $Nat := \langle \{0\}, \{+|_2, s|_1\}, \{<|_2\}\rangle$ para los números naturales. Es decir:
 \begin{itemize}
     \item Hay un símbolo de constante, $0$.
@@ -40,7 +40,7 @@ $$A_{S} := Ct_S \cup Fn_S \cup Pd_S \cup Var \cup \{\neg, \land, \lor, \rightarr
 donde:
 \begin{itemize}
     \item $Ct_S,Fn_S,Pd_S$ vienen dados por \ref{sig}.
-    \item $Var$ son los símbolos de variable.
+    \item $Var$ son los símbolos de variable: \{$x,y,z,x_1,\dots\}$.
     \item $\neg, \land, \lor, \rightarrow, \leftrightarrow, \top, \bot,(,)$ son los símbolos de conectiva y los paréntesis, al igual que en lógica proposicional.
     \item $\exists$ (para todo) y $\forall$ (existe) son los \textit{cuantificadores lógicos}. Llamamos a $\forall$ \textit{cuantificador universal} y a $\exists$ \textit{cuantificador existencial}.
     \item $\doteq$, el símbolo de igualdad. Usamos $\doteq$ en vez de $=$ para distinguirlo de la igualdad de fórmulas. Por ejemplo, si escribimos $\varphi = t \doteq s$ queremos decir que $\varphi$ es igual a $t \doteq s$.
@@ -59,8 +59,10 @@ Dada la signatura $S$, el \textit{conjunto de términos} de $S$, $TERM_S$, es el
 \end{enumerate}
 \end{definition}
 
+Si $f$ es una función 2-aria, a veces usaremos la notación tradicional $xfy$ en vez de $f(x,y)$. Por ejemplo, en $Nat$ diremos $x+y$ en vez de $+(x,y)$.
+
 \begin{example}
-Siguiendo con la signatura $Nat$, algunos ejemplos de elementos de $TERM_{NAT}$ serían  $0, s(s(0)), x, y, z,+(s(0), s(1))$ y $s(+(x,3))$.
+Siguiendo con la signatura $Nat$, algunos ejemplos de elementos de $TERM_{NAT}$ serían  $0, s(s(0)), x, y, z,+(s(s(0)), s(0))$ y $s(+(x,s(s(s(0)))))$.
 \end{example}
 
 La siguiente proposición nos da una definición constructiva de $TERM_S$: 
@@ -84,6 +86,8 @@ Dada la signatura $S$, el \textit{conjunto de fórmulas atómicas} de $S$, $FORM
     \item $\top, \bot \in FORMAT_S$.
 \end{enumerate}
 \end{definition}
+
+Si $R$ es un predicado 2-ario, a veces usaremos la notación tradicional $xRy$ en vez de $R(x,y)$. Por ejemplo, en $Nat$ diremos $x<y$ en vez de $<(x,y)$.
 
 \begin{definition}\label{form}
 Dada la signatura $S$, el \textit{conjunto de fórmulas} de $S$, $FORM_S$, es el menor subconjunto de $A_{S}^*$ que verifica:
@@ -119,7 +123,7 @@ Comenzamos con los teoremas de inducción estructural y recursión para $TERM_S$
 Sean $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ una signatura y $P$ una propiedad. Si se cumple que:
 \begin{enumerate}
     \item $P$ es válida para todo elemento de $T_{S}^{0}$.
-    \item Sea $f|_k \in Fn_S$. Si $P$ es válida para todo elemento de $T_{S}^{n}$, entonces es válida para $f(t_1, \dots t_n)$, con $t_1, \dots, t_n \in T_{S}^{n}$.
+    \item Sea $f|_k \in Fn_S$. Si $P$ es válida para todo elemento de $T_{S}^{n}$, entonces es válida para $f(t_1, \dots t_k)$, con $t_1, \dots, t_k \in T_{S}^{n}$.
 \end{enumerate}
 Entonces $P$ es válida para todo elemento de $TERM_S$.
 \end{prop}
@@ -201,7 +205,7 @@ Extendamos la función $var$ al conjunto $FORM_S$. Por comodidad, omitimos las f
     \item Caso recursivo:
         \begin{itemize}
             \item $var((\neg \varphi)) = var(\varphi)$.
-            \item $var((\phi \square \psi)) = var(\varphi) \cup var(\psi)$.
+            \item $var((\varphi \square \psi)) = var(\varphi) \cup var(\psi)$.
             \item $var((Qx \, \varphi)) = \{x\} \cup var(\varphi)$.
         \end{itemize}
 \end{enumerate}
@@ -259,60 +263,64 @@ Hasta ahora hemos venido considerando cuestiones sintácticas sobre las fórmula
 
 \begin{definition}
 Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ una signatura. Una \textit{S-álgebra} es una tupla 
-$$\mathcal{A} := \langle A, \{ c^{\mathcal{A}} \, | \, c \in Ct_S\}, \{f^{\mathcal{A}} \, | \, f \in Fn_S\}, \{p^{\mathcal{A}} \, | \, p \in Pd_S\}\rangle$$
+$$\mathfrak{A} := \langle A, \{ c^{\mathfrak{A}} \, | \, c \in Ct_S\}, \{f^{\mathfrak{A}} \, | \, f \in Fn_S\}, \{p^{\mathfrak{A}} \, | \, p \in Pd_S\}\rangle$$
 De modo que:
 \begin{itemize}
     \item $A$, el \textit{conjunto soporte}, verifica que $A \neq \emptyset$.
-    \item Si $c \in Ct_S$, $c^{\mathcal{A}} \in A$.
-    \item Si $f|_k \in Fn_S$, $f^{\mathcal{A}}: A^{k} \rightarrow A$.
-    \item Si $p|_k \in Pd_S$, $p^{\mathcal{A}}: A^{k} \rightarrow Bool$.
+    \item Si $c \in Ct_S$, $c^{\mathfrak{A}} \in A$.
+    \item Si $f|_k \in Fn_S$, $f^{\mathfrak{A}}: A^{k} \rightarrow A$.
+    \item Si $p|_k \in Pd_S$, $p^{\mathfrak{A}}: A^{k} \rightarrow Bool$.
 \end{itemize}
 \end{definition}
+$\\$
+Por convenio, un símbolo $f$ de función 0-aria tendrá asociada una función $f^{\mathfrak{A}}: \{\emptyset\} \rightarrow A$. Es decir, será una función desde el conjunto de un elemento $\{\emptyset\}$ en $A$. Está claro que estas funciones pueden identificarse con elementos de $A$, identificando $f$ con $f(\emptyset)$. De modo que las funciones 0-arias van a llevar a cabo esencialmente la misma función que las constantes, y de hecho, aunque aquí usaremos constantes, toda la lógica de primer orden se puede desarrollar sin constantes usando funciones 0-arias.$\\$
 
-\begin{example}
+De igual forma, un símbolo $p$ de predicado 0-ario tendrá asociada una función $p^{\mathfrak{A}}: \{\emptyset\} \rightarrow Bool$. Es decir, igual que con las funciones 0-arias, podemos asociar a cada predicado 0-ario un valor de $Bool$, $V$ o $F$. En esto se asemejarán a los símbolos de proposición de lógica proposicional, a los cuales asignábamos (mediante las asignaciones de verdad) un valor de $Bool$.
+
+\begin{example}\label{anat}
 Consideremos la signatura $Nat := \langle \{0\}, \{+|_2,*|_2, s|_1\}, \{<|_2\}\rangle$ que presentamos previamente. La forma natural (aunque no la única) de asignar significados a estos símbolos sería la $S$-álgebra:
-$$\mathcal{A}_{Nat} := \langle \mathbb{N}, \{ 0^{\mathcal{A}_{Nat}}\}, \{+^{\mathcal{A}_{Nat}},*^{\mathcal{A}_{Nat}},s^{\mathcal{A}_{Nat}}\}, \{<^{\mathcal{A}_{Nat}}\}\rangle \text{, donde:}$$
+$$\mathfrak{A}_{Nat} := \langle \mathbb{N}, \{ 0^{\mathfrak{A}_{Nat}}\}, \{+^{\mathfrak{A}_{Nat}},*^{\mathfrak{A}_{Nat}},s^{\mathfrak{A}_{Nat}}\}, \{<^{\mathfrak{A}_{Nat}}\}\rangle \text{, donde:}$$
 \begin{itemize}
     \item $\mathbb{N}$ es el conjunto de los números naturales: $\{0,1,2,\dots\}$.
-    \item $0^{\mathcal{A}_{Nat}}$ será el número natural 0.
-    \item $+^{\mathcal{A}_{Nat}}$ será la función suma en los naturales, $+:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m+n$. $\\$
-    $*^{\mathcal{A}_{Nat}}$ será la función producto en los naturales, $*:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m*n$.$\\$
-    $s^{\mathcal{A}_{Nat}}$ será la función sucesor en los naturales, $s:\mathbb{N}\to\mathbb{N};n\mapsto n+1$.
-    \item $<^{\mathcal{A}_{Nat}}:\mathbb{N}^2\to Bool$ será la función que cumpla $<^{\mathcal{A}_{Nat}}(m,n)=V$ si $m<n$, y $<^{\mathcal{A}_{Nat}}(m,n)=F$ en caso contrario. Es decir, $<^{\mathcal{A}_{Nat}}(m,n)$ será verdadero si y solo sí $m<n$.
+    \item $0^{\mathfrak{A}_{Nat}}$ será el número natural 0.
+    \item $+^{\mathfrak{A}_{Nat}}$ será la función suma en los naturales, $+:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m+n$. $\\$
+    $*^{\mathfrak{A}_{Nat}}$ será la función producto en los naturales, $*:\mathbb{N}^2\to\mathbb{N};(m,n)\mapsto m*n$.$\\$
+    $s^{\mathfrak{A}_{Nat}}$ será la función sucesor en los naturales, $s:\mathbb{N}\to\mathbb{N};n\mapsto n+1$.
+    \item $<^{\mathfrak{A}_{Nat}}:\mathbb{N}^2\to Bool$ será la función que cumpla $<^{\mathfrak{A}_{Nat}}(m,n)=V$ si $m<n$, y $<^{\mathfrak{A}_{Nat}}(m,n)=F$ en caso contrario. Es decir, $<^{\mathfrak{A}_{Nat}}(m,n)$ será verdadero si y solo si $m<n$.
 \end{itemize}
 Es importante distinguir los símbolos de sus objetos asociados, ya que en algunos casos, como 0, suma y producto en este ejemplo, representamos igual ambas cosas. En el siguiente ejemplo habrá una clara distinción entre los símbolos y sus objetos asociados.
 \end{example}
 
 
 \begin{example}Vamos a ver otro ejemplo de álgebra para la signatura $Nat$.
-Sea $\mathcal{A} = \langle \{\bigtriangleup, \bigcirc \}, \{0^{\mathcal{A}}\}, \{+^{\mathcal{A}}, *^{\mathcal{A}}, s^{\mathcal{A}}\}, \{<^{\mathcal{A}}\}\rangle$ tal que:
+Sea $\mathfrak{A} = \langle \{\bigtriangleup, \bigcirc \}, \{0^{\mathfrak{A}}\}, \{+^{\mathfrak{A}}, *^{\mathfrak{A}}, s^{\mathfrak{A}}\}, \{<^{\mathfrak{A}}\}\rangle$ tal que:
 \begin{itemize}
-    \item $0^{\mathcal{A}} = \bigtriangleup$.
-    \item $s^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \} \rightarrow \{\bigtriangleup, \bigcirc\}$, $x \mapsto \bigtriangleup$.
-    \item $*^{\mathcal{A}}, +^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow \{\bigtriangleup, \bigcirc\}$, $(x, y) \mapsto \bigcirc$.
-    \item $<^{\mathcal{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow Bool$, $(x, y) \mapsto V$.
+    \item $0^{\mathfrak{A}} = \bigtriangleup$.
+    \item $s^{\mathfrak{A}}: \{\bigtriangleup, \bigcirc \} \rightarrow \{\bigtriangleup, \bigcirc\}$, $x \mapsto \bigtriangleup$.
+    \item $*^{\mathfrak{A}}, +^{\mathfrak{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow \{\bigtriangleup, \bigcirc\}$, $(x, y) \mapsto \bigcirc$.
+    \item $<^{\mathfrak{A}}: \{\bigtriangleup, \bigcirc \}^{2} \rightarrow Bool$, $(x, y) \mapsto V$.
 \end{itemize}
-Como veremos en interpretaciones, la expresión $$*(+(s(0), s(0)), s(s(s(0))))$$ en $\mathcal{A}$ se refiere a $\bigcirc$ ya que, desarrollando, esa expresión corresponde a:
+Como veremos en interpretaciones, la expresión $$*(+(s(0), s(0)), s(s(s(0))))$$ en $\mathfrak{A}$ se refiere a $\bigcirc$ ya que, desarrollando, esa expresión corresponde a:
 \begin{align*}
-&*^{\mathcal{A}}(+^{\mathcal{A}}(s^{\mathcal{A}}(0^{\mathcal{A}}), s^{\mathcal{A}}(0^{\mathcal{A}})), s^{\mathcal{A}}(s^{\mathcal{A}}(s^{\mathcal{A}}(0^{\mathcal{A}}))))\\
-&=*^{\mathcal{A}}(+^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup), s^{\mathcal{A}}(\bigtriangleup)), s^{\mathcal{A}}(s^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup))))\\
-&=*^{\mathcal{A}}(+^{\mathcal{A}}(\bigtriangleup, \bigtriangleup), s^{\mathcal{A}}(s^{\mathcal{A}}(\bigtriangleup)))\\
-&=*^{\mathcal{A}}(\bigcirc, s^{\mathcal{A}}(\bigtriangleup))\\
-&=*^{\mathcal{A}}(\bigcirc, \bigtriangleup)\\
+&*^{\mathfrak{A}}(+^{\mathfrak{A}}(s^{\mathfrak{A}}(0^{\mathfrak{A}}), s^{\mathfrak{A}}(0^{\mathfrak{A}})), s^{\mathfrak{A}}(s^{\mathfrak{A}}(s^{\mathfrak{A}}(0^{\mathfrak{A}}))))\\
+&=*^{\mathfrak{A}}(+^{\mathfrak{A}}(s^{\mathfrak{A}}(\bigtriangleup), s^{\mathfrak{A}}(\bigtriangleup)), s^{\mathfrak{A}}(s^{\mathfrak{A}}(s^{\mathfrak{A}}(\bigtriangleup))))\\
+&=*^{\mathfrak{A}}(+^{\mathfrak{A}}(\bigtriangleup, \bigtriangleup), s^{\mathfrak{A}}(s^{\mathfrak{A}}(\bigtriangleup)))\\
+&=*^{\mathfrak{A}}(\bigcirc, s^{\mathfrak{A}}(\bigtriangleup))\\
+&=*^{\mathfrak{A}}(\bigcirc, \bigtriangleup)\\
 &=\bigcirc
 \end{align*}
 
 
-, mientras que en $\mathcal{A}_{Nat}$ podemos ver de forma similar que la expresión se refiere a $6$.$\\$
-Sin embargo, si intentamos ver a qué se refiere el término $+(s(x), s(0))$, tiene una variable que todavía no sabemos como interpretar. Informalmente, las variables suelen referirse a objetos que no hemos determinado. En nuestra segunda álgebra, $x$ podría referirse a $\bigtriangleup$ o a $\bigcirc$. En ambos casos, $+(s(x), s(0))$ se refiere a $\bigcirc$ en $\mathcal{A}$. Sin embargo, en $\mathcal{A}_{Nat}$, el valor que tome la expresión dependerá del valor que tome la $x$.
+, mientras que en $\mathfrak{A}_{Nat}$ podemos ver de forma similar que la expresión se refiere a $6$.$\\$
+Sin embargo, si intentamos ver a qué se refiere el término $+(s(x), s(0))$, tiene una variable que todavía no sabemos como interpretar. Informalmente, las variables suelen referirse a objetos que no hemos determinado. En nuestra segunda álgebra, $x$ podría referirse a $\bigtriangleup$ o a $\bigcirc$. En ambos casos, $+(s(x), s(0))$ se refiere a $\bigcirc$ en $\mathfrak{A}$. Sin embargo, en $\mathfrak{A}_{Nat}$, el valor que tome la expresión dependerá del valor que tome la $x$.
 \end{example}
 
 Lo anterior muestra que es necesario definir una función especial para dotar de significado a las variables:
 
 \begin{definition}
-Sea $S$ signatura. Una \textit{S-interpretación} es una tupla $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ con:
+Sea $S$ signatura. Una \textit{S-interpretación} es una tupla $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ con:
 \begin{itemize}
-    \item $\mathcal{A}$ es \textit{S-álgebra} de soporte $A$.
+    \item $\mathfrak{A}$ es \textit{S-álgebra} de soporte $A$.
     \item $\sigma : Var \rightarrow A$.
 \end{itemize}
 \end{definition}
@@ -320,9 +328,9 @@ Sea $S$ signatura. Una \textit{S-interpretación} es una tupla $\mathcal{F} := \
 \begin{example}
 Así, en el ejemplo anterior, tomando una $Nat$-interpretación $\sigma: Var \rightarrow \mathbb{N}$, podemos interpretar $+(s(x), s(0))$: si por ejemplo $\sigma(x) = 7$, estamos `asignando' a la variable $x$ el valor 7, por tanto a la expresión total le asignaríamos el valor:
 \begin{align*}
-&+^{\mathcal{A}_{Nat}}(s^{\mathcal{A}_{Nat}}(\sigma(x)), s^{\mathcal{A}_{Nat}}(0^{\mathcal{A}_{Nat}}))\\
-&=+^{\mathcal{A}_{Nat}}(s^{\mathcal{A}_{Nat}}(7), s^{\mathcal{A}_{Nat}}(0))\\
-&=+^{\mathcal{A}_{Nat}}(8,1)\\
+&+^{\mathfrak{A}_{Nat}}(s^{\mathfrak{A}_{Nat}}(\sigma(x)), s^{\mathfrak{A}_{Nat}}(0^{\mathfrak{A}_{Nat}}))\\
+&=+^{\mathfrak{A}_{Nat}}(s^{\mathfrak{A}_{Nat}}(7), s^{\mathfrak{A}_{Nat}}(0))\\
+&=+^{\mathfrak{A}_{Nat}}(8,1)\\
 &=9
 \end{align*}
 \end{example}
@@ -330,38 +338,38 @@ Así, en el ejemplo anterior, tomando una $Nat$-interpretación $\sigma: Var \ri
 Ahora extendemos este concepto a términos, como ya hemos hecho intuitivamente en los dos últimos ejemplos:
 
 \begin{definition}
-Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura, $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ $S$-interpretación. Definimos recursivamente la \textit{interpretación de los términos} $t \in TERM_S$, $t^{\mathcal{F}}$, como:
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura, $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ $S$-interpretación. Definimos recursivamente la \textit{interpretación de los términos} $t \in TERM_S$, $t^{\mathfrak{I}}$, como:
 \begin{itemize}
     \item Caso base:
         \begin{itemize}
-            \item Si $c \in Ct_S$, $c^{\mathcal{F}} = c^{\mathcal{A}}$.
-            \item Si $x \in Var$, $x^{\mathcal{F}} = \sigma(x)$.
+            \item Si $c \in Ct_S$, $c^{\mathfrak{I}} = c^{\mathfrak{A}}$.
+            \item Si $x \in Var$, $x^{\mathfrak{I}} = \sigma(x)$.
         \end{itemize}
     \item Caso recursivo:
         \begin{itemize}
-           \item Si $f|_k \in Fn_S$, $t_1, \dots, t_k \in TERM_S$, $f(t_1, \dots, t_k)^{\mathcal{F}} = f^{\mathcal{A}}(t_{1}^{\mathcal{F}}, \dots, t_{k}^{\mathcal{F}})$.
+           \item Si $f|_k \in Fn_S$, $t_1, \dots, t_k \in TERM_S$, $f(t_1, \dots, t_k)^{\mathfrak{I}} = f^{\mathfrak{A}}(t_{1}^{\mathfrak{I}}, \dots, t_{k}^{\mathfrak{I}})$.
         \end{itemize}
 \end{itemize}
 \end{definition}
 
-Antes de pasar a la interpretación de fórmulas, conviene establecer la siguiente notación: dada la $S$-interpretación $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$, por el símbolo $\mathcal{F}[a/x]$ designamos la $S$-interpretación determinada por $\langle \mathcal{A}, \sigma[a/x]\rangle$.\footnote{Recordemos que denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.}
+Antes de pasar a la interpretación de fórmulas, conviene establecer la siguiente notación: dada la $S$-interpretación $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$, por el símbolo $\mathfrak{I}[a/x]$ designamos la $S$-interpretación determinada por $\langle \mathfrak{A}, \sigma[a/x]\rangle$.\footnote{Recordemos que denotamos respectivamente por $f[b/a](x)$ a $f(x)$, si $x \neq a$, y a $b$, si $x = a$.}
 
 \begin{definition}
-Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$, $\mathcal{F} := \langle \mathcal{A}, \sigma \rangle$ $S$-interpretación, con $A$ conjunto soporte.  Definimos recursivamente la \textit{interpretación de las fórmulas} $\varphi \in FORM_S$, $\varphi^{\mathcal{F}}$, como:
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$, $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ $S$-interpretación, con $A$ conjunto soporte.  Definimos recursivamente la \textit{interpretación de las fórmulas} $\varphi \in FORM_S$, $\varphi^{\mathfrak{I}}$, como:
 \begin{itemize}
     \item Caso base:
         \begin{itemize}
-            \item Si $\varphi = \top$, $\varphi^{\mathcal{F}} = V$.
-            \item Si $\varphi = \bot$, $\varphi^{\mathcal{F}} = F$.
-            \item Si $\varphi = t \doteq s$, con $t, s \in TERM_S$; entonces $\varphi^{\mathcal{F}} = V$ si $t^{\mathcal{F}} = s^{\mathcal{F}}$ y $\varphi^{\mathcal{F}} = F$ en otro caso.
-            \item Si $\varphi = p(t_1, \dots, t_k)$, con $t_1, \dots, t_k \in TERM_S$, $p|_k \in Pd_S$; entonces $\varphi^{\mathcal{F}} = V$ si $p^{\mathcal{A}}(t_{1}^{\mathcal{F}}, \dots, t_{k}^{\mathcal{F}}) = V$ y $\varphi^{\mathcal{F}} = F$ en otro caso. 
+            \item Si $\varphi = \top$, $\varphi^{\mathfrak{I}} = V$.
+            \item Si $\varphi = \bot$, $\varphi^{\mathfrak{I}} = F$.
+            \item Si $\varphi = t \doteq s$, con $t, s \in TERM_S$; entonces $\varphi^{\mathfrak{I}} = V$ si $t^{\mathfrak{I}} = s^{\mathfrak{I}}$ y $\varphi^{\mathfrak{I}} = F$ en otro caso.
+            \item Si $\varphi = p(t_1, \dots, t_k)$, con $t_1, \dots, t_k \in TERM_S$, $p|_k \in Pd_S$; entonces $\varphi^{\mathfrak{I}} = V$ si $p^{\mathfrak{A}}(t_{1}^{\mathfrak{I}}, \dots, t_{k}^{\mathfrak{I}}) = V$ y $\varphi^{\mathfrak{I}} = F$ en otro caso. 
         \end{itemize}
     \item Caso recursivo:
         \begin{itemize}
-            \item Si $\varphi = \neg \varphi_1$,  $\varphi^{\mathcal{F}} = v_{\neg}(\varphi_{1}^{\mathcal{F}})$.
-            \item Si $\varphi = \varphi_1 \square \varphi_2$,  $\varphi^{\mathcal{F}} = v_{\square}(\varphi_{1}^{\mathcal{F}}, \varphi_{2}^{\mathcal{F}})$.
-            \item Si $\varphi = \forall x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathcal{F}} = V$, si para todo $a \in A$, $\varphi_1^{\mathcal{F}[a/x]} = V$; y $\varphi^{\mathcal{F}} = F$ en otro caso.
-            \item Si $\varphi = \exists x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathcal{F}} = V$, si existe $a \in A$ tal que $\varphi_1^{\mathcal{F}[a/x]} = V$; y $\varphi^{\mathcal{F}} = F$ en otro caso.
+            \item Si $\varphi = \neg \varphi_1$,  $\varphi^{\mathfrak{I}} = v_{\neg}(\varphi_{1}^{\mathfrak{I}})$.
+            \item Si $\varphi = \varphi_1 \square \varphi_2$,  $\varphi^{\mathfrak{I}} = v_{\square}(\varphi_{1}^{\mathfrak{I}}, \varphi_{2}^{\mathfrak{I}})$.
+            \item Si $\varphi = \forall x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathfrak{I}} = V$, si para todo $a \in A$, $\varphi_1^{\mathfrak{I}[a/x]} = V$; y $\varphi^{\mathfrak{I}} = F$ en otro caso.
+            \item Si $\varphi = \exists x \, \varphi_1$, con $x \in Var$; entonces $\varphi^{\mathfrak{I}} = V$, si existe $a \in A$ tal que $\varphi_1^{\mathfrak{I}[a/x]} = V$; y $\varphi^{\mathfrak{I}} = F$ en otro caso.
         \end{itemize}
 \end{itemize}
 \end{definition}
@@ -369,23 +377,23 @@ Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$, $\mathcal{F} := \langle \mathca
 Describamos el concepto de \textit{consecuencia lógica} para lógica de primer orden: 
 
 \begin{definition}
-Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$, $\mathcal{F}$ $S$-interpretación. Decimos que $\mathcal{F}$ \textit{satisface} $\varphi$, $\mathcal{F} \vDash \varphi$, si $\varphi^{\mathcal{F}} = V$. 
-Análogamemente, $\mathcal{\A}$ \textit{satisface} $\Phi$, $\mathcal{F} \vDash \Phi$, si $\psi^{\mathcal{F}} = V$, para cada $\psi \in \Phi$.
+Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$, $\mathfrak{I}$ $S$-interpretación. Decimos que $\mathfrak{I}$ \textit{satisface} $\varphi$, $\mathfrak{I} \vDash \varphi$, si $\varphi^{\mathfrak{I}} = V$. 
+Análogamemente, $\mathcal{\A}$ \textit{satisface} $\Phi$, $\mathfrak{I} \vDash \Phi$, si $\psi^{\mathfrak{I}} = V$, para cada $\psi \in \Phi$.
 \end{definition}
 
 \begin{definition}
-Sea $S$ signatura. Dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, decimos que $\varphi$ es \textit{consecuencia lógica} de $\Phi$ si toda $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F}\vDash \Phi$ verifica $\mathcal{F} \vDash \varphi$.
+Sea $S$ signatura. Dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, decimos que $\varphi$ es \textit{consecuencia lógica} de $\Phi$ si toda $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I}\vDash \Phi$ verifica $\mathfrak{I} \vDash \varphi$.
 \end{definition}
 
 \begin{definition}
-Sea $S$ signatura. $\Phi \subseteq FORM_S$ se dice \textit{satisfactible} si existe una $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F} \vDash \Phi$. $\Phi$ se dice \textit{insatisfactible} si no existe tal $S$-interpretación $\mathcal{F}$.
+Sea $S$ signatura. $\Phi \subseteq FORM_S$ se dice \textit{satisfactible} si existe una $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Phi$. $\Phi$ se dice \textit{insatisfactible} si no existe tal $S$-interpretación $\mathfrak{I}$.
 \end{definition}
 $\\$
 Fijada una signatura $S$, podemos clasificar cada fórmula $\varphi$ como:
 \begin{itemize}
-    \item \textit{Satisfactible}, si existe alguna $S$-interpretación $\mathcal{F}$ tal que $\mathcal{F} \vDash \varphi$. 
+    \item \textit{Satisfactible}, si existe alguna $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \varphi$. 
     \begin{itemize}
-        \item \textit{Tautología}, si $\mathcal{F} \vDash \varphi$ para toda $S$-interpretación $\mathcal{F}$.
+        \item \textit{Tautología}, si $\mathfrak{I} \vDash \varphi$ para toda $S$-interpretación $\mathfrak{I}$.
         \item \textit{Contingencia}, si es satisfactible pero no tautología.
     \end{itemize}
     \item \textit{Contradicción}, si no es satisfactible. 
@@ -395,36 +403,424 @@ Veamos algunos ejemplos:
 
 \begin{example}
 La fórmula $\varphi=\exists x \, x \doteq x$ siempre es una tautología.
-En esta afirmación juega un papel importante que el conjunto soporte, $A$, no es vacío. Por tanto dada una signatura $S$ y una $S$-interpretación $\mathcal{F}$, existe un elemento $a\in A$. De modo que llamando $\varphi_1=x \doteq x$, tenemos que $\varphi_1^{\mathcal{F}[a/x]} = V$, ya que se cumple que $a=a$. Como hay un elemento $a\in A$ tal que $\varphi_1^{\mathcal{F}[a/x]} = V$, tenemos que $\varphi^{\mathcal{F}} = V$. De hecho, como esto sucede para todo elemento $a\in A$, también será una tautología la fórmula $\forall x \, x \doteq x$.
+En esta afirmación juega un papel importante que el conjunto soporte, $A$, no es vacío. Por tanto dada una signatura $S$ y una $S$-interpretación $\mathfrak{I}$, existe un elemento $a\in A$. De modo que llamando $\varphi_1=x \doteq x$, tenemos que $\varphi_1^{\mathfrak{I}[a/x]} = V$, ya que se cumple que $a=a$. Como hay un elemento $a\in A$ tal que $\varphi_1^{\mathfrak{I}[a/x]} = V$, tenemos que $\varphi^{\mathfrak{I}} = V$. De hecho, como esto sucede para todo elemento $a\in A$, también será una tautología la fórmula $\forall x \, x \doteq x$.
 \end{example}
 
-\begin{example}
+\begin{example}\label{complejo}
 Consideremos la signatura $S:= \langle \emptyset, \emptyset, \{ R|_2\}\rangle$ y las fórmulas 
 $$\varphi := \exists x \, \forall y \, R(x, y)$$
 $$\psi := \forall y \, \exists x \, R(x, y)$$
 Veamos que $\varphi \vDash \psi$. Para ello, vamos a ver qué significan $\varphi$ y $\psi$ en términos del conjunto soporte.
 
-Sea $\mathcal{F}$ $S$-interpretación de soporte $A$ tal que $\mathcal{F} \vDash \varphi$. Entonces, existe un $a \in A$ tal que $\mathcal{F}[a/x] \vDash \forall y \, R(x, y)$. Por tanto, para todo $b \in A$ se cumple que $\mathcal{F}[a/x][b/y] \vDash R(x, y)$. 
+Sea $\mathfrak{I}$ $S$-interpretación de soporte $A$ tal que $\mathfrak{I} \vDash \varphi$. Entonces, existe un $a \in A$ tal que $\mathfrak{I}[a/x] \vDash \forall y \, R(x, y)$. Por tanto, para todo $b \in A$ se cumple que $\mathfrak{I}[a/x][b/y] \vDash R(x, y)$. 
 
-Es decir, $\mathcal{F} \vDash \varphi$ significa que existe un elemento $a\in A$ que está relacionado con todos los elementos del conjunto soporte $A$ mediante la relación $R$.$\\$
+Es decir, $\mathfrak{I} \vDash \varphi$ significa que existe un elemento $a\in A$ que está relacionado con todos los elementos del conjunto soporte $A$ mediante la relación $R$.$\\$
 
-Ahora, sea $\mathcal{F}$ $S$-interpretación de soporte $A$ tal que $\mathcal{F} \vDash \psi$. Entonces, para todo $c \in A$, $\mathcal{F}[c/y]\vDash \exists x \, R(x, y)$. De la misma forma, existe $d \in A$ tal que $\mathcal{F}[c/y][d/x] \vDash R(x, y)$. 
+Ahora, sea $\mathfrak{I}$ $S$-interpretación de soporte $A$ tal que $\mathfrak{I} \vDash \psi$. Entonces, para todo $c \in A$, $\mathfrak{I}[c/y]\vDash \exists x \, R(x, y)$. De la misma forma, existe $d \in A$ tal que $\mathfrak{I}[c/y][d/x] \vDash R(x, y)$. 
 
-Es decir, $\mathcal{F} \vDash \psi$ significa que para todo elemento $c\in A$ existe algún elemento $d$ del conjunto soporte $A$ tal que $d$ está relacionado con $c$.$\\$
+Es decir, $\mathfrak{I} \vDash \psi$ significa que para todo elemento $c\in A$ existe algún elemento $d$ del conjunto soporte $A$ tal que $d$ está relacionado con $c$.$\\$
 
 Claramente, si tenemos el primer caso tenemos el segundo, porque para todo elemento $c\in A$, $a$ está relacionado con $c$, por tanto existe algún elemento relacionado con $c$. Por tanto, $\varphi \vDash \psi$.$\\[5pt]$
 
 Veamos que la implicación recíproca, $\psi \vDash \varphi$, no es cierta en general. 
 
-Para ello damos el siguiente contraejemplo: sea el $S$-álgebra $\mathcal{A} := \langle A, \emptyset, \{R^{\mathcal{A}} \}\rangle$, con $A :=  \{1, 2, 3 \}$ y $R^{\mathcal{A}}: A^{2} \rightarrow Bool$ dada por $(1, 2), (2, 3), (3, 1) \mapsto V$, $(x, y) \mapsto F$ en otro caso\footnote{En ocasiones es más cómoda la notación conjuntista, es decir, en vez de dar $R^\mathcal{A}$ como una función $R^{\mathcal{A}}:A^n\to Bool$, podemos darla como el subconjunto $\{a\in\mathcal{A}^n\, | \, R^{\mathcal{A}}(a)=V\}$. Por ejemplo, en este caso, $R^{\mathcal{A}}$ sería el conjunto $\{(1, 2), (2, 3), (3, 1)\}$}.$\\$
+Para ello damos el siguiente contraejemplo: sea el $S$-álgebra $\mathfrak{A} := \langle A, \emptyset, \{R^{\mathfrak{A}} \}\rangle$, con $A :=  \{1, 2, 3 \}$ y $R^{\mathfrak{A}}: A^{2} \rightarrow Bool$ dada por $(1, 2), (2, 3), (3, 1) \mapsto V$, $(x, y) \mapsto F$ en otro caso\footnote{En ocasiones es más cómoda la notación conjuntista, es decir, en vez de dar $R^\mathfrak{A}$ como una función $R^{\mathfrak{A}}:A^n\to Bool$, podemos darla como el subconjunto $\{a\in\mathfrak{A}^n\, | \, R^{\mathfrak{A}}(a)=V\}$. Por ejemplo, en este caso, $R^{\mathfrak{A}}$ sería el conjunto $\{(1, 2), (2, 3), (3, 1)\}$}.$\\$
 
-Sea $\mathcal{G}=\langle\mathcal{A},\sigma \rangle$ una $S$-interpretación. Evidentemente, para todo $a \in A$ existe $b \in A$ tal que $\mathcal{G}[a/y][b/x] \vDash R(x, y)$: si $a = 1$, $b = 3$; si $a = 2$, $b = 1$; si $a= 3$, $b = 2$. Por otro lado, es imposible que exista $c \in A$ tal que, para todo $d \in A$, $\mathcal{F}[c/x][d/y] \vDash R(x, y)$, ya que ningún elemento está relacionado con todos. Por tanto $\mathcal{G}$ satisface $\psi$ pero no satisface $\varphi$.
+Sea $\mathcal{G}=\langle\mathfrak{A},\sigma \rangle$ una $S$-interpretación. Evidentemente, para todo $a \in A$ existe $b \in A$ tal que $\mathcal{G}[a/y][b/x] \vDash R(x, y)$: si $a = 1$, $b = 3$; si $a = 2$, $b = 1$; si $a= 3$, $b = 2$. Por otro lado, es imposible que exista $c \in A$ tal que, para todo $d \in A$, $\mathfrak{I}[c/x][d/y] \vDash R(x, y)$, ya que ningún elemento está relacionado con todos. Por tanto $\mathcal{G}$ satisface $\psi$ pero no satisface $\varphi$.
 \end{example}
 
 \begin{example}
-$\varphi_{=\infty} := (\exists z \, \forall x \, \neg f(x) \doteq z) \land (\forall x \, \forall y \, f(x) \doteq f(y) \rightarrow x \doteq y)$ es una contingencia. Nótese que nos dice que $f$ es (símbolo de) una función inyectiva y no sobreyectiva. En concreto, esto implica que el cardinal del conjunto soporte de cualquier $S$-álgebra inducida por una $S$-interpretación $\mathcal{F}$ que satisface $\varphi_{=\infty}$ tiene que ser infinito. Esto se debe a que el símbolo de función $f$ tiene asociada una función $f^\mathcal{A}:A\to A$ que es inyectiva y no sobreyectiva, lo cual no puede pasar si $A$ es finito.
+$\varphi_{=\infty} := (\exists z \, \forall x \, \neg f(x) \doteq z) \land (\forall x \, \forall y \, f(x) \doteq f(y) \rightarrow x \doteq y)$ es una contingencia. Nótese que nos dice que $f$ es (símbolo de) una función inyectiva y no sobreyectiva. En concreto, esto implica que el cardinal del conjunto soporte de cualquier $S$-álgebra inducida por una $S$-interpretación $\mathfrak{I}$ que satisface $\varphi_{=\infty}$ tiene que ser infinito. Esto se debe a que el símbolo de función $f$ tiene asociada una función $f^\mathfrak{A}:A\to A$ que es inyectiva y no sobreyectiva, lo cual no puede pasar si $A$ es finito.
 \end{example}
 
 \begin{example}
 $\varphi_{=2} := (\exists x \, \exists y \, \neg x \doteq y) \land \forall z \, (z \doteq y \lor z \doteq x)$ es una contingencia. Nos dice, en concreto, que el cardinal del conjunto soporte de cualquier $S$-álgebra inducida por una $S$-interpretación tiene que ser igual a 2.
 \end{example}
+
+
+\subsection{Axiomas de Peano}
+Recordemos la signatura $Nat$ definida en \ref{nat}. Este lenguaje fue introducido por Peano para describir los números naturales usando los símbolos de suma, producto, sucesor y menor o igual. También introdujo los que ahora conocemos como \textit{axiomas de Peano}:
+\begin{enumerate}
+    \item $\forall x \; \neg s(x)\doteq 0$
+    \item $\forall x \, \forall y \; s(x)\doteq s(y)\to x\doteq y$
+    \item $\forall x \; x+0\doteq x$
+    \item $\forall x \, \forall y \; x+s(y)\doteq s(x+y)$
+    \item $\forall x \; x*0\doteq 0$
+    \item $\forall x \, \forall y \; x*s(y)\doteq (x*y)+x$
+    \item $\forall x \, \forall y \; (x<y \leftrightarrow \exists z \; x+s(z)\doteq y)$
+\end{enumerate}
+Llamamos $\Phi_{Peano}$ al conjunto de las anteriores sentencias.
+Es fácil comprobar que en la $Nat$-álgebra $\mathfrak{A}_{Nat}$, introducida en \ref{anat}, cualquier interpretación satisface los axiomas de Peano. Sin embargo, también hay otras estructuras con esta propiedad.
+
+\begin{comment}
+como la siguiente:
+$$\mathcal{N}_2=\{\{0,1\}\times \mathbb{N},\{0^{\mathcal{N}_2}\},\{+^{\mathcal{N}_2},*^{\mathcal{N}_2},s^{\mathcal{N}_2}\},\{<^{\mathcal{N}_2}\}\}$$
+siendo:
+\begin{itemize}
+    \item $0^{\mathcal{N}_2}=(0,0)$.
+    \item $\begin{array}{clcl}
+         +^{\mathcal{N}_2}:&(\{0,1\}\times \mathbb{N})\times(\{0,1\}\times \mathbb{N})&\to& \{0,1\}\times\mathbb{N};\\
+         & ((x,m),(y,n))&\mapsto& (max(x,y),m+n)
+    \end{array}.$
+    \item $\begin{array}{clcl}
+         *^{\mathcal{N}_2}:&(\{0,1\}\times \mathbb{N})\times(\{0,1\}\times \mathbb{N})&\to& \{0,1\}\times\mathbb{N};\\
+         & ((x,m),(y,n))&\mapsto& (max(x*y,x),m*n)
+    \end{array}.$
+    \item $s^{\mathcal{N}_2}:\{0,1\}\times\mathbb{N}\to \{0,1\}\times\mathbb{N}; (x,m)\mapsto (x,m+1)$
+    \item $<^{\mathcal{N}_2}((x,m),(y,n))=V$ si y solo si $x\leq y$ y $m<n$.
+\end{itemize}
+
+Donde hemos usado las operaciones $+,*$ habituales de los naturales, y $max(x,y)$ es 0 si $x,y$ son 0 y 1 si no.
+\end{comment}
+
+
+
+
+\section{Sustitución}
+
+El ejemplo \ref{complejo} muestra que la determinación de la consecuencia lógica en particular y de la satisfactibilidad en general es una tarea costosa. Motivados por este hecho, investigamos relaciones sintácticas que nos permitan trabajar más cómodamente. Comenzamos por el concepto de \textit{sustitución}, que ya estuvo presente a lo largo del anterior capítulo. 
+
+De ahora en adelante, denotamos vectores de elementos de un determinado conjunto con una raya horizontal sobre una letra. Normalmente empleamos la misma letra para referirnos a los elementos de tal vector. Por ejemplo, dada la signatura $S$ y el conjunto soporte de cierta $S$-álgebra, $A$, designamos $\bar{a} := (a_1, \dots, a_n)$ con $a_i \in A$, para todo $i =1, \dots, n$.\\
+
+Comenzamos definiendo la sustitución para términos:
+
+\begin{definition}
+Sea $S$ signatura. Sean $t \in TERM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} \bar{s} \textit{en t} como:
+\begin{itemize}
+    \item Si $t \in Ct_S$, $t[\bar{s}/\bar{x}] = t$.
+    \item Si $t \in Var$, $t[\bar{s}/\bar{x}] = s_i$ si $t = x_i$, para cierto $i$, y $t[\bar{s}/\bar{x}] = t$ si $t \neq x_i$, para todo $i$.
+    \item $f(t_1, \dots t_n)[\bar{s}/\bar{x}] = f(t_1[\bar{s}/\bar{x}], \dots, t_n[\bar{s}/\bar{x}]).$
+\end{itemize}
+\end{definition}
+
+Pasamos a la sustitución para fórmulas:
+\begin{definition}
+Sea $S$ signatura. Sean $\varphi \in FORM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} \bar{s} \textit{en $\varphi$} como:
+\begin{itemize}
+    \item Caso base:
+    \begin{itemize}
+        \item $\top[\bar{s}/\bar{x}]=\top$.
+        \item $\bot[\bar{s}/\bar{x}]=\bot$.
+        \item $(t_1\doteq t_2)[\bar{s}/\bar{x}]=(t_1[\bar{s}/\bar{x}]\doteq t_2[\bar{s}/\bar{x}])$.
+        \item Si $p|_k\in Pd_S$ y $t_1,\dots,t_k\in TERM_S$, $p(t_1,\dots,t_k)[\bar{s}/\bar{x}]=p(t_1[\bar{s}/\bar{x}],\dots,t_k[\bar{s}/\bar{x}])$.
+    \end{itemize}
+    \item Caso recursivo:
+    \begin{itemize}
+        \item $(\neg\varphi)[\bar{s}/\bar{x}]=(\neg\varphi[\bar{s}/\bar{x}])$.
+        \item $(\varphi_1\square\varphi_2)[\bar{s}/\bar{x}]=(\varphi_1[\bar{s}/\bar{x}]\square\varphi_2[\bar{s}/\bar{x}])$.
+        \item $(Qx\;\varphi)[\bar{s}/\bar{x}]$ se define por casos:
+        \begin{itemize}
+            \item $(Qx\;\varphi[\bar{s}/\bar{x}])$, si $x\notin\bar{x}$ y $x\notin\bigcup_{i=1}^nvar(t_i)$.
+            \item $(Qx\;\varphi[(s_1,\dots,s_{i-1},s_{i+1},\dots,s_n)/(x_1,\dots,x_{i-1},x_{i+1}\dots,x_n)])$, si $x=x_i\in\bar{x}$ y $x\notin\bigcup_{i=1}^nvar(t_i)$.
+            \item $(Qz\;\varphi[z/x][\bar{s}/\bar{x}])$ si $x\in\bigcup_{i=1}^nvar(t_i)$, siendo z una variable que no está en $\bar{x}$ ni en $\bigcup_{i=1}^nvar(t_i)$.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{definition}
+
+Si queremos sustituir un solo elemento, no un vector con varios, podemos omitir la raya horizontal sobre la letra (aunque también puede interpretarse como un vector de un elemento).\\
+
+En ocasiones haremos uso de la siguiente notación:
+$$f(t_1, \dots t_n)[\bar{s}/\bar{x}] = f(t_1, \dots t_n)[s_1/x_1, \dots s_n/x_n].$$
+
+
+\begin{example}
+Si llamamos $a:= h(x)$ y $b:= f(x, y)$, entonces $$f(x, y)[h(x)/x, f(x, y)/y] = f(h(x), f(x, y)).$$
+\end{example}
+
+
+\begin{note}
+
+Si no nombramos adecuadamente a las variables que estamos manipulando podemos llegar a tener una \textit{colisión}, es decir, que mediante una sustitución una variable pase de estar libre a estar ligada. 
+ 
+Por ejemplo, sean $\varphi := \forall z \, p(x, z)$ y $t := f(z)$. Entonces la sustitución 
+$$\varphi[t/x] = \forall z \, p(f(z), z)$$ 
+daría lugar a una colisión porque la variable $z$ está libre en $t$, pero ligada al sustituirla en $\varphi$ por $x$. Habrá ocasiones en que esto no nos sea conveniente. En estos casos podremos cambiar $t=f(z)$ por $f(y)$, obteniendo
+$$\varphi[t/x] = \forall z \, p(f(y), z),$$
+de modo que ya no tenemos el problema anterior.
+\end{note}
+
+
+\section{Lema de coincidencia}
+
+Más adelante nos será útil el estudiar las relaciones entre diferentes interpretaciones y signaturas. Para ello nos será útil el lema de coincidencia, además de para demostrar el lema de sustitución de la próxima sección.
+
+Comencemos con la siguiente
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Definimos recursivamente el \textit{vocabulario para términos}, $voc$, como:
+\begin{itemize}
+    \item Caso base: 
+        \begin{itemize}
+            \item $voc(c) = \{c\}$, para todo $c \in Ct_S$.
+            \item $voc(x) = \emptyset$, para todo $x \in Var$.
+        \end{itemize}
+    \item Caso recursivo: $voc(f(t_1, \dots, t_k)) = \{ f\} \cup \bigcup \limits_{i = 1}^{k} voc(t_i)$, con $f|_k \in Fn_S$, $t_1 \dots t_k \in TERM_S$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Definimos recursivamente el \textit{vocabulario para fórmulas}, $voc$, como:
+\begin{itemize}
+    \item Caso base:
+        \begin{itemize}
+            \item $voc(p(t_1, \dots, t_k)) = \{ p\} \cup \bigcup \limits_{i = 1}^{k} voc(t_i)$, con $p|_k \in Pd_S$, $t_1 \dots t_k \in TERM_S$.
+            \item $voc(t \doteq s) = voc(t) \cup voc(s)$, con $t, s\in TERM_S$.
+            \item $voc(\top) = voc(\bot) = \emptyset$.
+        \end{itemize}
+    \item Caso recursivo:
+        \begin{itemize}
+            \item $voc(\neg \varphi) = voc(\varphi)$, con $\varphi \in FORM_S$.
+            \item $voc(\varphi \square \psi) = voc(\varphi) \cup voc(\psi)$, con $\varphi, \psi \in FORM_S$.
+            \item $voc(Qx \, \varphi) = voc(\varphi)$, con $\varphi \in FORM_S$ y $x \in Var$.
+        \end{itemize}
+\end{itemize}
+\end{definition}
+
+Es decir, el vocabulario de una expresión, sea término o fórmula, es el conjunto de elementos de la signatura (símbolos de constante, función y predicado) que aparecen en ella.\\
+
+Ahora consideramos:
+
+\begin{definition}
+Sean $S_1 = \langle Ct_{S_1}, Fn_{S_1}, Pd_{S_1}\rangle$, $S_2 = \langle Ct_{S_2}, Fn_{S_2}, Pd_{S_2}\rangle$ signaturas. Definimos la \textit{signatura unión} y la \textit{signatura intersección} respectivamente como:
+$$S_1 \cup S_2 := \langle Ct_{S_1} \cup Ct_{S_2}, Fn_{S_1} \cup Fn_{S_2}, Pd_{S_1} \cup Pd_{S_2} \rangle, $$
+$$S_1 \cap S_2 := \langle Ct_{S_1} \cap Ct_{S_2}, Fn_{S_1} \cap Fn_{S_2}, Pd_{S_1} \cap Pd_{S_2} \rangle. $$
+\end{definition}
+
+Ya que podemos obtener nuevas signaturas a partir de otras, es decir, nuevos conjuntos de símbolos, nos interesa estudiar qué ocurre con las interpretaciones, es decir, con los significados de los símbolos. Esto motiva la noción de \textit{coincidencia}:
+
+\begin{definition}
+Sean $S_1, S_2$ signaturas, $\mathfrak{I}_{1} = \langle \mathfrak{A}_1, \sigma_1 \rangle$ una $S_1$-interpretación y $\mathfrak{I}_{2} = \langle \mathfrak{A}_2, \sigma_2 \rangle$ una $S_2$-interpretación con el mismo conjunto soporte. Consideremos $S := S_1 \cap S_2$, $t \in TERM_S$. Decimos que $\mathfrak{I}_{1}$ \textit{y} $\mathfrak{I}_{2}$ \textit{coinciden en} $t$, $\mathfrak{I}_{1} \sim_{t} \mathfrak{I}_{2}$, si:
+\begin{enumerate}
+    \item $c^{\mathfrak{I}_{1}} = c^{\mathfrak{I}_{2}}$, para todo $c \in voc(t)$, $c \in Ct_S$.
+    \item $x^{\mathfrak{I}_{1}} = x^{\mathfrak{I}_{2}}$, para todo $x \in var(t)$.
+    \item $f^{\mathfrak{A}_{1}} = f^{\mathfrak{A}_{2}}$, para todo $f \in voc(t)$, $f \in Fn_S$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Sean $S_1, S_2$ signaturas, $\mathfrak{I}_{1} = \langle \mathfrak{A}_1, \sigma_1 \rangle$ una $S_1$-interpretación y $\mathfrak{I}_{2} = \langle \mathfrak{A}_2, \sigma_2 \rangle$ una $S_2$-interpretación con el mismo conjunto soporte. Consideremos $S := S_1 \cap S_2$, $ \varphi \in FORM_S$. Decimos que $\mathfrak{I}_{1}$ \textit{y} $\mathfrak{I}_{2}$ \textit{coinciden en} $\varphi$, $\mathfrak{I}_{1} \sim_{\varphi} \mathfrak{I}_{2}$, si:
+\begin{enumerate}
+    \item $c^{\mathfrak{I}_{1}} = c^{\mathfrak{I}_{2}}$, para todo $c \in voc(\varphi)$, $c \in Cts_S$.
+    \item $\sigma_1(x) = \sigma_2(x)$, para todo $x \in lib(\varphi)$.
+    \item $f^{\mathfrak{A}_{1}} = f^{\mathfrak{A}_{2}}$, para todo $f \in voc(\varphi)$, $f \in Fn_S$.
+    \item $p^{\mathfrak{A}_{1}} = p^{\mathfrak{A}_{2}}$, para todo $p \in voc(\varphi)$, $p \in Pd_S$.
+\end{enumerate}
+\end{definition}
+
+Ya estamos en disposición de enunciar el resultado que da nombre a esta sección:
+\begin{theorem}(Lema de coincidencia)\label{coinc}
+Sean $S_1, S_2$ signaturas, $\mathfrak{I}_{1} = \langle \mathfrak{A}_1, \sigma_1 \rangle$ una $S_1$-interpretación y $\mathfrak{I}_{2} = \langle \mathfrak{A}_2, \sigma_2 \rangle$ una $S_2$-interpretación con el mismo conjunto soporte. Consideremos $S := S_1 \cap S_2$.
+\begin{enumerate}
+    \item Si $\mathfrak{I}_{1} \sim_{t} \mathfrak{I}_{2}$, con $t \in TERM_S$, entonces  $t^{\mathfrak{I}_{1}} = t^{\mathfrak{I}_{2}}$.
+    \item Si $\mathfrak{I}_{1} \sim_{\varphi} \mathfrak{I}_{2}$, con $\varphi \in FORM_S$, entonces  $\varphi^{\mathfrak{I}_{1}} = \varphi^{\mathfrak{I}_{2}}$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+\begin{enumerate}
+    \item Inducción estructural.
+    Caso base:
+    \begin{itemize}
+        \item Si $t=p$ con $p\in Ct_S$, entonces $p\in voc(t)$, por tanto como $\mathfrak{I}_{1} \sim_{t} \mathfrak{I}_{2}$, tenemos que $p^{\mathfrak{I}_1}=p^{\mathfrak{I}_2}$.
+        \item Si $t=x$ con $x\in var$, entonces $x\in var(t)$, por tanto como $\mathfrak{I}_{1} \sim_{t} \mathfrak{I}_{2}$, se cumple $x^{\mathfrak{I}_1}=x^{\mathfrak{I}_2}$.
+    \end{itemize} 
+    Caso inductivo: $t=f(t_1,\dots,t_n)$, para $t_1,\dots,t_n\in TERM_S.$ Como $voc(t_i)\subseteq voc(t)$ y $var(t_i)\subseteq var(t)$, se cumple que $\mathfrak{I}_{1} \sim_{t_i} \mathfrak{I}_{2}, i=1,\dots,n$.\\
+    Por tanto por inducción tenemos $t_i^{\mathfrak{I}_1}=t_i^{\mathfrak{I}_2}$, de modo que:
+    $$f(t_1,\dots,t_n)^{\mathfrak{I}_1}=f^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1},\dots,t_n^{\mathfrak{I}_1})=f^{\mathfrak{A}_2}(t_2^{\mathfrak{I}_2},\dots,t_n^{\mathfrak{I}_2})=f(t_1,\dots,t_n)^{\mathfrak{I}_2},$$
+    Donde hemos usado que $f\in voc(t)$, por tanto $f^{\mathfrak{A}_1}=f^{\mathfrak{A}_2}$.
+    \item De nuevo, inducción estructural.
+    Caso base:
+    \begin{itemize}
+        \item $\varphi$ es $\top$ o $\bot$. Caso obvio.
+        \item $\varphi=t_1\doteq t_2$. En este caso, $voc(t_i)\subseteq voc(\varphi)$ y $var(t_i)\subseteq var(\varphi)$. De modo que $\mathfrak{I}_{1} \sim_{t_i} \mathfrak{I}_{2}, i=1,2$, y por el apartado anterior se cumple que $t_i^{\mathfrak{I}_{1}} = t_i^{\mathfrak{I}_{2}},i=1,2$. Por tanto $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si $t_1^{\mathfrak{I}_{1}} = t_1^{\mathfrak{I}_{2}}$ si y solo si $t_2^{\mathfrak{I}_{1}} = t_2^{\mathfrak{I}_{2}}$ si y solo si $\varphi^{\mathfrak{I}_2}$.
+        \item $\varphi=p(t_1,\dots,t_k)$. En este caso,igual que en el anterior tenemos $t_i^{\mathfrak{I}_1}=t_i^{\mathfrak{I}_2}$. Además, $p\in voc(\varphi)$, por tanto $p^{\mathfrak{A}_1}=p^{\mathfrak{A}_2}$. De modo que $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si $p^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1},\dots,t_n^{\mathfrak{I}_1})=V$ si y solo si $p^{\mathfrak{A}_2}(t_1^{\mathfrak{I}_2},\dots,t_n^{\mathfrak{I}_2})=V$ si y solo si $\varphi^{\mathfrak{I}_2}$ es $V$.
+    \end{itemize}
+    Caso inductivo:
+    \begin{itemize}
+        \item $\varphi=\neg\varphi_1$. Entonces $voc(\varphi)=voc(\varphi_1)$ y $lib(\varphi)=lib(\varphi_1)$. Por tanto, $\mathfrak{I}_{1} \sim_{\varphi_1} \mathfrak{I}_{2}$, y por hipótesis de inducción, $\varphi_1^{\mathfrak{I}_1}=\varphi_1^{\mathfrak{I}_2}$. De modo que
+        $\varphi^{\mathfrak{I}_1}=v_\neg(\varphi_1^{\mathfrak{I}_1})=v_\neg(\varphi_1^{\mathfrak{I}_2})=\varphi^{\mathfrak{I}_2}$.
+        
+        \item Si $\varphi=\varphi_1\square\varphi_2$. Igual que en el caso anterior, tenemos que $\varphi_i^{\mathfrak{I}_1}=\varphi_i^{\mathfrak{I}_2},i=1,2$. De modo que:
+        $\varphi^{\mathfrak{I}_1}=v_\square(\varphi_1^{\mathfrak{I}_1},\varphi_2^{\mathfrak{I}_1})=v_\square(\varphi_1^{\mathfrak{I}_2},\varphi_2^{\mathfrak{I}_2})=\varphi^{\mathfrak{I}_2}$.
+        
+        \item $\varphi=\exists x \varphi_1$. Como $\mathfrak{I}_{1} \sim_{\varphi} \mathfrak{I}_{2}$, y tenemos $voc(\varphi)=voc(\varphi_1)$, $lib(\varphi)=lib(\varphi_1)\setminus \{x\}$, sabemos que $\mathfrak{I}_1[a/x]\sim_{\varphi_1}\mathfrak{I}_2[a/x]$, ya que la única diferencia de interpretaciones de $\mathfrak{I}_1$ y $\mathfrak{I}_2$ en $\varphi_1$ que no se da en $\varphi$ es en la variable $x$, y $\mathfrak{I}_1[a/x]$ y $\mathfrak{I}_2[a/x]$ coinciden en la variable $x$. Ahora,
+        $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si existe $a\in A$ tal que $\varphi_1^{\mathfrak{I}_1[a/x]} = V$. Pero esto equivale a que exista $a\in A$ tal que $\varphi_1^{\mathfrak{I}_2[a/x]} = V$, es decir, a que $\varphi^{\mathfrak{I}_2}$ sea $V$.
+        
+        \item $\varphi=\forall x \varphi_1$. Igual que en el caso anterior, sabemos que $\mathfrak{I}_1[a/x]\sim_{\varphi_1}\mathfrak{I}_2[a/x]$. Ahora,
+        $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si para todo $a\in A$ se cumple $\varphi_1^{\mathfrak{I}_1[a/x]} = V$. Pero esto equivale a que para todo $a\in A$ se cumpla $\varphi_1^{\mathfrak{I}_2[a/x]} = V$, lo cual equivale a que $\varphi^{\mathfrak{I}_2}$ sea $V$.
+    \end{itemize}
+\end{enumerate}
+\end{proof}
+
+\begin{example}
+Sean $t \in TERM_S$, $\varphi \in FORM_S$ tales que existen $x_1, \dots, x_n \in Var$ de modo que $var(\varphi) \subseteq \{x_1, \dots, x_n\}$ y $var(\varphi) \subseteq \{x_1, \dots, x_n\}$. El Lema de Coincidencia nos dice que el significado que tome cada variable que no pertenezca a $\{x_1, \dots, x_n \}$ no afectará al significado de $t$.
+
+En efecto, sea $\mathfrak{I} = \langle \mathfrak{A}, \sigma\rangle$ $S$-intepretación y sea $\bar{a} := (a_1, \dots, a_n)$, con $a_i = \sigma(x_i)$, para todo $i$. Denotemos $\bar{x} = (x_1, \dots x_n)$. Entonces, tomando $\mathcal{G} := \mathfrak{I}[\bar{a}/\bar{x}]$, obtenemos que $t^{\mathcal{G}} = t^{\mathfrak{I}}$ y que $\varphi^{\mathcal{G}} = \varphi^{\mathfrak{I}}$.
+\end{example}
+
+\begin{example}
+En el ejemplo anterior, si $\varphi$ es una fórmula cerrada, $lib(\varphi) = \emptyset$ y entonces podemos tomar $n=0$.
+\end{example}
+
+
+\section{Isomorfía}
+
+Seguimos nuestro estudio de las relaciones entre signaturas e interpretaciones. Introducimos a continuación un concepto empleado constantemente en matemáticas. En nuestro caso, captura la idea de una aplicación que `preserva el significado' entre dos álgebras de la misma signatura:
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sean $\mathfrak{A}_1$ y $\mathfrak{A}_2$ $S$-álgebras de conjuntos soporte respectivos $A_1$ y $A_2$. Una aplicación $h: A_1 \rightarrow A_2$ es \textit{isomorfismo de S-álgebras} si:
+\begin{itemize}
+    \item $h$ es biyectiva.
+    \item $h(c^{\mathfrak{A}_1}) = c^{\mathfrak{A}_2}$, para todo $c \in Ct_S$.
+    \item $h(f^{\mathfrak{A}_1}(a_1, \dots, a_n)) = f^{\mathfrak{A}_2}(h(a_1), \dots, h(a_n))$, con $f|_n \in Fn_S$, $a_1, \dots, a_n \in A_1$.
+    \item $p^{\mathfrak{A}_1}(a_1, \dots, a_n) = p^{\mathfrak{A}_2}(h(a_1), \dots, h(a_n))$, con $p|_n \in Pn_S$, $a_1, \dots, a_n \in A_1$.
+\end{itemize}
+Si existe un isomorfismo entre $\mathfrak{A}_1$ y $\mathfrak{A}_2$, decimos que son \textit{isomorfas} y lo denotamos por $\mathfrak{A}_1 \approx \mathfrak{A}_2$.
+\end{definition}
+
+\begin{definition}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sean $\mathfrak{I}_1 = \langle \mathfrak{A}_1, \sigma_1 \rangle$ y $\mathfrak{I}_2 = \langle \mathfrak{A}_2, \sigma_2 \rangle$ $S$-intepretaciones. Una aplicación $h$ es \textit{isomorfismo de S-interpretaciones} si:
+\begin{itemize}
+    \item $h$ es isomorfismo entre las $S$-álgebras $\mathfrak{A}_1$ y $\mathfrak{A}_2$.
+    \item $h(\sigma_1(x)) = \sigma_2(x)$, para todo $x \in Var$.
+\end{itemize}
+Cuando existe un isomorfismo entre $\mathfrak{I}_1$ y $\mathfrak{I}_2$, decimos que son \textit{isomorfas} y lo simbolizamos por $\mathfrak{I}_1 \approx \mathfrak{I}_2$.
+\end{definition}
+
+\begin{example}
+Consideremos la signatura característica de los grupos, $S := \langle \{e\}, \{*|_2\}, \emptyset \rangle$. Sean los grupos $(\mathbb{Z}_2, +)$ y $(A, \cdot)$ dado por $A = \{a, b\}$ con:
+\begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline 
+    $\cdot$ & $a$ & $b$ \\ \hline
+    $a$ & $a$ & $b$\\ \hline
+    $b$ & $b$ & $a$\\ \hline
+    \end{tabular}
+    \end{center}
+    \end{table}
+\end{example}
+Entonces tenemos dos $S$-álgebras:
+$$\mathfrak{A}_1 = \langle \mathbb{Z}_2, \{ 0,1\}, \{ +\}, \emptyset \rangle$$
+$$\mathfrak{A}_2 = \langle A, \{a,b\}, \{\cdot \}, \emptyset \rangle$$
+Entonces, la aplicación $h: \mathbb{Z}_2 \rightarrow A$ dada por $h(0) = a$ y $h(1) = b$ es un isomorfismo, es decir, $h:\mathfrak{A}_1 \approx \mathfrak{A}_2$. 
+
+Este lema técnico nos permitirá probar el siguiente teorema:
+
+\begin{lema}\label{sustiso}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sean $\mathfrak{I}_1 = \langle \mathfrak{A}_1, \sigma_1 \rangle$ y $\mathfrak{I}_2 = \langle \mathfrak{A}_2, \sigma_2 \rangle$ $S$-interpretaciones de conjuntos soporte $A_1,A_2$ tales que existe $h: \mathfrak{I}_1 \approx \mathfrak{I}_2$. Sea $a\in A_1$.\\
+Entonces, $\mathfrak{I}_1[a/x]\approx\mathfrak{I}_2[h(a)/x]$. De hecho, la misma función $h:A_1\to A_2$ es isomorfismo entre $\mathfrak{I}_1[a/x]$ y $\mathfrak{I}_2[h(a)/x]$.
+\end{lema}
+\begin{proof}
+Está claro que se cumple $h(\sigma_1(y)) = \sigma_2(y)$ para todas las variables excepto x, ya que si $y\in Var\setminus \{x\}$, $h(\sigma_1[a/x](y))=h(\sigma_1(y))=\sigma_2(y)=\sigma_2[h(a)/x](y)$.\\
+Respecto a la variable $x$, $h(\sigma_1[a/x](x))=h(a)=\sigma_2[h(a)/x](x)$.\\
+Queda entonces comprobar que $h$ es isomorfismo entre las álgebras de $\mathfrak{I}_1$ y $\mathfrak{I}_2$. Pero esto es directo, ya que estas álgebras son $\mathfrak{A}_1$ y $\mathfrak{A}_2$.
+\end{proof}
+
+El siguiente resultado muestra que los isomorfismos entre $S$-interpretaciones se extienden a las fórmulas y los términos de tal signatura $S$.
+
+\begin{theorem}
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sea $h$ isomorfismo entre las $S$-interpretaciones $\mathfrak{I}_1$ y $\mathfrak{I}_2$. Entonces:
+\begin{enumerate}
+    \item Para todo $t \in TERM_S$, $h(t^{\mathfrak{I}_1}) = t^{\mathfrak{I}_2}$.
+    \item Para toda $\varphi \in FORM_S$, $\varphi^{\mathfrak{I}_1} = \varphi^{\mathfrak{I}_2}$, y por tanto $\mathfrak{I}_1 \vDash \varphi$ si y solo si $\mathfrak{I}_2 \vDash \varphi$.
+\end{enumerate}
+\end{theorem}
+\begin{proof} \mbox{}
+\begin{enumerate}
+    \item Por inducción estructural sobre $t \in TERM_S$:
+        \begin{itemize}
+            \item Caso base:
+                \begin{itemize}
+                \item Si $t = c$, con $c \in Ct_S$, entonces $h(t^{\mathfrak{I}_1}) = h(c^{\mathfrak{I}_1}) = c^{\mathfrak{I}_2} = t^{\mathfrak{I}_2}$.
+                \item Si $t = x$, con $x \in Var$, entonces $h(t^{\mathfrak{I}_1}) = h(x^{\mathfrak{I}_1}) = h(\sigma_1(x)) = \sigma_2(x) = x^{\mathfrak{I}_2} = t^{\mathfrak{I}_2}$.
+                 \end{itemize}
+            \item Caso recursivo: Si $t = f(t_1, \dots, t_n)$, con $f|_n \in Fn_S$ y $t_1, \dots, t_n \in TERM_S$ cumplen el enunciado, entonces: 
+            
+            $h(f(t_1, \dots, t_n)^{\mathfrak{I}_1}) = h(f^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1}, \dots, t_n^{\mathfrak{I}_1})) = f^{\mathfrak{A}_2}(h(t_1^{\mathfrak{I}_1}), \dots, h(t_n^{\mathfrak{I}_1})) =  f^{\mathfrak{A}_2}(t_1^{\mathfrak{I}_2}, \dots, t_n^{\mathfrak{I}_2}) = f(t_1, \dots, t_n)^{\mathfrak{I}_2}$
+        \end{itemize}
+    \item Por inducción estructural sobre $\varphi \in FORM_S$:
+        \begin{itemize}
+            \item Caso base:
+                \begin{itemize}
+                    \item Si $\varphi = \top$, entonces $\varphi^{\mathfrak{I}_1} = \top^{\mathfrak{I}_1} = V = \top^{\mathfrak{I}_2} = \varphi^{\mathfrak{I}_2}$ y análogo con $\bot$.
+                    \item Si $\varphi = t \doteq s$ para $t, s \in TERM_S$, entonces $\mathfrak{I}_1 \vDash \varphi$ si y solo si $t^{\mathfrak{I}_1} = s^{\mathfrak{I}_1}$ si y solo si (por ser $h$ inyectiva) $h(t^{\mathfrak{I}_1}) = h(s^{\mathfrak{I}_1})$ si y solo si $t^{\mathfrak{I}_2} = s^{\mathfrak{I}_2}$ si y solo si  $\mathfrak{I}_1 \vDash \varphi$.
+                    \item Si $\varphi = p(t_1, \dots, t_n)$, con $p|_n \in Pd_S$ y $t_1, \dots, t_n \in TERM_S$ cumplen el enunciado, entonces $p(t_1, \dots, t_n)^{\mathfrak{I}_1} = V$, si y solo si $p^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1}, \dots, t_n^{\mathfrak{I}_1}) = V$ si y solo si  $p^{\mathfrak{A}_2}(h(t_1^{\mathfrak{I}_1}), \dots, h(t_n^{\mathfrak{I}_1})) = V$ si y solo si  $p^{\mathfrak{A}_2}(t_1^{\mathfrak{I}_2}, \dots, t_n^{\mathfrak{I}_2}) = V$
+                \end{itemize}
+            \item Caso recursivo:
+                \begin{itemize}
+                    \item $\varphi=\neg\varphi_1$. Entonces, $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si $v_\neg(\varphi_1^{\mathfrak{I}_1})$ es $V$ si y solo si $v_\neg(\varphi_1^{\mathfrak{I}_2})$ es $V$ si y solo si 
+                    $\varphi^{\mathfrak{I}_2}$ es $V$.
+                    \item $\varphi=\varphi_1\square\varphi_2$. Entonces, 
+                    $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si $v_\square(\varphi_1^{\mathfrak{I}_1},\varphi_2^{\mathfrak{I}_1})$ es $V$ si y solo si $v_\square(\varphi_1^{\mathfrak{I}_2},\varphi_1^{\mathfrak{I}_2})$ es $V$ si y solo si 
+                    $\varphi^{\mathfrak{I}_2}$ es $V$.
+                    \item $\varphi=\exists x \, \varphi_1$. Entonces, $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si existe $a$ que cumple $\varphi_1^{\mathfrak{I}_1[a/x]}=V$. Como por hipótesis inductiva el enunciado se cumple para $\varphi_1$, usando el lema \ref{sustiso} tenemos que $\varphi_1^{\mathfrak{I}_1[a/x]}=V$ equivale a $\varphi_1^{\mathfrak{I}_2[a/x]}=V$. Y que exista $a$ que cumpla esto es equivalente a que $\varphi^{\mathfrak{I}_2}$ sea $V$, como queríamos.
+                    \item $\varphi=\forall x \, \varphi_1$. Entonces, $\varphi^{\mathfrak{I}_1}$ es $V$ si y solo si para todo $a$ se cumple $\varphi_1^{\mathfrak{I}_1[a/x]}=V$. Como por hipótesis inductiva el enunciado se cumple para $\varphi_1$, usando el lema \ref{sustiso} tenemos que $\varphi_1^{\mathfrak{I}_1[a/x]}=V$ equivale a $\varphi_1^{\mathfrak{I}_2[a/x]}=V$. Y que esto se cumpla para todo $a$ es equivalente a que $\varphi^{\mathfrak{I}_2}$ sea $V$, como queríamos.
+                    
+                \end{itemize}
+        \end{itemize}
+\end{enumerate}
+\end{proof}
+
+\section{Lema de sustitución}
+
+Proseguimos nuestro estudio de la sustitución. A continuación obtenemos el resultado análogo al que ya demostramos en lógica proposicional.
+
+\begin{theorem}(Lema de sustitución)
+Sean $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura, $\mathfrak{I}$ $S$-interpretación de conjunto soporte $A$. Sean $\bar{x} := (x_1, \dots, x_n)$ y $\bar{t} := (t_1, \dots, t_n)$ vectores de $Var$ y $TERM_S$, respectivamente. Denotemos $\bar{t}^{\mathfrak{I}} := (t_1^{\mathfrak{I}}, \dots, t_n^{\mathfrak{I}})$ y $\mathcal{J} := \mathfrak{I}[\bar{t}^{\mathfrak{I}}/\bar{x}]$.
+Entonces:
+\begin{enumerate}
+    \item Si $s \in TERM_S$, $(s[\bar{t}/\bar{x}])^{\mathfrak{I}} = s^{\mathcal{J}}$.
+    \item Si $\varphi \in FORM_S$, $(\varphi[\bar{t}/\bar{x}])^{\mathfrak{I}} = \varphi^{\mathcal{J}}$, es decir, $\mathfrak{I} \vDash \varphi[\bar{t}/\bar{x}]$ si y solo si $\mathcal{J} \vDash \varphi$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+\begin{enumerate} 
+    \item Por inducción estructural.
+        \begin{itemize}
+            \item Caso base:
+                \begin{itemize}
+                    \item Si $s = c$, con $c \in Ct_S$, entonces $s=s[\bar{t}/\bar{x}]=c$, y se cumple $c^{\mathfrak{I}}=c^{\mathcal{J}}$, ya que $\mathfrak{I}$ y $\mathcal{J}$ tienen la misma álgebra.
+                    \item Sea $s = x$, con $x \in Var$. Si $x$ no está en $\bar{x}$, entonces $x[\bar{t}/\bar{x}]=x$, y como $x^{\mathfrak{I}}=x^{\mathcal{J}}$, tenemos el resultado. Si $x = x_i$, con $x_i$ el elemento $i$-ésimo de $\bar{x}$, $(x[\bar{t}/\bar{x}])^{\mathfrak{I}} = t_i^{\mathfrak{I}} = x^{\mathfrak{I}[\bar{t}/\bar{x}]} = x^{\mathcal{J}}$.
+                \end{itemize}
+            \item Caso recursivo: Sea $s = f(r_1, \dots, r_k)$, con $f|_k \in Fn_S$ y $r_1, \dots, r_k \in TERM_S$. Entonces, $(f(r_1, \dots, r_k)[\bar{t}/\bar{x}])^{\mathfrak{I}} = (f(r_1[\bar{t}/\bar{x}], \dots, r_k[\bar{t}/\bar{x}]))^{\mathfrak{I}} = f^{\mathfrak{A}}((r_1[\bar{t}/\bar{x}])^{\mathfrak{I}}, \dots, (r_k[\bar{t}/\bar{x}])^{\mathfrak{I}})$ y aplicando la hipótesis de inducción, lo anterior es igual $f^{\mathfrak{A}}(r_1^{\mathcal{J}}, \dots, r_k^{\mathcal{J}}) = f(r_1, \dots, r_k)^{\mathcal{J}}.$
+        \end{itemize}
+    \item Por inducción estructural.
+        \begin{itemize}
+            \item Caso base:
+                \begin{itemize}
+                    \item Si $\varphi = \top$, $(\varphi[\bar{t}/\bar{x}])^{\mathfrak{I}} = V = \varphi^{\mathcal{J}}$. Análogo con $\bot$.
+                    \item Si $\varphi = r \doteq s$, con $r, s \in TERM_S$. Entonces $((r \doteq s)[\bar{t}/\bar{x}])^{\mathfrak{I}} = (r[\bar{t}/\bar{x}] \doteq s[\bar{t}/\bar{x}])^{\mathfrak{I}}$, que es cierto si y solo si $r[\bar{t}/\bar{x}])^{\mathfrak{I}} = s[\bar{t}/\bar{x}]^{\mathfrak{I}}$ si y solo si, por hipótesis de inducción, $r^{\mathcal{J}} = s^{\mathcal{J}}$, es decir, si y solo si $\mathcal{J} \vDash r \doteq s$.
+                    \item Si $\varphi = p(r_1, \dots, r_k)$, con $p|_k \in Pd_S$, $r_1, \dots r_k \in TERM_S$, entonces $(p(r_1, \dots, r_k)[\bar{t}/\bar{x}])^{\mathfrak{I}} = (p(r_1[\bar{t}/\bar{x}], \dots, r_k[\bar{t}/\bar{x}]))^{\mathfrak{I}}$ es igual a  $p^{\mathfrak{A}}((r_1[\bar{t}/\bar{x}])^{\mathfrak{I}}, \dots, (r_k[\bar{t}/\bar{x}])^{\mathfrak{I}})$, que por hipótesis de inducción es igual a $p^{\mathcal{A}}(r_1^{\mathcal{J}}, \dots, r_k^{\mathcal{J}}) = p(r_1, \dots, r_k)^{\mathcal{J}}$.
+                \end{itemize}
+            \item Caso inductivo:
+                    \begin{itemize}
+                        \item Si $\varphi = \neg \psi$, entonces $((\neg \psi)[\bar{t}/\bar{x}])^{\mathfrak{I}} = (\neg \psi[\bar{t}/\bar{x}])^{\mathfrak{I}} = v_{\neg}((\psi[\bar{t}/\bar{x}])^{\mathfrak{I}})$, que por hipótesis de inducción es $v_{\neg}(\psi^{\mathcal{J}}) = (\neg \psi)^{\mathcal{J}}$.
+                        \item Si $\varphi = \psi \square \chi$, entonces $((\psi \square \chi)[\bar{t}/\bar{x}])^{\mathfrak{I}} = ((\psi[\bar{t}/\bar{x}]) \square (\chi[\bar{t}/\bar{x}]))^{\mathfrak{I}} = v_{\square}((\psi[\bar{t}/\bar{x}])^{\mathfrak{I}}, (\chi[\bar{t}/\bar{x}])^{\mathfrak{I}})$, que por hipótesis de inducción es $v_{\square}(\psi^{\mathcal{J}}, \chi^{\mathcal{J}}) = (\psi \square \chi)^{\mathcal{J}}$.
+                        \item Veamos el caso $\forall x \, \varphi$. Supongamos que $x$ no es ninguno de los elementos del vector $\bar{x}$, ya que si esto fuera cierto y $x$ correspondiera a la variable $i$-ésima de $\bar{x}$, $x_i$, por cómo hemos definido sustitución tendríamos que 
+                        $$(\forall x\;\varphi)[\bar{t}/\bar{x}]=(\forall x\;\varphi)[(t_1,\dots t_{i-1},t_{i+1},\dots,t_n)/(x_1,\dots x_{i-1},x_{i+1},\dots,x_n)],$$
+                        es decir, nuestra sustitución es igual a otra sustitución en que $x\notin\bar{x}$.
+    
+    Tenemos entonces dos casos, $x \in var(t_i)$ para algún $i=1,\dots,n$ o no. El primero resulta ser más complicado y nos limitamos a hacer ese:\\
+    Supongamos $x \in var(t_i)$ para cierto $1 \leq i \leq n$, con $t_i$ el $i$-ésimo elemento de $\bar{t}$. Entonces, introduciendo la variable nueva $z$, 
+    $$(\forall x \, \varphi)[\bar{t}/\bar{x}] = \forall z \, \varphi[z/x][\bar{t}/\bar{x}]$$
+    Entonces, $\mathfrak{I} \vDash \forall z \, \varphi[z/x][\bar{t}/\bar{x}]$ es equivalente a que para todo $a \in A$, $\mathfrak{I}[a/z] \vDash \varphi[z/x][\bar{t}/\bar{x}]$. Aplicando la hipótesis de inducción a $\mathfrak{I}[a/z]$ y a $\varphi$, lo anterior equivale a que para todo $a \in A$,
+    $$(\mathfrak{I}[a/z])[\bar{t}^{\mathfrak{I}[a/z]}/\bar{x}] \vDash \varphi[z/x]$$
+    Nótese que, al ser $z$ variable nueva, $z \notin var(t_i)$, para todo $1 \leq i \leq n$ y por \ref{coinc}, $t_i^{\mathfrak{I}[a/z]} = t_i^{\mathfrak{I}}$. Lo anterior es entonces equivalente a que para todo $a \in A$:
+    $$(\mathfrak{I}[a/z])[\bar{t}^{\mathfrak{I}}/\bar{x}] \vDash \varphi[z/x]$$
+    Por ser $z$ nueva, se sigue también que es distinta de todo elemento de $\bar{x}$. De modo que
+    $(\mathfrak{I}[a/z])[\bar{t}^{\mathfrak{I}}/\bar{x}] = \mathfrak{I}[\bar{t}^{\mathfrak{I}}/\bar{x}][a/z] = \mathcal{J}[a/z]$, y entonces lo anterior es cierto si y solo si para todo $a \in A$, 
+    $$\mathcal{J}[a/z] \vDash \varphi[z/x]$$
+    De nuevo, por hipótesis de inducción sobre $\mathcal{J}[a/z]$ y $\varphi$, lo anterior se da si y solo si, para todo $a \in A$,
+    $$\mathcal{J}[a/z][z^{\mathcal{J}[a/z]}/x] \vDash \varphi$$
+    esto es, usando que $z^{\mathcal{J}[a/z]} = a$, 
+    $$(\mathcal{J}[a/z])[a/x] \vDash \varphi$$
+    Por ser $z$ variable nueva, $\mathcal{J}[a/z] \sim_{\varphi} \mathcal{J}$ y empleando \ref{coinc}, $\varphi^{\mathcal{J}[a/z]} = \varphi^{\mathcal{J}}$. Finalmente, lo anterior es equivalente a que para todo $a \in A$,
+    $$\mathcal{J}[a/x] \vDash \varphi$$
+    es decir, $\mathcal{J} \vDash \forall x \, \varphi$.
+    El caso $\exists x \, \varphi$ es análogo.
+                    \end{itemize}
+        \end{itemize}
+    
+\end{enumerate}
+\end{proof}
