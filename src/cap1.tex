@@ -376,7 +376,7 @@ $\Phi$ se dice insatisfactible, y se escribe $Insat(\Phi)$, si $Mod(\Phi) = \emp
 
 Ahora llegamos a la definición del concepto que ha motivado nuestro estudio inicial de la semántica.
 
-\begin{definition}(Consecuencia lógica) Sea $\varphi \in PROP_{SP}$. Decimos que $\varphi$ es consecuencia lógica de $\Phi$, $\Phi \vDash \varphi$, si y solo si $Mod(\Phi) \subseteq Mod(\{\varphi\})$. \\ \\
+\begin{definition}(Consecuencia lógica) Sea $\varphi \in PROP_{SP}$, $\Phi \subseteq PROP_SP$. Decimos que $\varphi$ es consecuencia lógica de $\Phi$, $\Phi \vDash \varphi$, si y solo si $Mod(\Phi) \subseteq Mod(\{\varphi\})$. \\ \\
 Esto equivale a decir que toda asignación de verdad que satisface todos los elementos de $\Phi$ también satisface $\varphi$.\\ \\
 \noindent De ahora en adelante, escribimos $Mod(\varphi)$ en vez de $Mod(\{\varphi\})$.
 \end{definition}
@@ -683,7 +683,7 @@ donde cada $\varphi_{ij}$ es una proposición atómica o la negación de una pro
 \end{definition}
 
 
-\begin{cor} \mbox{}
+\begin{cor} \mbox{}\label{cosasfunccomp}
 \begin{enumerate}
     \item $\{\neg, \land\}$ es funcionalmente completo.
     \item $\{\neg, \lor\}$ es funcionalmente completo.

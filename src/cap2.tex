@@ -4,7 +4,23 @@
 
 En el anterior capítulo, construímos con éxito un lenguaje formal que nos permitía traducir frases informales del español a expresiones formales, además de formalizar los conceptos de implicación y equivalencia lógica. Sin embargo, se puede reprochar que la lógica proposicional es demasiado \textit{simple} en el sentido siguiente: $\\$
 
-Consideremos el silogismo compuesto por dos premisas `Todos los hombres son mortales', `Sócrates es un hombre' y la conclusión `Sócrates es mortal'. En este caso, podríamos pensar que la consecuencia lógica se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo: `Para todo $x$, si $x$ es hombre entonces es mortal', `Sócrates es hombre' luego `Sócrates es mortal'. Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.$\\$
+Consideremos el silogismo: 
+
+\begin{center}
+\syllog{Todo hombre es mortal}
+{Sócrates es un hombre}
+{Sócrates es mortal}
+\end{center}
+
+En este caso, podríamos pensar que la consecuencia lógica se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo:
+
+\begin{center}
+\syllog{Para todo $x$, si $x$ es hombre entonces es mortal}
+{\textit{Sócrates} es hombre}
+{\textit{Sócrates} es mortal}
+\end{center}
+
+Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.$\\$
 
 A continuación vamos a definir, igual que en lógica proposicional, el alfabeto que usaremos para construir fórmulas en los lenguajes de primer orden. Pero además, en este caso, habrá múltiples lenguajes de primer orden, y cada uno tendrá unos ciertos elementos que lo caractericen, que resumimos en el concepto de `signatura':
 
@@ -115,7 +131,7 @@ De nuevo, la demostración es análoga a la de \ref{ind}.
 
 \section{Inducción estructural y recursión}
 
-Tal y como ocurría con la lógica proposicional, la recursión y la inducción estructural son las dos principales herramientas empleadas en las demostraciones de la lógica de primer orden. Sin embargo, ahora tenemos que tratar separadamente los conjuntos $TERM_S$ y $FORM_S$ asociados a cierta signatura $S$. $\\$
+Tal y como ocurría con la lógica proposicional, la recursión y la inducción estructural son las dos principales herramientas empleadas en las definiciones y demostraciones de la lógica de primer orden. Sin embargo, ahora tenemos que tratar separadamente los conjuntos $TERM_S$ y $FORM_S$ asociados a cierta signatura $S$. $\\$
 
 Comenzamos con los teoremas de inducción estructural y recursión para $TERM_S$, dada una signatura $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$:
 
@@ -211,6 +227,9 @@ Extendamos la función $var$ al conjunto $FORM_S$. Por comodidad, omitimos las f
 \end{enumerate}
 \end{example}
 
+
+\begin{comment}
+
 \section{Eliminación de paréntesis}
 Al igual que en lógica proposicional, nos serán útiles unas reglas de omisión de paréntesis:
 \begin{enumerate}
@@ -227,6 +246,7 @@ Un par de ejemplos de aplicación de estas reglas en fórmulas con cuantificador
 \end{array}
 \end{equation*}
 
+\end{comment}
 
 
 
@@ -382,8 +402,10 @@ Análogamemente, $\mathcal{\A}$ \textit{satisface} $\Phi$, $\mathfrak{I} \vDash 
 \end{definition}
 
 \begin{definition}
-Sea $S$ signatura. Dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, decimos que $\varphi$ es \textit{consecuencia lógica} de $\Phi$ si toda $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I}\vDash \Phi$ verifica $\mathfrak{I} \vDash \varphi$.
+Sea $S$ signatura. Dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, decimos que $\varphi$ es \textit{consecuencia lógica} de $\Phi$, $\Phi\vDash\varphi$, si toda $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I}\vDash \Phi$ verifica $\mathfrak{I} \vDash \varphi$.
 \end{definition}
+
+Está claro que $\emptyset\vDash\varphi$ es equivalente a que toda interpretación verifica $\varphi$. En estos casos, podemos escribir $\vDash\varphi$ en vez de $\emptyset\vDash\varphi$.
 
 \begin{definition}
 Sea $S$ signatura. $\Phi \subseteq FORM_S$ se dice \textit{satisfactible} si existe una $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Phi$. $\Phi$ se dice \textit{insatisfactible} si no existe tal $S$-interpretación $\mathfrak{I}$.
@@ -393,11 +415,12 @@ Fijada una signatura $S$, podemos clasificar cada fórmula $\varphi$ como:
 \begin{itemize}
     \item \textit{Satisfactible}, si existe alguna $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \varphi$. 
     \begin{itemize}
-        \item \textit{Tautología}, si $\mathfrak{I} \vDash \varphi$ para toda $S$-interpretación $\mathfrak{I}$.
+        \item \textit{Tautología}, si $\mathfrak{I} \vDash \varphi$ para toda $S$-interpretación $\mathfrak{I}$, es decir, $\vDash\varphi$
         \item \textit{Contingencia}, si es satisfactible pero no tautología.
     \end{itemize}
     \item \textit{Contradicción}, si no es satisfactible. 
 \end{itemize}
+
 $\\$
 Veamos algunos ejemplos:
 
@@ -616,6 +639,8 @@ Sean $S_1, S_2$ signaturas, $\mathfrak{I}_{1} = \langle \mathfrak{A}_1, \sigma_1
     \item Si $\mathfrak{I}_{1} \sim_{\varphi} \mathfrak{I}_{2}$, con $\varphi \in FORM_S$, entonces  $\varphi^{\mathfrak{I}_{1}} = \varphi^{\mathfrak{I}_{2}}$.
 \end{enumerate}
 \end{theorem}
+
+Es decir, la primera parte nos dice que el significado de un término bajo una interpretación solo depende de los significados de las constantes, variables y funciones que aparecen en ella. La segunda nos dice algo parecido para fórmulas, solo que además nos dice que el significado de una fórmula \textbf{no} depende del significado de sus variables ligadas, solo importan las libres.
 \begin{proof}\mbox{}
 \begin{enumerate}
     \item Inducción estructural.
@@ -653,13 +678,12 @@ Sean $S_1, S_2$ signaturas, $\mathfrak{I}_{1} = \langle \mathfrak{A}_1, \sigma_1
 \end{proof}
 
 \begin{example}
-Sean $t \in TERM_S$, $\varphi \in FORM_S$ tales que existen $x_1, \dots, x_n \in Var$ de modo que $var(\varphi) \subseteq \{x_1, \dots, x_n\}$ y $var(\varphi) \subseteq \{x_1, \dots, x_n\}$. El Lema de Coincidencia nos dice que el significado que tome cada variable que no pertenezca a $\{x_1, \dots, x_n \}$ no afectará al significado de $t$.
-
-En efecto, sea $\mathfrak{I} = \langle \mathfrak{A}, \sigma\rangle$ $S$-intepretación y sea $\bar{a} := (a_1, \dots, a_n)$, con $a_i = \sigma(x_i)$, para todo $i$. Denotemos $\bar{x} = (x_1, \dots x_n)$. Entonces, tomando $\mathcal{G} := \mathfrak{I}[\bar{a}/\bar{x}]$, obtenemos que $t^{\mathcal{G}} = t^{\mathfrak{I}}$ y que $\varphi^{\mathcal{G}} = \varphi^{\mathfrak{I}}$.
+Sean $t \in TERM_S$, $\varphi \in FORM_S$ tales que existen $x_1, \dots, x_n \in Var$ de modo que $var(t) \subseteq \{x_1, \dots, x_n\}$ y $lib(\varphi) \subseteq \{x_1, \dots, x_n\}$. El Lema de Coincidencia nos dice que el significado que tome cada variable que no pertenezca a $\{x_1, \dots, x_n \}$ no afectará a los significados de $t$ y $\varphi$.\\
+Es decir, dada una interpretación $\mathfrak{I}=\langle \mathfrak{A}, \sigma \rangle$, $\varphi^\mathfrak{I}$ solo depende de $\mathfrak{A}$ y de $\sigma(x_1),\dots,\sigma(x_n)$.
 \end{example}
 
 \begin{example}
-En el ejemplo anterior, si $\varphi$ es una fórmula cerrada, $lib(\varphi) = \emptyset$ y entonces podemos tomar $n=0$.
+En el ejemplo anterior, si $\varphi$ es una fórmula cerrada, $lib(\varphi) = \emptyset$ y entonces podemos tomar $n=0$. Es decir, el significado de $\varphi$ depende solo de el álgebra, no de la interpretación.
 \end{example}
 
 
@@ -766,7 +790,7 @@ Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sea $h$ isomorfismo e
 
 Proseguimos nuestro estudio de la sustitución. A continuación obtenemos el resultado análogo al que ya demostramos en lógica proposicional.
 
-\begin{theorem}(Lema de sustitución)
+\begin{theorem}(Lema de sustitución)\label{sustprim}
 Sean $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura, $\mathfrak{I}$ $S$-interpretación de conjunto soporte $A$. Sean $\bar{x} := (x_1, \dots, x_n)$ y $\bar{t} := (t_1, \dots, t_n)$ vectores de $Var$ y $TERM_S$, respectivamente. Denotemos $\bar{t}^{\mathfrak{I}} := (t_1^{\mathfrak{I}}, \dots, t_n^{\mathfrak{I}})$ y $\mathcal{J} := \mathfrak{I}[\bar{t}^{\mathfrak{I}}/\bar{x}]$.
 Entonces:
 \begin{enumerate}
@@ -823,4 +847,415 @@ Entonces:
         \end{itemize}
     
 \end{enumerate}
+\end{proof}
+
+
+\section{Equivalencia lógica}
+
+Algunos de los ejemplos precedentes muestran que operar con interpretaciones no es tarea cómoda. Por ello, debemos investigar relaciones entre los signos, que nos faciliten un futuro estudio de su semántica. De nuevo, la noción principal para este propósito es la de \textit{equivalencia lógica}:
+
+\begin{definition}
+Sea $S$ signatura, $\varphi, \psi \in FORM_S$. $\varphi$ y $\psi$ son \textit{lógicamente equivalentes}, $\varphi \sim \psi$, si para toda $S$-intepretación $\mathfrak{I}$, $\varphi^{\mathfrak{I}} = \psi^{\mathfrak{I}}$, es decir, $\mathfrak{I} \vDash \varphi$ si y solo si $\mathfrak{I} \vDash \psi$\footnote{No es difícil demostrar que $\sim$ es reflexiva, simétrica y transitiva, es decir, es relación de equivalencia sobre $FORM_S$.}.
+\end{definition}
+
+
+
+\begin{prop}\label{fund}
+Sea $S$ signatura, $\varphi, \psi \in FORM_S$. Entonces son equivalentes:
+\begin{enumerate}
+    \item $\varphi \sim \psi$.
+    \item $\vDash \varphi \leftrightarrow \psi$.
+    \item $\varphi \vDash \psi$ y $\psi \vDash \varphi$.
+\end{enumerate}
+\end{prop}
+\begin{proof}$\\$
+\be
+(1)$\implies$(2): Si $\varphi \sim \psi$, $\varphi^{\mathfrak{I}} = \psi^{\mathfrak{I}}$ para toda $S$-interpretación $\mathfrak{I}$, por tanto toda interpretación $\mathfrak{I}$ cumple $\mathfrak{I} \vDash \varphi\leftrightarrow \psi$, como queríamos.\\
+
+\noindent (2)$\implies$(3):  Si $\vDash \varphi \leftrightarrow \psi$, toda interpretación $\mathfrak{I}$ solo puede satisfacer $\varphi$ y $\psi$ o no satisfacer $\varphi$ ni $\psi$. Por tanto, si una interpretación satisface $\varphi$, satisface $\psi$ y viceversa.  \\
+
+
+\noindent (3)$\implies$(1): Si $\varphi \vDash \psi$ y $\psi \vDash \varphi$, entonces una interpretación satisface $\psi$ si satisface $\varphi$ y viceversa, por tanto satisface $\psi$ si y solo si satisface $\varphi$.
+\end{proof}
+
+Evidentemente, las leyes de equivalencia del cálculo proposicional siguen siendo válidas en lógica de primer orden. Además, introducimos nuevas leyes en las que aparezcen cuantificadores:
+
+\begin{theorem}(Leyes de equivalencia lógica con cuantificadores)\mbox{}
+\begin{enumerate}
+    \item $Q x \, \varphi \sim Q u \, \varphi[u/x]$, siendo $u$ variable nueva.
+    \item Si $\varphi \sim \psi$, entonces $Qx \, \varphi \sim Qx \, \psi$.
+    \item $\neg \forall x \, \varphi \sim \exists x \, \neg \varphi,  \quad \neg \exists x \, \varphi \sim \forall x \, \neg \varphi$.
+    \item $\forall x \, \varphi \sim \neg \exists x \, \neg \varphi, \quad \exists x \, \varphi \sim \neg \forall x \neg \varphi$.
+    \item Si $x \neq y$, entonces $Qx \, Qy \, \varphi \sim Qy \, Qx \, \varphi$.
+    \item $\forall x \, (\varphi \land \psi) \sim \forall x \, \varphi \land \forall x\, \psi, \quad \exists x \, (\varphi \lor \psi) \sim \exists x \, \varphi \lor \exists x\, \psi$.
+    \item Si $x \notin lib(\psi)$, $Qx \, \psi \sim \psi$.
+    \item Si $x \notin lib(\psi)$, $(\forall x \, \varphi) \land \psi \sim \forall x \, (\varphi \land \psi), \quad  (\exists x \, \varphi) \lor \psi \sim \exists x \, (\varphi \lor \psi)$.
+    \item Si $x \notin lib(\psi)$, $\forall x \, (\varphi \lor \psi) \sim \forall x \, \varphi \lor \forall x \, \psi, \quad \exists x \, (\varphi \land \psi) \sim \exists x \, \varphi \land \exists x \, \psi$.
+    \item Si $x \notin lib(\psi)$, $(\forall x \, \varphi) \rightarrow \psi \sim \exists x \, (\varphi \rightarrow  \psi), \quad (\exists x \, \varphi) \rightarrow \psi \sim \forall x (\varphi \rightarrow  \psi)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof} \mbox{}
+\begin{enumerate}
+    \item Demostremos el caso $\forall$, el $\exists$ se hace de forma análoga.
+    Sea $\mathfrak{I}$ $S$-interpretación de conjunto soporte $A$. $\mathfrak{I} \vDash \forall u\;\varphi[u/x]$ es por definición equivalente a que, para todo $a \in A$, 
+    $$\mathfrak{I}[a/u] \vDash \varphi[u/x].$$ 
+    Como $u^{\mathfrak{I}[a/u]} = a$, aplicando el lema de sustitución \ref{sustprim} lo anterior es cierto si y solo si, para todo $a \in A$, 
+    $$(\mathfrak{I}[a/u])[a/x]\vDash \varphi$$
+    Al ser $u$ variable nueva, $(\mathfrak{I}[a/u])[a/x] \sim_{\varphi} \mathfrak{I}[a/x]$ y \ref{coinc} nos dice que lo anterior equivale a que, para todo $a \in A$, 
+    $$\mathfrak{I}[a/x] \vDash \varphi,$$
+    que es la definición de $\mathfrak{I} \vDash \forall x \, \varphi$.
+    \item Sea $\mathfrak{I}$ $S$-interpretación tal que $\mathfrak{I} \vDash \exists x \, \varphi$, es decir, tal que existe $a \in A$ con $\mathfrak{I}[a/x] \vDash \varphi$, y al ser $\varphi \sim \psi$, lo anterior se da si y solo si existe $a \in A$ con $\mathfrak{I}[a/x] \vDash \psi$, es decir, la definición de $\mathfrak{I} \vDash \exists x \, \psi$. El caso $\forall$ es análogo.
+    \item Sea $\mathfrak{I}$ $S$-interpretación tal que $\mathfrak{I} \vDash \neg \forall x \, \varphi$, es decir, $\mathfrak{I} \nvDash \forall x \, \varphi$. Equivalentemente, existe $a \in A$ tal que $\mathfrak{I}[a/x] \vDash \neg \varphi$, que es la definición de $\mathfrak{I} \vDash \exists x \, \neg \varphi$. El caso $\exists$ es análogo.
+    \item $\varphi \sim \neg \neg \varphi$ luego, aplicando (2), $\forall x \, \varphi \sim \forall x \, \neg \neg \varphi$ y, por (3), $\forall x \, \neg \neg \varphi \sim \neg \exists x \, \neg \varphi$. El caso $\exists$ es análogo.
+    \item $\mathfrak{I}\vDash \exists x\;\exists y\;\varphi$ si y solo si existe $a\in A$ tal que $\mathfrak{I}[a/x]\vDash\exists y\;\varphi$ si y solo si existen $a,b\in A$ tal que $\mathfrak{I}[a/x][b/y]\vDash\varphi$. Como $x\neq y$, $\mathfrak{I}[a/x][b/y]=\mathfrak{I}[b/y][a/x]$, por tanto lo anterior equivale a que existan $a,b\in A$ tales que $\mathfrak{I}[b/y][a/x]\vDash\varphi$. Igual que antes, vemos que esto es equivalente a que $\mathfrak{I}\vDash \exists y\;\exists x\;\varphi$. El caso $\forall$ es análogo.
+    
+    \item Sea $\mathfrak{I}$ $S$-interpretación tal que $\mathfrak{I} \vDash \forall x \, \varphi \land \forall x \, \psi$. Esto, por \ref{fund}, es equivalente a que $\mathfrak{I} \vDash \forall x \, \varphi $ y $\mathfrak{I} \vDash \forall x \, \psi$. Entonces, en el primer caso tenemos que, para todo $a \in A$, $\mathfrak{I}[a/x] \vDash \varphi$ y en el segundo que, para todo $b \in A$, $\mathfrak{I}[b/x] \vDash \psi$. De esta forma, lo anterior es equivalente a que, para todo $c \in A$, $\mathfrak{I}[c/x] \vDash \varphi$ y $\mathfrak{I}[c/x] \vDash \psi$, es decir, $\mathfrak{I}[c/x] \vDash \varphi \land \psi$, es decir, $\mathfrak{I} \vDash \varphi \land \psi$.\\
+    El otro caso se puede probar a partir del primero, ya que:
+    \begin{multline*}
+        \exists x \, (\varphi \lor \psi) \sim \neg\neg(\exists x \, (\varphi \lor \psi))\sim\neg(\forall x\,\neg(\varphi\lor\psi))\sim\neg(\forall x\,(\neg\varphi\land\neg\psi))\sim \\ \sim\neg((\forall x\,\neg\varphi)\land(\forall x\neg\psi))\sim\neg(\forall x\,\neg\varphi)\lor\neg(\forall x\neg\psi)\sim(\exists x\,\neg\neg\varphi)\lor(\exists x\,\neg\neg\psi)\sim\exists x\varphi\lor\exists x\psi,
+    \end{multline*}
+    donde hemos usado las leyes de equivalencia de lógica proposicional, el primer apartado de este ejercicio y la regla (4) para negar cuantificadores.
+    \item En este caso, solo es necesario notar que $\mathfrak{I}[a/x] \sim_{\psi} \mathfrak{I}$ y aplicar el Lema de Coincidencia, \ref{coinc}.
+    \item Es una consecuencia directa de los apartados 6 y 7.
+    \item Comencemos con el caso $\forall$.\\ 
+    Queremos demostrar que $\mathfrak{I}\vDash\forall x\,\varphi\lor\psi$ si y solo si $\mathfrak{I}\vDash\forall x\,\varphi\lor\forall x\psi$\\
+    $\implies$) Si $\mathfrak{I}\vDash\forall x\,\varphi\lor\psi$, para todo $a\in A$ se cumple $\mathfrak{I}[a/x]\vDash\varphi\lor\psi$. Dividimos en casos:
+    \begin{itemize}
+        \item $\mathfrak{I}\vDash\forall x\,\varphi$. En este caso, es obvio que se cumple $\mathfrak{I}\vDash\forall x\,\varphi\lor\forall x\psi$.
+        \item En caso contrario, existe $a\in A$ tal que $\mathfrak{I}[a/x]\nvDash\varphi$. Entonces para ese $a$ tiene que cumplirse $\mathfrak{I}[a/x]\vDash\psi$. Pero entonces por la regla (7), $\mathfrak{I}[a/x]\vDash\forall x\psi$, por tanto $\mathfrak{I}\vDash\forall x\,\varphi\lor\forall x\psi$.
+    \end{itemize}
+    $\Longleftarrow$) $\mathfrak{I}\vDash\forall x \psi\lor\forall x \psi$. Tenemos dos casos:
+    \begin{itemize}
+        \item $\mathfrak{I}\vDash\forall x \psi$, es decir, para todo $a\in A$, $\mathfrak{I}[a/x]\vDash\psi$. Esto implica que para todo $a\in A$, $\mathfrak{I}[a/x]\vDash\varphi\lor\psi$, es decir, $\mathfrak{I}\vDash\forall x (\varphi\lor\psi)$.
+        \item $\mathfrak{I}\vDash\forall x \varphi$, es decir, para todo $a\in A$, $\mathfrak{I}[a/x]\vDash\varphi$. Esto implica que para todo $a\in A$, $\mathfrak{I}[a/x]\vDash\varphi\lor\psi$, es decir, $\mathfrak{I}\vDash\forall x (\varphi\lor\psi)$.
+    \end{itemize}
+    Pasamos a la segunda parte. Esta se puede hacer de forma análoga a la anterior, aunque es más rápido deducirla de la anterior:
+    \begin{multline*}
+        \exists x\,(\varphi\land\psi)\sim\neg\neg\exists x(\varphi\land\psi)\sim\neg\forall x (\neg\varphi\lor\neg\psi)\sim\\\sim\neg((\forall x \neg \varphi)\lor(\forall x \neg\psi))\sim(\neg\forall x\neg\varphi)\land(\neg\forall x\neg\psi)\sim\exists x\varphi\land\exists x\psi.
+    \end{multline*}
+    Hemos podido usar la parte anterior de la regla ya que $x\in lib(\psi)$ si y solo si $x\in lib(\neg\psi)$.
+    \item Estas últimas reglas se pueden deducir de las anteriores:
+    \begin{multline*}
+        (\forall x\,\varphi)\to\psi\sim\neg(\forall x\,\varphi)\lor\psi\sim\\\sim(\exists x\,\neg\varphi)\lor\psi\sim\exists x\,(\neg\varphi\lor\psi)\sim\exists x\,\varphi\to\psi.
+    \end{multline*}
+    \begin{multline*}
+        (\exists x\,\varphi)\to\psi\sim\neg(\exists x\,\varphi)\lor\psi\sim(\forall x\,\neg\varphi)\lor\psi\sim\\\sim(\forall x\,\neg\varphi)\lor(\forall x\,\psi)\sim\forall x (\neg\varphi\lor\psi)\sim\forall x(\varphi\to\psi).
+    \end{multline*}
+\end{enumerate}
+\end{proof}
+
+Las leyes de equivalencia como 6, 8, 9 o 10 permiten escribir los cuantificadores \textit{al principio} de las fórmulas. Esto nos lleva a la siguiente
+\begin{definition}
+Sea $S$ signatura. Se dice que $\varphi \in FORM_S$ \textit{está en forma prenexa} si se puede escribir como:
+$Q_1 x_1 \,, \dots, Q_n x_n \, \psi$, con $x_i$ variable y $Q_i$ cuantificador, para cada $1 \leq i \leq n$, y $\psi$ libre de cuantificadores. $\psi$ recibe el nombre de \textit{núcleo}.
+\end{definition}
+
+Ahora bien, ¿toda fórmula tiene una fórmula equivalente en forma prenexa? Antes de dar una respuesta afirmativa a esta pregunta necesitamos el siguiente lema:
+\begin{lema}\label{lemita2345}
+Sea $S$ signatura. Sean $\varphi,\psi \in FORM_S$, $x \in lib(\psi)$, $u \in Var$ tal que $u$ una variable nueva. Entonces 
+$$Q x \, \varphi \lor \psi \sim Q u \, (\varphi[u/x] \lor \psi).$$
+\begin{proof}
+Es consecuencia de las reglas de equivalencia:
+$$\forall x \, \varphi \lor \psi \sim \forall u \, \varphi[u/x] \lor \psi \sim \forall u \, \varphi[u/x] \lor \forall u\, \psi \sim \forall u \, (\varphi[u/x] \lor \psi)$$
+$$\exists x \, \varphi \lor \psi \sim \exists u \, \varphi[u/x] \lor \psi \sim \exists u \, \varphi[u/x] \lor \exists u\, \psi \sim \exists u \, (\varphi[u/x] \lor \psi),$$
+donde en el caso $\forall$ hemos usado que $u$ no aparece libre en $\psi$.
+\end{proof}
+\end{lema}
+
+\begin{prop}
+Sea $S$ signatura. Entonces, para cada $\varphi \in FORM_S$ existe $\psi \in FORM_S$ en forma prenexa tal que $\varphi \sim \psi$.
+\end{prop}
+\begin{proof}
+La demostración se lleva a cabo por inducción estructural. Es rutinaria salvo por el paso inductivo en fórmulas, que demostramos para $\neg$ y $\lor$ \footnote{En realidad no hace falta demostrar el paso inductivo para más conectivas ya que el resto de conectivas pueden expresarse en términos de $\neg$ y $\lor$, como vimos en \ref{cosasfunccomp}}.$\\$
+
+\noindent ($\neg$) Sea $\varphi=\neg \varphi_1$. Por hipótesis de inducción, existe $\psi \in FORM_S$ en forma prenexa tal que $\varphi_1 \sim \psi$, con $\psi = Q_1 x_1 \, \dots Q_n x_n \, \chi$. Entonces $\varphi\sim\neg \varphi_1 \sim \neg \psi \sim Q'_1 x_1 \, \dots Q'_n x_n \, \neg \chi$, donde $Q'_i = \forall$ si $Q_i = \exists$ y $Q'_i = \exists$ si $Q'_i = \forall$, para cada $1 \leq i \leq n$. $\\$
+
+\noindent ($\lor$) Sea $\varphi=\varphi_1 \lor \varphi_2$. Por hipótesis de inducción, existen los respectivos núcleos $\chi_1$, $\chi_2$, tales que $\varphi_1 \sim Q^{1}_1 x_1 \, \dots Q^{1}_n x_n \, \chi_1$ y $\varphi_2 \sim Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2$. Consideremos los vectores de variables nuevas $\bar{u}= (u_1, \dots, u_n)$ y $\bar{v} = (v_1, \dots, v_m)$. Entonces, $\varphi_1 \sim Q^{1}_1 u_1 \, \dots Q^{1}_n u_n \, \chi_1[\bar{u}/\bar{x}]$ y $\varphi_2 \sim Q^{2}_1 v_1 \, \dots Q^{2}_m v_m \, \chi_2[\bar{v}/\bar{y}]$. Ahora, como $\bar{u}$ y $\bar{v}$ son variables nuevas, aplicando repetidamente el lema \ref{lemita2345}, obtenemos:
+
+\begin{array}{ccl}
+ \varphi_1 \lor \varphi_2 &\sim&Q^{1}_1 x_1(Q^1_2 x_2 \, \dots Q^{1}_n x_n \, \chi_1)\lor Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2 \\
+     &\sim& Q^{1}_1u_1(Q^{1}_2 x_2 \, \dots Q^{1}_n x_n \, \chi_1[u_1/x_1]\lor Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2)\\
+     &\vdots&\\
+     &\sim& Q^1_1 u_1\dots Q^1_n u_n (\chi_1[\bar{u}/\bar{x}]\lor Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2)\\
+     &\sim& Q^1_1 u_1\dots Q^1_n u_n (Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2\lor\chi_1[\bar{u}/\bar{x}])\\
+     &\sim& Q^1_1 u_1\dots Q^1_n u_n Q^2_1 v_1 (Q^{2}_2 y_2 \, \dots Q^{2}_m y_m \, \chi_2[v_1/y_1]\lor\chi_1[\bar{u}/\bar{x}])\\
+     &\vdots&\\
+     &\sim& Q^1_1 u_1\dots Q^1_n u_n Q^2_1 v_1\dots Q^2_m v_m(\chi_2[\bar{v}/\bar{y}]\lor \chi_1[\bar{u}/\bar{x}]),
+\end{array}
+
+y ya tenemos una forma prenexa.
+\end{proof}
+
+
+\section{Método de los \textit{tableaux}}
+
+En esta sección desarrollaremos el método de los \textit{tableaux} para lógica de primer orden, análogo al que ya presentamos en el anterior capítulo. Por ello, remitimos toda motivación informal acerca de este procedimiento a lo que ya dijimos allí. Para aprender métodos de este tipo siempre son de ayuda los ejemplos, que hemos incluido al final de la siguiente subsección.
+
+\subsection{Nociones básicas y ejemplos}
+
+Como veremos durante esta sección, para aplicar una regla de construcción de \textit{tableaux} necesitaremos unas constantes auxiliares. Por tanto, supondremos la existencia de un conjunto de constantes auxiliares $C_{A} = \{c_0,c_1, \dots \}$ en nuestra signatura.
+
+Siempre que tengamos una fórmula existencial en un \textit{tableaux} podremos seleccionar un elemento del conjunto $C_A$ que la verifica. Más adelante veremos un ejemplo. 
+
+
+Las fórmulas que pueden aparecer ahora en nuestros \textit{tableaux} obviamente incluyen a las que lo hacían en los del cálculo proposicional, pero se incorporan algunas nuevas. Es decir, además de las $\alpha$, $\beta$, $\sigma$-fórmulas, definimos:
+\begin{itemize}
+    \item $\gamma$-\textit{fórmulas} (también llamadas \textit{universales}):
+    \begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    $\gamma$ & $\gamma(t)$ \\
+    \hline \hline
+    $\forall x \, \varphi$ & $\varphi[t/x]$ \\ \hline
+    $\neg \exists x \, \varphi$ & $\neg \varphi[t/x]$\\ \hline
+    \end{tabular}
+    \end{center}
+    \end{table}
+    Siendo $t \in TERM_S$.
+    
+    \item $\delta$-\textit{fórmulas} (también llamadas \textit{existenciales}):
+    \begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    $\delta$ & $\delta(c)$ \\
+    \hline \hline
+    $\exists x \, \varphi$ & $\varphi[c/x]$ \\ \hline
+    $\neg \forall x \, \varphi$ & $\varphi[c/x]$\\ \hline
+    \end{tabular}
+    \end{center}
+    \end{table}
+    Siendo $c \in C_A$.
+    
+    \item \textit{Axiomas de igualdad}, $EQ_S$:
+    \begin{itemize}
+        \item[(RF)] $\forall x \, x \doteq x$.
+        \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$.
+        \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$.
+        \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
+        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \land  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n).$$
+    \end{itemize}
+\end{itemize}
+Los nombres de las reglas $RF,IM,TR$ se deben a que a estas propiedades se conocen como reflexiva, simétrica y transitiva. En el caso de las dos últimas se debe a que son reglas de sustitución.
+
+Un resultado análogo al correspondiente de lógica proposicional es el siguiente:
+
+\begin{prop}
+Sean $S$ signatura, $\varphi \in FORM_S$. Entonces $\varphi$ verifica una de las siguientes condiciones:
+\begin{enumerate}
+    \item Es de la forma $\psi$, $\neg \psi$, $\bot$ o $\top$, con $\psi \in FORMAT_S$.
+    \item Es $\sigma$-fórmula.
+    \item Es $\alpha$-fórmula.
+    \item Es $\beta$-fórmula.
+    \item Es $\gamma$-fórmula.
+    \item Es $\delta$-fórmula.
+\end{enumerate}
+\end{prop}
+
+Esto asegura que nuestro método nos permitirá descomponer fórmulas arbitrarias en otras de la forma $\bot$, $\top$ $\psi$ o $\neg \psi$, con $\psi \in FORMAT_S$. \\\
+
+Ahora describimos las reglas para la construcción de \textit{tableaux} asociados a un conjunto de fórmulas $\Sigma$:
+\begin{itemize}
+    \item Las reglas $R_{ini}, R_{hip}, R_{\sigma}, R_{\alpha}, R_{\beta}$.
+    \item \textit{Regla} $\gamma$, $R_{\gamma}$: Sea 
+    \begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \gamma \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head]                                           & {}
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Sigma$, donde $\gamma$ es $\gamma$-fórmula y $\gamma(t)$ su versión simplificada. Entonces 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \gamma \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head] \arrow[d, no head]                        & {} \\
+                      & \gamma(t)                                                        &   
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Sigma$.$\\$
+Es decir, siempre podemos añadir a una rama abierta una versión simplificada de cualquier $\gamma$-fórmula suya y seguimos teniendo un \textit{tableau} de $\Sigma$.
+
+    \item \textit{Regla} $\delta$, $R_{\delta}$: Sea 
+    \begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \delta \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head]                                           & {}
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Sigma$, donde $\delta$ es $\delta$-fórmula y $\delta(c)$ su versión simplificada. Entonces 
+\begin{center}
+\begin{tikzcd}
+                      & {} \arrow[d, no head] \arrow[ldd, no head] \arrow[rdd, no head] &    \\
+                      & \delta \arrow[d, no head]                                       &    \\
+{} \arrow[r, no head] & {} \arrow[r, no head] \arrow[d, no head]                        & {} \\
+                      & \delta(c)                                                        &   
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Sigma$.$\\$
+Es decir, siempre que tengamos una rama abierta que contenga una $\delta$-fórmula, $\delta$, la podemos extender con su versión simplificada $\delta(c)$, siendo $c \in C_A$ nueva en tal rama, y seguimos teniendo un \textit{tableau} de $\Sigma$.
+
+    \item Dado un axioma de igualdad, $\Theta \in EQ_S$, la \textit{regla} $\Theta$: Sea 
+\begin{center}
+\begin{tikzcd}
+                                           & {} \arrow[d, no head] &                        \\
+{} \arrow[ru, no head] \arrow[rr, no head] & {}                    & {} \arrow[lu, no head]
+\end{tikzcd}
+\end{center}
+\textit{tableau} de $\Sigma$. Entonces 
+\begin{center}
+\begin{tikzcd}
+                                           & {} \arrow[d, no head] &                        \\
+{} \arrow[ru, no head] \arrow[rr, no head] & {} \arrow[d, no head] & {} \arrow[lu, no head] \\
+                                           & \theta               &                       
+\end{tikzcd}
+\end{center}
+es \textit{tableau} de $\Sigma$, donde $\theta \in FORM_S$ se obtiene por aplicación del axioma $\Theta$.$\\$
+Es decir, siempre podemos aplicar cada axioma de igualdad $\Theta$ a una rama.
+\end{itemize}
+
+El siguiente ejemplo muestra por qué, al aplicar la regla $\delta$, la constante auxiliar introducida en la rama debe ser nueva en ella.
+
+\begin{example}
+Consideremos el siguiente razonamiento:
+\begin{center}
+\syllog{Alguien mató a Trotsky} 
+{Stalin pagó a alguien} 
+{Stalin pagó a alguien que mató a Trotsky}
+\end{center}
+
+Lo formalizamos como:
+\begin{center}
+\syllog{$\varphi_1$: $\exists x \, M(x, Trotsky)$}
+{$\varphi_2$: $\exists x \, P(Stalin, x)$}
+{$\psi$: $\exists x \,  M(x, Trotsky) \land P(Stalin, x)$}
+\end{center}
+
+Es decir, tenemos el conjunto $\Sigma = \{\varphi_1, \varphi_2, \neg \psi \}$.
+
+\begin{comment}
+\begin{tikzcd}
+{1.\neg\exists x M(x, Trotsky)\land P(Stalin, x)} \arrow[d, "hip(1)"']                                        &  &                                        \\
+{2.  \exists x M(x, Trotsky)} \arrow[d, "hip(2)"']                                                            &  &                                        \\
+{3.  \exists x P(Stalin, x)} \arrow[d, "{\delta, 2}"']                                                        &  &                                        \\
+{4. M(Mercader, Trotsky)} \arrow[d, "{\delta, 3}"']                                                           &  &                                        \\
+{5. P(Stalin, Mercader)} \arrow[d, "{\gamma, 1}"']                                                            &  &                                        \\
+{6. \neg P(Stalin, Mercader) \land M(Mercader, Trotsky)} \arrow[dd, "{\beta, 6}"'] \arrow[rrdd, "{\beta, 6}"] &  &                                        \\
+                                                                                                              &  &                                        \\
+{7. \neg P(Stalin, Mercader) \#5, 7}                                                                          &  & {8. \neg M(Mercader, Trotsky) \#4, 8 }
+\end{tikzcd}
+\end{comment}
+\begin{center}
+\includegraphics[scale = 0.36]{figures/tableau3.png}
+\end{center}
+
+En el punto 4 hemos aplicado correctamente una regla $\delta$ introduciendo la constante auxiliar $Mercader$, y en el 5 hemos vuelto a introducirla por la misma regla, es decir, hemos introducido una constante auxiliar no nueva en la rama. Esto nos ha llevado al absurdo de que la deducción original era válida.  
+\end{example}
+
+\begin{example}
+Un ejemplo sencillo. Veamos si es válida la siguiente deducción:
+
+\begin{center}
+\syllog{Algunos niños son buenos} 
+{Todo lo bueno se come} 
+{Algunos niños se comen}
+\end{center}
+Que formalizamos como:
+\begin{center}
+\syllog{$\varphi_1$: $\exists x \, (ni(x)\land bu(x))$}
+{$\varphi_2$: $\forall x \, (bu(x)\to co(x))$}
+{$\psi$: $\exists x \, (ni(x)\land co(x))$}
+\end{center}
+
+Es decir, en este caso, $\Sigma = \{\varphi_1, \varphi_2, \neg \psi \}$. Veamos un tableau cerrado de $\Sigma$:
+
+\begin{comment}
+\begin{tikzcd}
+1.\exists x (ni(x)\land bu(x)) \arrow[d]                                          &                                                                       \\
+2.  \forall x (bu(x)\to co(x)) \arrow[d]                                          &                                                                       \\
+3.  \neg\exists x (ni(x)\land co(x)) \arrow[d, "{\delta, 1}"']                    &                                                                       \\
+4. ni(Pepe)\land bu(Pepe) \arrow[d, "{\alpha, 4}"']                               & \text{(Donde $Pepe\in C_A$)}                                         \\
+5. ni(Pepe) \arrow[d]                                                             &                                                                       \\
+6. bu(Pepe) \arrow[d, "{\gamma,2,pepe/x}"]                                        &                                                                       \\
+7.bu(Pepe)\to co(Pepe) \arrow[rd, "{\beta,7}"] \arrow[d, "{\beta,7}"]             &  \\
+9.co(Pepe) \arrow[d, "{\gamma,3,pepe/x}"]                                         & {\neg bu(Pepe)\#6,8}                                                  \\
+10.\neg(ni(pepe)\lor co(Pepe)) \arrow[d, "{\beta, 10}"] \arrow[rd, "{\beta, 10}"] &                                                                       \\
+{12.\neg co(Pepe)\#9,12}                                                          & {11.\neg ni(Pepe)\#5,11}                                             
+\end{tikzcd}
+\end{comment}
+
+\begin{center}
+\includegraphics[scale = 0.44]{figures/tableau4.png}
+\end{center}
+\end{example}
+
+
+\subsection{Corrección y completitud}
+
+Tal y como hicimos en el método de los \textit{tableaux} para lógica proposicional, dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, escribimos $\Phi \vdash_{tb} \varphi$ cuando existe un \textit{tableau} cerrado para $\Phi \cup \{\neg \varphi\}$.
+
+Pues bien, recordemos del capítulo anterior que decimos el método de los \textit{tableaux} tiene \textit{corrección} si $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$, y decimos que tiene \textit{completitud} si $\Phi \vDash \varphi$ implica $\Phi \vdash_{tb} \varphi$.\\
+Vamos a comprobar que el método de los \textit{tableaux} de primer orden tiene ambas propiedades, empezando por la corrección.
+
+Comencemos con el siguiente:
+
+\begin{lema}\label{eq}
+Para todo $\Theta \in EQ_S$, $\vDash \Theta$. 
+\end{lema}
+\begin{proof} \mbox{}
+\begin{itemize}
+        \item[(RF)] $\forall x \, x \doteq x$ es tautología ya que dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x] \vDash x \doteq x$ para todo $a \in A$, ya que obviamente $a=a$.
+        \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$ es tautología ya que, dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x][b/y] \vDash x \doteq y \rightarrow y \doteq x$ para todo $a \in A$, ya que si $a=b$, $\mathfrak{I}[a/x][b/y]$ verifica $x \doteq y$ y $y \doteq x$, por tanto verifica $x \doteq y \rightarrow y \doteq x$. Si $x\neq y$, $\mathfrak{I}[a/x][b/y]$ no verifican $x \doteq y$ ni $y \doteq x$, por tanto de nuevo verifica $x \doteq y \rightarrow y \doteq x$.
+        \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$ es una tautología. Este caso se demuestra de forma similar a los anteriores, comprobando que $\mathfrak{I}[a/x][b/y][c/z]$ siempre verifica $x \doteq y \land y \doteq z \rightarrow x \doteq z$. En este caso habría 8 casos, pero se puede hacer dividiendo en los casos $a\neq b$, $a=b\neq c$, $a=b=c$.
+        \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
+        \begin{comment}
+        Este caso se demuestra por inducción en $n$.
+        \begin{itemize}
+            \item Caso base: Para cualquier constante (función 0-aria) $a$, cualquier interpretación verifica $a\doteq a$.
+            \item Caso inductivo: Supongamos que cualquier función $n-1$-aria lo cumple. Sea f una función $n$-aria y sea una interpretación $\mathfrak{I}$. Entonces, $\mathfrak{I}$ verifica la función que buscamos si y solo si para todo $a\in A$, $\mathfrak{I}[a/x_1]$ verifica $$\forall x_2, \dots, \forall x_n \, \forall y_2, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
+            Esta fórmula es equivalente a:
+            $$\forall x_2, \dots, \forall x_n \, \forall y_2, \dots, \forall y_n \, \neg (x_1\doteq y_1)\lor(\bigvee\limits_{i = 1}^{n} \neg (x_i \doteq y_i)) \lor f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
+            Como ninguna variable aparece libre, por la ley (9) de equivalencia lógica esto equivale a:
+            $$\neg (x_1\doteq y_1)\lor\forall x_2, \dots, \forall x_n \, \forall y_2, \dots, \forall y_n \, (\bigvee\limits_{i = 1}^{n} \neg (x_i \doteq y_i)) \lor f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
+        \end{itemize}
+        \end{comment}
+        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \land  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
+\end{itemize}
+\end{proof}
+
+El siguiente resultado es fundamental, nos permite extender una rama satisfactible del \textit{tableaux} a otra que también lo es:
+
+\begin{prop}
+Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$ y $\mathfrak{I}$ $S$-interpretación tales que $\mathfrak{I} \vDash \Phi$. Entonces existe una $S$-interpretación $\mathfrak{I}'$ tal que $\mathfrak{I} \sim_{\varphi} \mathfrak{I}'$ para toda $\varphi \in \Phi$ de modo que:
+\begin{enumerate}
+    \item Sea $\sigma \in \Phi$ fórmula simplificable. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\sigma_1 \}$, con $\sigma \sim \sigma_1$ la simplificación de $\sigma$.
+    \item Sea $\alpha \in \Phi$ una $\alpha$-fórmula. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\alpha_1, \alpha_2 \}$, con $\alpha \sim \alpha_1 \land \alpha_2$ la descomposición de $\alpha$.
+    \item Sea $\beta \in \Phi$ una $\beta$-fórmula. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\beta_1\}$ o $\mathfrak{I}' \vDash \Phi \cup \{\beta_2\}$, con $\beta \sim \beta_1 \lor \beta_2$ la descomposición de $\beta$.
+    \item Sean $\gamma \in \Phi$ $\gamma$-fórmula, $t \in TERM_S$. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\gamma(t)\}$.
+    \item Sean $\delta \in \Phi$ $\delta$-fórmula, $c \in C_A$ constante auxiliar nueva en $\Phi$. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\delta(c)\}$.
+    \item Para cada $\Theta \in EQ_S$, $\mathfrak{I}' \vDash \Phi \cup \{ \Theta\}$.
+\end{enumerate}
+\end{prop}
+\begin{proof} \mbox{}
+
+(1), (2) y (3) son análogos a los de lógica proposicional. Basta hacer que $\mathfrak{I} = \mathfrak{I}'$ y el hecho de que:$$\sigma \sim \sigma_1, \quad \alpha \sim \alpha_1 \land \alpha_2, \quad \beta \sim \beta_1 \lor \beta_2.$$ \\
+
+Veamos (4). Sea $\gamma \in \Phi$ y supongamos, sin pérdida de generalidad, que $\gamma$ es de la forma $\forall x \, \varphi$ (si fuese de la forma $\neg \exists x \, \varphi$, usamos que esto es equivalente a $\forall x \, \neg \varphi$ y hacemos $\psi := \neg \varphi$). Tomemos $\mathfrak{I}' = \mathfrak{I}$.
+
+\noindent Consideremos el conjunto soporte de la interpretación $\mathfrak{I}$, $A$. Sea $t \in TERM_S$, y sea $a := t^{\mathfrak{I}} \in A$. Dado que $\forall x \, \varphi \in \Phi$, por hipótesis, $\mathfrak{I} \vDash \forall x \, \varphi$, y por tanto, $\mathfrak{I}[b/x] \vDash \varphi$ para todo $b \in A$, en especial, $\mathfrak{I}[a/x] \vDash \varphi$. Por el Lema de Sustitución, $\mathfrak{I} \vDash \varphi[t/x]$, y notando que $\varphi[t/x] = \gamma(t)$, obtenemos el resultado. \\
+
+Veamos (5). Sea $\delta \in \Phi$ y supongamos que $\delta = \exists x \, \varphi$, para $\varphi \in FORM_S$ (en caso de que $\delta$ fuese de la forma $\neg \forall x \, \varphi$, entonces sería equivalente a $\exists x \, \neg \varphi$ y, haciendo que $\psi := \neg \varphi$, habríamos terminado). Sea $c \in C_A$ constante auxiliar nueva en $\Phi$.
+
+\noindent Consideremos de nuevo el conjunto soporte de $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$, $A$. Como $\exists x \, \varphi \in \Phi$, por hipótesis, $\mathfrak{I} \vDash \exists x \, \varphi$, luego existe $a \in A$ tal que $\mathfrak{I}[a/x] \vDash \varphi$. Ahora definimos $\mathfrak{A}'$ como $\mathfrak{A}$ excepto que $c^{\mathfrak{A}'} = a$. Definamos $\mathfrak{I}' := \langle \mathfrak{A}', \sigma \rangle$. 
+
+\noindent Al ser $c$ constante nueva para $\Phi$, es decir, para cada elemento de $\Phi$, tenemos que $\mathfrak{I} \sim_{\psi} \mathfrak{I}'$, para cada $\psi \in \Phi$, por tanto se cumple $\mathfrak{I} \vDash \psi$ para toda $\psi\in\Phi$. Por el Lema de Sustitución, 
+$$(\varphi[c/x])^{\mathfrak{I}'} = \varphi^{\mathfrak{I}'[c^{\mathfrak{I}'}/x]} = \varphi^{\mathfrak{I}'[a/x]}.$$
+Y dado que $\mathfrak{I}'[a/x] \sim_{\varphi} \mathfrak{I}[a/x]$ por ser $c$ nueva, aplicando una vez más el Lema de Sustitución, 
+$$\varphi^{\mathfrak{I}'[a/x]} = \varphi^{\mathfrak{I}[a/x]} = V.$$
+Lo que nos da el resultado. \\
+
+Finalmente, (6) se deduce de \ref{eq}. 
 \end{proof}
