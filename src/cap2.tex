@@ -1022,7 +1022,7 @@ Las fórmulas que pueden aparecer ahora en nuestros \textit{tableaux} obviamente
     $\delta$ & $\delta(c)$ \\
     \hline \hline
     $\exists x \, \varphi$ & $\varphi[c/x]$ \\ \hline
-    $\neg \forall x \, \varphi$ & $\varphi[c/x]$\\ \hline
+    $\neg \forall x \, \varphi$ & $\neg \varphi[c/x]$\\ \hline
     \end{tabular}
     \end{center}
     \end{table}
@@ -1032,7 +1032,7 @@ Las fórmulas que pueden aparecer ahora en nuestros \textit{tableaux} obviamente
     \begin{itemize}
         \item[(RF)] $\forall x \, x \doteq x$.
         \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$.
-        \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$.
+        \item[(TR)] $\forall x \, \forall y \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$.
         \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
         \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \land  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n).$$
     \end{itemize}
@@ -1098,7 +1098,7 @@ Es decir, siempre podemos añadir a una rama abierta una versión simplificada d
 es \textit{tableau} de $\Sigma$.$\\$
 Es decir, siempre que tengamos una rama abierta que contenga una $\delta$-fórmula, $\delta$, la podemos extender con su versión simplificada $\delta(c)$, siendo $c \in C_A$ nueva en tal rama, y seguimos teniendo un \textit{tableau} de $\Sigma$.
 
-    \item Dado un axioma de igualdad, $\Theta \in EQ_S$, la \textit{regla} $\Theta$: Sea 
+    \item Dado un axioma de igualdad, $\theta \in EQ_S$, la \textit{regla} $\theta$: Sea 
 \begin{center}
 \begin{tikzcd}
                                            & {} \arrow[d, no head] &                        \\
@@ -1113,8 +1113,7 @@ Es decir, siempre que tengamos una rama abierta que contenga una $\delta$-fórmu
                                            & \theta               &                       
 \end{tikzcd}
 \end{center}
-es \textit{tableau} de $\Sigma$, donde $\theta \in FORM_S$ se obtiene por aplicación del axioma $\Theta$.$\\$
-Es decir, siempre podemos aplicar cada axioma de igualdad $\Theta$ a una rama.
+Es decir, siempre podemos introducir cada axioma de igualdad $\theta$ a una rama.
 \end{itemize}
 
 El siguiente ejemplo muestra por qué, al aplicar la regla $\delta$, la constante auxiliar introducida en la rama debe ser nueva en ella.
@@ -1193,17 +1192,17 @@ Es decir, en este caso, $\Sigma = \{\varphi_1, \varphi_2, \neg \psi \}$. Veamos 
 \end{example}
 
 
-\subsection{Corrección y completitud}
+\subsection{Corrección}
 
 Tal y como hicimos en el método de los \textit{tableaux} para lógica proposicional, dados $\Phi \subseteq FORM_S$ y $\varphi \in FORM_S$, escribimos $\Phi \vdash_{tb} \varphi$ cuando existe un \textit{tableau} cerrado para $\Phi \cup \{\neg \varphi\}$.
 
-Pues bien, recordemos del capítulo anterior que decimos el método de los \textit{tableaux} tiene \textit{corrección} si $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$, y decimos que tiene \textit{completitud} si $\Phi \vDash \varphi$ implica $\Phi \vdash_{tb} \varphi$.\\
+Recordemos del capítulo anterior que decimos del método de los \textit{tableaux} que tiene \textit{corrección} si $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$, y decimos que tiene \textit{completitud} si $\Phi \vDash \varphi$ implica $\Phi \vdash_{tb} \varphi$.\\
 Vamos a comprobar que el método de los \textit{tableaux} de primer orden tiene ambas propiedades, empezando por la corrección.
 
 Comencemos con el siguiente:
 
 \begin{lema}\label{eq}
-Para todo $\Theta \in EQ_S$, $\vDash \Theta$. 
+Para todo $\theta \in EQ_S$, $\vDash \theta$. 
 \end{lema}
 \begin{proof} \mbox{}
 \begin{itemize}
@@ -1228,7 +1227,7 @@ Para todo $\Theta \in EQ_S$, $\vDash \Theta$.
 
 El siguiente resultado es fundamental, nos permite extender una rama satisfactible del \textit{tableaux} a otra que también lo es:
 
-\begin{prop}
+\begin{prop}\label{aaa}
 Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$ y $\mathfrak{I}$ $S$-interpretación tales que $\mathfrak{I} \vDash \Phi$. Entonces existe una $S$-interpretación $\mathfrak{I}'$ tal que $\mathfrak{I} \sim_{\varphi} \mathfrak{I}'$ para toda $\varphi \in \Phi$ de modo que:
 \begin{enumerate}
     \item Sea $\sigma \in \Phi$ fórmula simplificable. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\sigma_1 \}$, con $\sigma \sim \sigma_1$ la simplificación de $\sigma$.
@@ -1236,7 +1235,7 @@ Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$ y $\mathfrak{I}$ $S$-interpretac
     \item Sea $\beta \in \Phi$ una $\beta$-fórmula. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\beta_1\}$ o $\mathfrak{I}' \vDash \Phi \cup \{\beta_2\}$, con $\beta \sim \beta_1 \lor \beta_2$ la descomposición de $\beta$.
     \item Sean $\gamma \in \Phi$ $\gamma$-fórmula, $t \in TERM_S$. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\gamma(t)\}$.
     \item Sean $\delta \in \Phi$ $\delta$-fórmula, $c \in C_A$ constante auxiliar nueva en $\Phi$. Entonces $\mathfrak{I}' \vDash \Phi \cup \{\delta(c)\}$.
-    \item Para cada $\Theta \in EQ_S$, $\mathfrak{I}' \vDash \Phi \cup \{ \Theta\}$.
+    \item Para cada $\theta \in EQ_S$, $\mathfrak{I}' \vDash \Phi \cup \{ \theta\}$.
 \end{enumerate}
 \end{prop}
 \begin{proof} \mbox{}
@@ -1258,4 +1257,181 @@ $$\varphi^{\mathfrak{I}'[a/x]} = \varphi^{\mathfrak{I}[a/x]} = V.$$
 Lo que nos da el resultado. \\
 
 Finalmente, (6) se deduce de \ref{eq}. 
+\end{proof}
+
+Del siguiente resultado se deducirá como corolario la corrección del método de los \textit{tableaux} de primer orden:
+
+\begin{theorem}\label{bbb}
+Sea $S$ signatura. Sea $\Phi \subseteq FORM_S$ conjunto de fórmulas satisfactible y $T$ un tableau abierto finito para $\Phi$. Entonces existe una rama abierta de $T$, $r$, tal que $\Gamma_r$ es satisfactible.
+\end{theorem}
+\begin{proof}
+Demostremos que existe una $S$-interpretación $\mathfrak{I}$ y una tal rama $r$ de modo que $\mathfrak{I} \vDash \Phi$ y $\mathfrak{I} \vDash \Gamma_r$. 
+
+Al ser $T$ finito, se ha construido en un número finito de reglas $R_{ini}, R_1,  \dots, R_{n}$, dando lugar la sucesión de \textit{tableaux} $T_0, T_1, \dots, T_n = T$. Por tanto, procedemos por inducción sobre $n$. \\
+
+Si $n=0$, entonces $T_0$ es un \textit{tableaux} inicial, es decir, tiene la forma 
+\begin{tikzcd}
+\varphi_1 \arrow[d, no head]          \\
+\varphi_2 \arrow[dd, no head, dotted] \\ 
+                                      \\
+\varphi_k                            
+\end{tikzcd}.
+Entonces $r$ es la única rama disponible, y $\Gamma_r = \{ \varphi_1, \dots, \varphi_k\} \subseteq \Phi$, por lo que, dado que $\Phi$ es satisfactible, $\Gamma_r$ lo es. Por tanto, hemos encontrado una $S$-interpretación que verifica lo deseado. \\
+
+Sea $n>0$ y supongamos que el resultado es cierto para el \textit{tableau} $T_{n-1}$ y veamos que lo es para $T_n$. Al aplicar la regla $R_n$ a $T_{n-1}$, extendemos una rama $r$. Además, por hipótesis de inducción, hay una rama $r'$ tal que $\Gamma_{r'}$ es satisfactible. \\
+
+Si $r \neq r'$ entonces $r'$ es rama de $T_n$ y, como hemos dicho, verifica que $\Gamma_{r'}$ es satisfactible, con lo que obtenemos el resultado. \\
+
+Si $r = r'$, debemos distinguir los siguientes casos, dependiendo de qué tipo de regla es $R_n$:
+\begin{enumerate}
+    \item $R_n$ es una regla inicial, de tipo $\sigma$, $\alpha$ o $\beta$. La demostración es análoga a la que vimos en lógica proposicional.
+    \item $R_n$ es una regla $\delta$. Sea $\Gamma_{r}^{k}$ el conjunto de fórmulas de la rama $r$ en el árbol $k$-ésimo. Entonces existe $\delta \in \Gamma_{r}^{n-1}$ tal que $\Gamma_{r}^{n} = \Gamma_{r}^{n-1} \cup \{\delta(c)\}$, con $c \in C_A$ nueva en $r$. Por hipótesis de inducción, existe una $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Phi$ y $\mathfrak{I} \vDash \Gamma_{r}^{n-1}$.
+    
+    Por \ref{aaa}, existe $\mathfrak{I}'$ tal que $\mathfrak{I}' \vDash \Gamma_{r}^{n-1} \cup \{\delta(c)\}$, es decir, tal que $\mathfrak{I}' \vDash \Gamma_{r}^{n}$. Al ser $c$ nueva en $r$, $c \notin voc(\psi)$, para cada $\psi \in \Phi$, por tanto como en la prueba de \ref{aaa} vimos que $\mathfrak{I}'$ solo difiere de $\mathfrak{I}$ en $c$, $\mathfrak{I}' \sim_{\psi} \mathfrak{I}$, y por tanto $\mathfrak{I}' \vDash \psi$, es decir, $\mathfrak{I}' \vDash \Phi$.
+    
+    \item $R_n$ es una regla $\gamma$. Existe $\gamma \in \Gamma_{r}^{n-1}$ tal que $\Gamma_{r}^{n} = \Gamma_{r}^{n-1} \cup \{\gamma(t)\}$, siendo $t \in TERM_S$. Por hipótesis, existe una $S$-interpretación $\mathfrak{I}$ con $\mathfrak{I} \vDash \Phi$ y $\mathfrak{I} \vDash \Gamma_{r}^{n-1}$. 
+    
+    Por la prueba de \ref{aaa}, la misma $\mathfrak{I}$ cumple $\mathfrak{I} \vDash \Gamma_{r}^{n-1} \cup \{\gamma(t)\}$, por tanto $\mathfrak{I} \vDash \Gamma_{r}^n$.
+    
+    \item $R_n$ es una regla $\theta$, con $\theta \in EQ_S$. Entonces, $\Gamma_{r}^{n} = \Gamma_{r}^{n-1} \cup \{\theta\}$. Por hipótesis de inducción, existe una $S$-interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Phi$ y, $\mathfrak{I} \vDash \Gamma_{r}^{n-1}$. Por tanto, $\mathfrak{I} \vDash \Gamma_{r}^n$.
+\end{enumerate}
+\end{proof}
+
+\begin{cor}\label{ccc}
+Sea $S$ signatura. Si $\Phi \subseteq FORM_S$ y $\Phi$ tiene un \textit{tableau} cerrado, entonces $\Phi$ es insatisfactible. 
+\end{cor}
+\begin{proof}
+Basta notar que este enunciado es la forma contrapositiva de \ref{bbb}.
+\end{proof}
+
+Finalmente, obtenemos el resultado al que hemos dedicado esta subsección:
+
+\begin{cor}(Corrección)
+Sean $S$ signatura, $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$. Entonces, si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \vDash \varphi$.
+\end{cor}
+\begin{proof}
+Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \cup \{\neg \varphi \}$ tiene un \textit{tableau} cerrado y, por \ref{ccc}, $\Phi \cup \{\neg \varphi \}$ es insatisfactible. Por el resultado análogo a \ref{insat} para lógica de primer orden, esto implica que $\Phi \vDash \varphi$.
+\end{proof}
+
+
+\subsection{Completitud}
+
+El estudio de la completitud va a ser más complicado que en lógica proposicional. Para poder estudiarla, vamos a necesitar introducir una serie de nociones fundamentales de teoría de grafos: 
+
+\begin{defs}\mbox{}
+\begin{enumerate}[label=\bold{\arabic*})]
+    \item Un \textit{grafo no dirigido} es un par ordenado $T = \langle N, E \rangle$, donde $N$ es el conjunto de \textit{nodos} y $E$ es el conjunto de \textit{aristas}, que son pares sin ordenar de nodos.
+    \item Un camino es una sucesión de $(\geq1)$ aristas $(a_1,\dots,a_n)$ de forma que el segundo vértice de $a_i$ es el primero de $a_{i+1}$ para $i=1,\dots,n$. Llamamos a $n$ \textit{longitud del camino}. 
+    \item Decimos que el camino es simple si cada vértice del camino solo aparece hasta dos veces, una al final de una arista y otra al principio de la siguiente. Decimos que un camino es un ciclo si es simple y el primer vértice de la primera arista es el segundo vértice de la última arista.
+    \item Decimos que un grafo es \textit{acíclico} si no tiene ciclos. Decimos que un grafo es \textit{conexo} si para cada par de nodos hay un camino entre ellos.
+    \item Un \textit{árbol (libre)} es un grafo no dirigido conexo y acíclico. Equivalentemente, es un grafo tal que entre cada par de sus nodos hay un solo camino simple que los une.
+    \item Sea $G = \langle V, E\rangle$ grafo no dirigido. Se llama \textit{grado} de $v \in V$, $deg(v)$, al número de elementos de $E$ que inciden sobre él.
+    \item Se llama \textit{profundidad} del árbol (libre) $T = \langle N, E \rangle$ a $|N|$.
+\end{enumerate}
+\end{defs}
+
+
+Se tienen las siguientes propiedades:
+
+\begin{prop}
+Sea $T = \langle N, E \rangle$ un grafo:
+\begin{enumerate}
+    \item Si $T$ es un árbol y le quitamos un elemento de $E$, $T$ deja de ser conexo.
+    \item Si $T$ tiene finitos nodos, $T$ es un árbol si y solo si $|E| = |N| - 1$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+Se omite la demostración.
+\end{proof}
+
+\begin{defs}\mbox{}
+\begin{enumerate}
+    \item Un árbol $T = \langle N, E \rangle$ se llama \textit{árbol con raíz} si se selecciona un elemento especial de $N$, llamado \textit{raíz} de $T$.
+    \item Sea $T = \langle N, E \rangle$ árbol con raíz $n_0$. Se llama \textit{altura} de $n \in N$, $h(n)$, a la longitud del único camino simple que une $n_0$ con $n$.
+    \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Se dice que $n_1\in N$ es \textit{hijo de} $n$ si hay una arista que conecta $n$ y $n_1$ y $h(n_1)=h(n)+1$. Se dice que $n_1$ y $n_2$ son \textit{hermanos} si son hijos del mismo nodo.
+    \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Llamamos \textit{rama} finita a un camino simple desde $n_0$ que no está contenido en ningún otro camino simple desde $n_0$. Una rama infinita será una sucesión de aristas $a_1,a_2,\dots$ tal que el primer vértice de $a_{n+1}$ es el segundo de $a_n$ para todo $n$, que parte desde $n_0$ y en que no se repiten vértices.
+\end{enumerate}
+\end{defs}
+
+De ahora en adelante consideraremos árboles con una raíz determinada.
+
+\begin{definition}
+Sean $T_1 := \langle N_1, E_1 \rangle$, $T_2 :=  \langle N_2, E_2 \rangle$ dos árboles con la misma raíz. Decimos que $T_1$ \textit{está incluido en} $T_2$, $T_1 \leq T_2$, si:
+\begin{itemize}
+    \item $N_1 \subseteq N_2$.
+    \item $E_1 \subseteq E_2$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Sean $T_0, \dots, T_k, \dots$ árboles tales que $T_0 \leq \dots \leq T_k \leq \dots$. Definimos:
+$$\lim_{n \in \mathbb{N}} T_n := \langle N, E \rangle$$
+siendo $N := \bigcup_{n\in \mathbb{N}} N_{n}$ y $E := \bigcup_{n\in \mathbb{N}} E_{n}$ y con la misma raíz que la de T_0.
+\end{definition}
+
+\begin{prop}
+Sea $T_0 \leq \dots \leq T_k \leq \dots$ sucesión de árboles. Sea $T := \lim_{n \in \mathbb{N}} T_n$. Entonces:
+\begin{enumerate}
+    \item $T_i \leq T$, para todo $i \in \mathbb{N}$.
+    \item $T$ es un árbol.
+\end{enumerate}
+\end{prop}
+\begin{proof}\mbox{}
+\begin{enumerate}
+    \item Se sigue de las definiciones anteriores.
+    \item Comencemos demostrando que $T = \langle T, N\rangle$ es conexo. Sean $n_1, n_2 \in N$. Como $N := \bigcup_{n\in \mathbb{N}} N_{n}$ y $N_i \subseteq N_j$, para todo $i \leq j$, existe $k \in \mathbb{N}$ tal que $n_1, n_2 \in N_k$. Al ser $T_k = \langle N_k, E_k\rangle$ conexo, existe un camino en $T_k$ que une $n_1$ y $n_2$. Al ser $E_k \subseteq E$ por definición, también es un camino en $T$, lo que nos da la conexión de $T$. \\
+    
+    Supongamos que existen dos nodos $n_1, n_2 \in N$ tales que existen dos caminos distintos $e_1, \dots, e_l$ y $f_1, \dots, f_k$ que los conectan. Es claro, razonando igual que antes, que existe $i \in \mathbb{N}$ tal que $n_1, n_2 \in N_i$ y $e_1, \dots, e_l, f_1, \dots, f_k \in E_i$ y, al ser $T_i = \langle N_i, E_i\rangle$ árbol, $e_1, \dots, e_l$ y $f_1, \dots, f_k$ son iguales, lo que implica que $T$ sea acíclico.
+\end{enumerate}
+\end{proof}
+
+Nótese que nuestros \textit{tableaux} son árboles con raíz. Además, se cumplirá que las ramas cerradas serán siempre finitas.
+
+
+Necesitamos el siguiente resultado técnico de la teoría de grafos:
+
+\begin{theorem}(Lema de König para árboles)\label{konig}
+\mbox{}
+Sea $T$ un árbol con raíz con infinitos nodos tal que cada nodo tiene finitos hijos. Entonces $T$ tiene una rama infinita.
+\end{theorem}
+\begin{proof}
+Se omite la demostración.
+\end{proof}
+
+
+\begin{comment}
+\begin{theorem}(Lema de König)\label{konig}
+Sea $G$ grafo que verifica lo siguiente:
+\begin{enumerate}
+    \item $G$ es conexo.
+    \item $G$ es \textit{localmente finito}, es decir, cada nodo es vecino de finitos vértices.
+    \item $G$ es \textit{infinito}, es decir, su conjunto de nodos es infinito.
+\end{enumerate}
+Entonces $G$ contiene un camino simple infinito.
+
+En especial, cada árbol infinito contiene o un nodo de grado infinito o un camino simple infinito.
+\end{theorem}
+\begin{proof}
+Se omite la demostración.
+\end{proof}
+\end{comment}
+
+
+\begin{prop}
+Si $T$ es tableau cerrado, es finito.
+\end{prop}
+\begin{comment}
+\begin{proof}
+Observemos que, en todo \textit{tableau}, el número máximo de hijos de cada nodo es dos: los que se pueden obtener por la aplicación de una regla $\beta$.
+Al ser $T$ cerrado, en cada rama suya $r$ hay dos nodos $n_1, n_2$ que son contradictorios. Definimos:
+$$h_r := max\{h(n_1), h(n_2)\}$$
+$$h := max\{h_r \, | \, r \text{ rama de } T\}$$
+
+Si $h$ fuese infinito, el árbol tendría ramas $r$ con $h_r$ arbitraria. Como cada nodo tiene a lo sumo dos hijos, por \ref{konig} debe tener una camino simple infinito, esto es, una rama infinita. Esta rama infinita no puede estar cerrada, ya que las ramas cerradas tienen siempre profundidad finita.
+
+Por tanto, $h$ es finito y, del hecho de que cada nodo tiene a lo sumo dos hijos deducimos que tiene que ser finito.
+\end{proof}
+\end{comment}
+\begin{proof}
+Usaremos reducción al absurdo. Sea $T$ un \textit{tableaux} infinito cerrado. Observemos que, en todo \textit{tableau}, el número máximo de hijos de cada nodo es dos: los que se pueden obtener por la aplicación de una regla $\beta$. Por tanto, por $\ref{konig}$ el \textit{tableau} contiene una rama infinita. Esto contradice el hecho de que todas las ramas cerradas son finitas.
 \end{proof}

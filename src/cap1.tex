@@ -999,7 +999,7 @@ El último ejemplo muestra que hay muchas formas de intentar conseguir un \texti
 \end{enumerate}
 Es decir, nos conviene aplicar siempre que sea posible la regla $R_\sigma$. Cuando no sea posible, aplicaremos la regla $R_\alpha$. Si esta tampoco es posible, usaremos $R_\beta$.$\\$
 
-\subsection{Corrección y completitud}
+\subsection{Corrección}
 
 Recordemos que lo que motivó esta sección fue, dados un conjunto de fórmulas $\Phi$ y una fórmula $\varphi$, el demostrar que $\Phi\vDash\varphi$, usando el método de los \textit{tableaux}. Por tanto, para que el método nos permita alcanzar este objetivo tiene que cumplir dos propiedades:
 \begin{itemize}
@@ -1009,7 +1009,7 @@ Recordemos que lo que motivó esta sección fue, dados un conjunto de fórmulas 
     Es decir, si encontramos un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$, entonces se cumple que $\Phi\vDash\varphi$. 
 \end{itemize}
 
-El siguiente resultado condensa las ideas expuestas hasta ahora:
+Comenzamos demostrando la propiedad de corrección. El siguiente resultado condensa las ideas expuestas hasta ahora:
 
 \begin{theorem}\label{sat}
 Sean $\Phi \subseteq PROP_{SP}$ tal que $Sat(\Phi)$ y $T$ \textit{tableau} finito para $\Phi$. Entonces existe una rama de $T$, $r$, tal que $Sat(\Gamma_{r})$. Es más: si una valoración $v$ cumple $v\vDash\Phi$, hay una rama $r$ que cumple $v \vDash \Gamma_{r}$.
@@ -1051,11 +1051,13 @@ Se trata de la forma contrapositiva del enunciado \ref{sat}.
 \end{proof}
 
 \begin{cor}(Corrección)\label{corrección}
-Sean $\Phi \in PROP_{SP}, \varphi \in PROP_{SP}$. Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \vDash \varphi$.
+Sean $\Phi \subseteq PROP_{SP}, \varphi \in PROP_{SP}$. Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \vDash \varphi$.
 \end{cor}
 \begin{proof}
 Si $\Phi \vdash_{tb} \varphi$ entonces $\Phi \cup \{\neg \varphi\}$ tiene un \textit{tableau} cerrado. Por \ref{corr} se sigue que $Insat(\Phi \cup \{\neg \varphi \})$, es decir,  aplicando \ref{insat}, $\Phi \vDash \varphi$.
 \end{proof}
+
+\subsection{Completitud}
 
 Ahora pasamos a estudiar la completitud. Para ello es necesario introducir previamente varias nociones:
 
