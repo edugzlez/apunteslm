@@ -573,19 +573,19 @@ Consideremos las dos fórmulas $\psi_1 = p \lor q$ y $\psi_2 = q \lor p$. Sabemo
 Supongamos que queremos demostrar la equivalencia de estas dos fórmulas:
 \begin{itemize}
     \item $p_1\lor p_2\lor p_3\to p_4\land (p_5\lor p_6)$
-    \item $\neg((p_4\lor p_5)\land(p_4\lor p_6))\to \neg(p_1\lor p_2\lor p_3)$
+    \item $\neg((p_4\land p_5)\lor(p_4\land p_6))\to \neg(p_1\lor p_2\lor p_3)$
 \end{itemize}
 Desde luego podríamos hacerlo usando tablas de verdad, pero está claro que tardaríamos demasiado. Una forma más sencilla de hacerlo usando las leyes de equivalencia y los lemas de sustitución es comprobar las dos equivalencias lógicas:
 \begin{enumerate}
-    \item $p_1\lor p_2\lor p_3\to p_4\land (p_5\lor p_6) \sim p_1\lor p_2\lor p_3\to (p_4\lor p_5)\land(p_4\lor p_6)$
-    \item $p_1\lor p_2\lor p_3\to (p_4\lor p_5)\land(p_4\lor p_6) \sim \neg((p_4\lor p_5)\land(p_4\lor p_6))\to \neg(p_1\lor p_2\lor p_3)$
+    \item $p_1\lor p_2\lor p_3\to p_4\land (p_5\lor p_6) \sim p_1\lor p_2\lor p_3\to (p_4\land p_5)\lor(p_4\land p_6)$
+    \item $p_1\lor p_2\lor p_3\to (p_4\land p_5)\lor(p_4\land p_6) \sim \neg((p_4\land p_5)\lor(p_4\land p_6))\to \neg(p_1\lor p_2\lor p_3)$
 \end{enumerate}
 En efecto: 
 \begin{itemize}
-\item 1 se obtiene aplicando el lema~\ref{sust1} con $\psi=p_1\lor p_2\lor p_3\to p$, $\varphi_1=p_4\land (p_5\lor p_6)$,$\varphi_2=(p_4\lor p_5)\land(p_4\lor p_6)$.
+\item 1 se obtiene aplicando el lema~\ref{sust1} con $\psi=p_1\lor p_2\lor p_3\to p$, $\varphi_1=p_4\land (p_5\lor p_6)$,$\varphi_2=(p_4\land p_5)\lor(p_4\land p_6)$.
 \item 2 se obtiene en dos pasos: $\\$
 Aplicando el lema~\ref{sust2} con $\psi_1=p\to q$, $\psi_2=\neg q\to\neg p$ y $p=p_1\lor p_2\lor p_3$, obtenemos: $p_1\lor p_2\lor p_3\to q \sim \neg q\to \neg(p_1\lor p_2\lor p_3)$.$\\$
-Y aplicando de nuevo el lema~\ref{sust2} con $\psi_1=p_1\lor p_2\lor p_3\to q$, $\psi_2=\neg q\to \neg(p_1\lor p_2\lor p_3)$ y $q=(p_4\lor p_5)\land(p_4\lor p_6)$, obtenemos 2.
+Y aplicando de nuevo el lema~\ref{sust2} con $\psi_1=p_1\lor p_2\lor p_3\to q$, $\psi_2=\neg q\to \neg(p_1\lor p_2\lor p_3)$ y $q=(p_4\land p_5)\lor(p_4\land p_6)$, obtenemos 2.
 \end{itemize}
 \end{example}
 
@@ -679,7 +679,7 @@ Decimos que una fórmula está en \textit{Forma Normal Conjuntiva} (FNC) si es d
 $$\bigwedge\limits_{i\leq n} \bigvee\limits_{j \leq m_{i}} \varphi_{ij}$$
 y se dice que está en \textit{Forma Normal Disyuntiva} (FND) si es de la forma:
 $$\bigvee\limits_{i\leq n} \bigwedge\limits_{j \leq m_{i}} \varphi_{ij}$$
-donde cada $\varphi_{ij}$ es una proposición atómica o la negación de una proposición atómica \footnote{Ya veremos en un ejercicio que, para cada fórmula $\varphi$, existen dos fórmulas $\varphi^{c}, \varphi^{d}$ en FNC y en FND, respectivamente, tales que $\varphi \sim \varphi^{c}$ y $\varphi \sim \varphi^{d}$.}.
+donde cada $\varphi_{ij}$ es una proposición atómica o la negación de una proposición atómica. Ya veremos en un ejercicio que, para cada fórmula $\varphi$, existen dos fórmulas $\varphi^{c}, \varphi^{d}$ en FNC y en FND, respectivamente, tales que $\varphi \sim \varphi^{c}$ y $\varphi \sim \varphi^{d}$.
 \end{definition}
 
 
@@ -999,7 +999,7 @@ El último ejemplo muestra que hay muchas formas de intentar conseguir un \texti
 \end{enumerate}
 Es decir, nos conviene aplicar siempre que sea posible la regla $R_\sigma$. Cuando no sea posible, aplicaremos la regla $R_\alpha$. Si esta tampoco es posible, usaremos $R_\beta$.$\\$
 
-\subsection{Corrección}
+
 
 Recordemos que lo que motivó esta sección fue, dados un conjunto de fórmulas $\Phi$ y una fórmula $\varphi$, el demostrar que $\Phi\vDash\varphi$, usando el método de los \textit{tableaux}. Por tanto, para que el método nos permita alcanzar este objetivo tiene que cumplir dos propiedades:
 \begin{itemize}
@@ -1008,6 +1008,8 @@ Recordemos que lo que motivó esta sección fue, dados un conjunto de fórmulas 
     \item \textit{Corrección:} $\Phi \vdash_{tb} \varphi$ implica $\Phi \vDash \varphi$.
     Es decir, si encontramos un \textit{tableau} cerrado para $\Phi\cup\{\neg\varphi\}$, entonces se cumple que $\Phi\vDash\varphi$. 
 \end{itemize}
+
+\subsection{Corrección}
 
 Comenzamos demostrando la propiedad de corrección. El siguiente resultado condensa las ideas expuestas hasta ahora:
 
@@ -1121,7 +1123,9 @@ Tenemos que demostrar que para toda $\varphi\in H$, $v_H \vDash \varphi$. Para e
 
 Si $||\varphi|| = 0$ entonces $\varphi \in AT$ y, al ser $H$ coherente, $\varphi \in SP$ o $\varphi = \top$. Si se da lo primero, entonces se da el resultado por la definición de $v_H$. Lo segundo es trivial, porque toda valoración satisface a $\top$.
 
-Si $||\varphi|| = 1$ entonces solo puede ocurrir, por la coherencia de $H$, que $\varphi = \neg p$, para $p \in SP$; o que $\varphi = \top \lor \bot$. En el primer caso obtenemos que $v_H(p) = F$ y por tanto que $\hat{v}_H(\neg p) = V$. En el segundo caso se tiene claramente que $\hat{v}_H(\top \lor \bot) = V$.
+Si $||\varphi|| = 1$, por la coherencia de $H$ tenemos las siguientes posibilidades: \\[5pt]
+$\varphi=\neg p,\;\neg\bot,\;p\lor\bot,\;\bot\lor p,\;p\lor\top,\;\top\lor p,\;p\land \top,\;\top\land p,\;p\land q,\;p\lor q,\;\top\lor\top,\;\top\land\top,\;\top\lor\bot,\;\bot\lor\top$,\\[5pt]
+para $p,q \in SP$. En el primer caso obtenemos que $v_H(p) = F$ y por tanto que $\hat{v}_H(\neg p) = V$. En el segundo caso está claro que $\hat{v}_H(\neg \bot) = V$. El resto de casos se deduce de forma similar.\\
 
 Sea $\varphi$ con $||\varphi|| > 1$, supongamos que el resultado se cumple para todo $ n<||\varphi||$. Por la proposición \ref{clasprop} tenemos las siguientes posibilidades:
 \begin{itemize}
@@ -1159,7 +1163,7 @@ Sean $\Phi \subseteq PROP_{SP}$, $T$ \textit{tableau} de $\Phi$. $T$ se dice \te
 \end{definition}
 
 \begin{prop}\label{compi}
-Sea $\Phi \subseteq PROP_{SP}$ finito\footnote{Se puede prescindir de esta hipótesis, es decir, el enunciado sigue siendo cierto si $\Phi$ es infinito.}. Entonces existe un \textit{tableau} completo para $\Phi$.
+Sea $\Phi \subseteq PROP_{SP}$ finito\footnote{Veremos que se puede prescindir de esta hipótesis, es decir, el enunciado sigue siendo cierto si $\Phi$ es infinito.}. Entonces existe un \textit{tableau} completo para $\Phi$.
 \end{prop}
 \begin{proof}
 En el siguiente capítulo probaremos una generalización de este teorema.
@@ -1184,7 +1188,7 @@ Está claro que, que $\Phi_n$ tenga solo fórmulas atómicas es equivalente a qu
 \end{proof}
 
 \begin{cor}(Completitud)
-Sea $\Phi \subseteq PROP_{SP}$ finito. Si $\Phi \vDash \varphi$ entonces $\varphi \vdash_{tb} \varphi$.
+Sea $\Phi \subseteq PROP_{SP}$ finito. Si $\Phi \vDash \varphi$ entonces $\Phi \vdash_{tb} \varphi$.
 \end{cor}
 \begin{proof}
 $\Phi \vDash \varphi$ equivale por \ref{insat} a $Insat(\Phi \cup \{\neg \varphi\})$. Se sigue de \ref{compi} que podemos considerar un \textit{tableau} $T$ completo para $\Phi \cup \{\neg \varphi\}$. Veamos que $T$ no puede tener ramas abiertas:$\\$ 
