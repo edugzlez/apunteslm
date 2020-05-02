@@ -1184,7 +1184,7 @@ Es decir, en este caso, $\Sigma = \{\varphi_1, \varphi_2, \neg \psi \}$. Veamos 
 6. bu(Pepe) \arrow[d, "{\gamma,2,pepe/x}"]                                        &                                                                       \\
 7.bu(Pepe)\to co(Pepe) \arrow[rd, "{\beta,7}"] \arrow[d, "{\beta,7}"]             &  \\
 9.co(Pepe) \arrow[d, "{\gamma,3,pepe/x}"]                                         & {\neg bu(Pepe)\#6,8}                                                  \\
-10.\neg(ni(pepe)\lor co(Pepe)) \arrow[d, "{\beta, 10}"] \arrow[rd, "{\beta, 10}"] &                                                                       \\
+10.\neg(ni(pepe)\land co(Pepe)) \arrow[d, "{\beta, 10}"] \arrow[rd, "{\beta, 10}"] &                                                                       \\
 {12.\neg co(Pepe)\#9,12}                                                          & {11.\neg ni(Pepe)\#5,11}                                             
 \end{tikzcd}
 \end{comment}
@@ -1210,8 +1210,8 @@ Para todo $\theta \in EQ_S$, $\vDash \theta$.
 \begin{proof} \mbox{}
 \begin{itemize}
         \item[(RF)] $\forall x \, x \doteq x$ es tautología ya que dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x] \vDash x \doteq x$ para todo $a \in A$, ya que obviamente $a=a$.
-        \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$ es tautología ya que, dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x][b/y] \vDash x \doteq y \rightarrow y \doteq x$ para todo $a \in A$, ya que si $a=b$, $\mathfrak{I}[a/x][b/y]$ verifica $x \doteq y$ y $y \doteq x$, por tanto verifica $x \doteq y \rightarrow y \doteq x$. Si $x\neq y$, $\mathfrak{I}[a/x][b/y]$ no verifican $x \doteq y$ ni $y \doteq x$, por tanto de nuevo verifica $x \doteq y \rightarrow y \doteq x$.
-        \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$ es una tautología. Este caso se demuestra de forma similar a los anteriores, comprobando que $\mathfrak{I}[a/x][b/y][c/z]$ siempre verifica $x \doteq y \land y \doteq z \rightarrow x \doteq z$. En este caso habría 8 casos, pero se puede hacer dividiendo en los casos $a\neq b$, $a=b\neq c$, $a=b=c$.
+        \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$ es tautología ya que, dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x][b/y] \vDash x \doteq y \rightarrow y \doteq x$ para todos $a,b \in A$, ya que si $a=b$, $\mathfrak{I}[a/x][b/y]$ verifica $x \doteq y$ y $y \doteq x$, por tanto verifica $x \doteq y \rightarrow y \doteq x$. Si $a\neq b$, $\mathfrak{I}[a/x][b/y]$ no verifican $x \doteq y$ ni $y \doteq x$, por tanto de nuevo verifica $x \doteq y \rightarrow y \doteq x$.
+        \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$ es una tautología. Este caso se demuestra de forma similar a los anteriores, comprobando que $\mathfrak{I}[a/x][b/y][c/z]$ siempre verifica $x \doteq y \land y \doteq z \rightarrow x \doteq z$. Se puede hacer como el apartado anterior dividiendo en los casos $a\neq b$, $a=b\neq c$, $a=b=c$.
         \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
         \begin{comment}
         Este caso se demuestra por inducción en $n$.
@@ -1224,7 +1224,7 @@ Para todo $\theta \in EQ_S$, $\vDash \theta$.
             $$\neg (x_1\doteq y_1)\lor\forall x_2, \dots, \forall x_n \, \forall y_2, \dots, \forall y_n \, (\bigvee\limits_{i = 1}^{n} \neg (x_i \doteq y_i)) \lor f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
         \end{itemize}
         \end{comment}
-        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \land  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
+        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \to  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
 \end{itemize}
 \end{proof}
 
@@ -1265,7 +1265,7 @@ Finalmente, (6) se deduce de \ref{eq}.
 Del siguiente resultado se deducirá como corolario la corrección del método de los \textit{tableaux} de primer orden:
 
 \begin{theorem}\label{bbb}
-Sea $S$ signatura. Sea $\Phi \subseteq FORM_S$ conjunto de fórmulas satisfactible y $T$ un tableau abierto finito para $\Phi$. Entonces existe una rama abierta de $T$, $r$, tal que $\Gamma_r$ es satisfactible.
+Sea $S$ signatura. Sea $\Phi \subseteq FORM_S$ conjunto de fórmulas satisfactible y $T$ un tableau finito para $\Phi$. Entonces $T$ es abierto y existe una rama abierta de $T$, $r$, tal que $\Gamma_r$ es satisfactible.
 \end{theorem}
 \begin{proof}
 Demostremos que existe una $S$-interpretación $\mathfrak{I}$ y una tal rama $r$ de modo que $\mathfrak{I} \vDash \Phi$ y $\mathfrak{I} \vDash \Gamma_r$. 
@@ -1323,13 +1323,12 @@ El estudio de la completitud va a ser más complicado que en lógica proposicion
 
 \begin{defs}\mbox{}
 \begin{enumerate}[label=\bold{\arabic*})]
-    \item Un \textit{grafo no dirigido} es un par ordenado $T = \langle N, E \rangle$, donde $N$ es el conjunto de \textit{nodos} y $E$ es el conjunto de \textit{aristas}, que son pares sin ordenar de nodos.
-    \item Un camino es una sucesión de $(\geq1)$ aristas $(a_1,\dots,a_n)$ de forma que el segundo vértice de $a_i$ es el primero de $a_{i+1}$ para $i=1,\dots,n$. Llamamos a $n$ \textit{longitud del camino}. 
+    \item Un \textit{grafo no dirigido} es un par ordenado $T = \langle N, E \rangle$, donde $N$ es el conjunto de \textit{nodos} y $E$ es el conjunto de \textit{aristas}, que son pares sin ordenar de nodos distintos.
+    \item Un camino es una sucesión de $(\geq1)$ aristas $(a_1,\dots,a_n)$ de forma que  $a_i$ comparte uno de sus vértices con $a_{i-1}$ y el otro con $a_{i+1}$ para $i=2,3,\dots,n-1$. Llamamos a $n$ \textit{longitud del camino}.
     \item Decimos que el camino es \textit{simple} si cada vértice del camino solo aparece hasta dos veces, una al final de una arista y otra al principio de la siguiente. Decimos que un camino es un \textit{ciclo} si es simple y el primer vértice de la primera arista es el segundo vértice de la última arista.
     \item Decimos que un grafo es \textit{acíclico} si no tiene ciclos. Decimos que un grafo es \textit{conexo} si para cada par de nodos hay un camino entre ellos.
     \item Un \textit{árbol (libre)} es un grafo no dirigido conexo y acíclico. Equivalentemente, es un grafo tal que entre cada par de sus nodos hay un solo camino simple que los une.
     \item Sea $G = \langle V, E\rangle$ grafo no dirigido. Se llama \textit{grado} de $v \in V$, $deg(v)$, al número de elementos de $E$ que inciden sobre él.
-    \item Se llama \textit{profundidad} del árbol (libre) $T = \langle N, E \rangle$ a $|N|$.
 \end{enumerate}
 \end{defs}
 
@@ -1352,7 +1351,7 @@ Se omite la demostración.
     \item Un árbol $T = \langle N, E \rangle$ se llama \textit{árbol con raíz} si se selecciona un elemento especial de $N$, llamado \textit{raíz} de $T$.
     \item Sea $T = \langle N, E \rangle$ árbol con raíz $n_0$. Se llama \textit{altura} de $n \in N$, $h(n)$, a la longitud del único camino simple que une $n_0$ con $n$.
     \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Se dice que $n_1\in N$ es \textit{hijo de} $n$ si hay una arista que conecta $n$ y $n_1$ y $h(n_1)=h(n)+1$. Se dice que $n_1$ y $n_2$ son \textit{hermanos} si son hijos del mismo nodo.
-    \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Llamamos \textit{rama finita} a un camino simple desde $n_0$ que no está contenido en ningún otro camino simple desde $n_0$. Una \textit{rama infinita} será una sucesión de aristas $a_1,a_2,\dots$ tal que el primer vértice de $a_{n+1}$ es el segundo de $a_n$ para todo $n$, que parte desde $n_0$ y en que no se repiten vértices (es decir, como un camino simple desde $n_0$ pero con infinitos vértices).
+    \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Llamamos \textit{rama finita} a un camino simple desde $n_0$ que no está contenido en ningún otro camino simple desde $n_0$. Una \textit{rama infinita} será una sucesión de aristas $a_1,a_2,\dots$ tal que $a_i$ comparte un vértice con $a_{i-1}$ y el otro con $a_{i+1}$ para $i\geq2$, que parte desde $n_0$ y en que no se repiten vértices (es decir, como un camino simple desde $n_0$ pero con infinitos vértices).
 \end{enumerate}
 \end{defs}
 
@@ -1384,7 +1383,7 @@ Sea $T_0 \leq \dots \leq T_k \leq \dots$ sucesión de árboles. Sea $T := \lim_{
     \item Se sigue de las definiciones anteriores.
     \item Comencemos demostrando que $T = \langle T, N\rangle$ es conexo. Sean $n_1, n_2 \in N$. Como $N := \bigcup_{n\in \mathbb{N}} N_{n}$ y $N_i \subseteq N_j$, para todo $i \leq j$, existe $k \in \mathbb{N}$ tal que $n_1, n_2 \in N_k$. Al ser $T_k = \langle N_k, E_k\rangle$ conexo, existe un camino en $T_k$ que une $n_1$ y $n_2$. Al ser $E_k \subseteq E$ por definición, también es un camino en $T$, lo que nos da la conexión de $T$. \\
     
-    Supongamos que existen dos nodos $n_1, n_2 \in N$ tales que existen dos caminos distintos $e_1, \dots, e_l$ y $f_1, \dots, f_k$ que los conectan. Es claro, razonando igual que antes, que existe $i \in \mathbb{N}$ tal que $n_1, n_2 \in N_i$ y $e_1, \dots, e_l, f_1, \dots, f_k \in E_i$ y, al ser $T_i = \langle N_i, E_i\rangle$ árbol, $e_1, \dots, e_l$ y $f_1, \dots, f_k$ son iguales, lo que implica que $T$ sea acíclico.
+    Supongamos que existen dos nodos $n_1, n_2 \in N$ tales que existen dos caminos simples distintos $e_1, \dots, e_l$ y $f_1, \dots, f_k$ que los conectan. Es claro, razonando igual que antes, que existe $i \in \mathbb{N}$ tal que $n_1, n_2 \in N_i$ y $e_1, \dots, e_l, f_1, \dots, f_k \in E_i$ y, al ser $T_i = \langle N_i, E_i\rangle$ árbol, $e_1, \dots, e_l$ y $f_1, \dots, f_k$ son iguales, lo que implica que $T$ sea acíclico.
 \end{enumerate}
 \end{proof}
 
@@ -1398,7 +1397,13 @@ Necesitamos el siguiente resultado técnico de la teoría de grafos:
 Sea $T$ un árbol con raíz con infinitos nodos tal que cada nodo tiene finitos hijos. Entonces $T$ tiene una rama infinita.
 \end{theorem}
 \begin{proof}
-Se omite la demostración.
+\begin{comment}
+Supongamos que tenemos una ordenación de los vértices, $(v_n)_{n\in\mathbb{N}}$. La raíz del árbol será $v_{i_0}$. Dados dos nodos $a$ y $b$ distintos, decimos que $b$ es descendiente de $a$ si el único camino simple $c_b$ desde $v_0$ hasta $b$ pasa por $a$. Como $b\neq a$, en $c_b$ tenemos un vértice siguiente a $a$, que por tanto es hijo de $a$. De modo que cualquier descendiente de un vértice es uno de sus hijos o descendiente de uno de sus hijos.\\[-7pt]
+
+Entonces, $v_{i_0}$ tiene infinitos descendientes (todos los vértices salvo $v_0$). Estos infinitos descendientes contienen a los finitos hijos de $v_{i_0}$ y a sus descendientes. Por tanto alguno de sus hijos tiene que tener infinitos descendientes. Sea $v_{i_1}$ el menor de ellos. Como $v_{i_1}$ tiene infinitos descendientes, de la misma forma que antes escogemos el menor de sus hijos, $v_{i_2}$, que tiene infinitos descendientes.\\[-7pt]
+
+De este modo creamos una sucesión de vértices $(v_{i_n})_{n\in\mathbb{N}}$. Como por definición $v_{i_n}$ tiene altura $n$, no se repiten vértices. Por tanto la sucesión de aristas $a_n$ que unen $v_{i_n}$ con $v_{i_{n+1}}$ forman una rama infinita.
+\end{comment}
 \end{proof}
 
 
@@ -1436,7 +1441,7 @@ Por tanto, $h$ es finito y, del hecho de que cada nodo tiene a lo sumo dos hijos
 \end{proof}
 \end{comment}
 \begin{proof}
-Usaremos reducción al absurdo. Sea $T$ un \textit{tableaux} infinito cerrado. Observemos que, en todo \textit{tableau}, el número máximo de hijos de cada nodo es dos: los que se pueden obtener por la aplicación de una regla $\beta$. Por tanto, por $\ref{konig}$ el \textit{tableau} contiene una rama infinita. Esto contradice el hecho de que todas las ramas cerradas son finitas.
+Usaremos reducción al absurdo. Sea $T$ un \textit{tableaux} infinito cerrado. Observemos que, en todo \textit{tableau}, el número máximo de hijos de cada nodo es dos: los que se pueden obtener por la aplicación de una regla $\beta$. Por tanto, por el lema de König $\ref{konig}$ el \textit{tableau} contiene una rama infinita. Esto contradice el hecho de que todas las ramas cerradas son finitas.
 \end{proof}
 
 \subsection{Conjuntos de Hintikka para lógica de primer orden}\label{Hinti33}
@@ -1453,8 +1458,8 @@ para un conjunto de fórmulas $\Phi\subseteq FORM_S$
   Sea S una signatura, $t\in TERM_S$ y $\Phi\subseteq FORM_S$. Diremos que
   $t$ es \emph{adecuado} para $\Phi$ si se cumple:
   \begin{itemize}
-  \item $voc(t)\subseteq voc(\Phi)$
-  \item $var(t)\subseteq lib(\Phi)$
+  \item $voc(t)\subseteq voc(\Phi):=\bigcup\limits_{\varphi\in\Phi} voc(\varphi)$
+  \item $var(t)\subseteq lib(\Phi):=\bigcup\limits_{\varphi\in\Phi} lib(\varphi)$
   \end{itemize}
 \end{definition}
 \\ \\
@@ -1463,7 +1468,7 @@ para un conjunto de fórmulas $\Phi\subseteq FORM_S$
   \Phi = \{\exists x\ (p(x)\to q(x))\}
 \end{displaymath}
 En este caso
-$(voc(\Phi)\cap\mathit{Ct}_{S})\cup lib(\Phi)=\emptyset$, por tanto no podemos construir términos adecuados. En este caso, como en el método de los \textit{tableaux} nos serán necesarios términos adecuados para desarrollar el algoritmo, tomaremos como término adecuado cualquier constante auxiliar $c\in CA$ nueva.
+$(voc(\Phi)\cap\mathit{Ct}_{S})\cup lib(\Phi)=\emptyset$, por tanto no podemos construir términos adecuados. En este caso, como en el método de los \textit{tableaux} nos serán necesarios términos adecuados para desarrollar el algoritmo, tomaremos como término adecuado cualquier constante auxiliar $c\in C_A$ nueva.
 
 \begin{definition}[Conjunto de Hintikka]
   Sea $S$ una signatura,  $\Phi\in FORM_S$ y $T_{\Phi}:=\{t\ |\ t\in TERM_S\
@@ -1566,7 +1571,7 @@ t\doteq s$.
 \end{proof}
 \end{prop}
 
-Dada una relación de equivalencia $\equiv_{\Phi}$ podemos crear de forma natural una partición del conjunto  considerando el conjunto cociente, es decir, el conjunto de particiones inducido por $\equiv_{\Phi}$. Dado $t\in T_{\Phi}$, se tiene su clase de equivalencia:
+Dada una relación de equivalencia $\equiv_{\Phi}$ podemos crear de forma natural una partición del conjunto  considerando el conjunto cociente, es decir, el conjunto de clases de equivalencia inducido por $\equiv_{\Phi}$. Dado $t\in T_{\Phi}$, se tiene su clase de equivalencia:
 \begin{displaymath}
   [t] := \{s\ |\ s\in T_{\Phi}, t\equiv_{\Phi}s\}
 \end{displaymath}
@@ -1771,8 +1776,8 @@ Veamos los siguientes resultados auxiliares:
     \(\|\varphi[t/x]\|=\|\varphi\|\)
     \end{itemize}
   \begin{proof}
-    Las tres primeras las vimos en lógica proposicional.
-    La última se demuestra por una inducción estructural rutinaria en $\varphi$. Intuitivamente la norma de una fórmula no depende de los términos involucrados.
+    Las tres primeras son fáciles de obtener por casos.
+    La última se demuestra por una inducción estructural rutinaria en $\varphi$. Intuitivamente este lema quiere decir que la norma de una fórmula no depende de los términos involucrados.
   \end{proof}
   \end{lema}
 
@@ -2036,7 +2041,7 @@ igualdad).
   \includegraphics[scale = 0.55]{figures/ef.png}
 \end{center}
 \subsubsection{G-extensión}
-Esta extensión se denota \(\mathbf{G}(T)\). Consiste en extender cada rama
+Esta extensión se denota \(\mathbf{G}(T,n)\). Consiste en extender cada rama
 abierta $r$ de $T$ con la fórmula \(\gamma_{i}(t_{j})\) donde el par \((i,j)\in \mathbb{N}\times\mathbb{N}\) es el menor par según el
   siguiente buen orden de \(\mathbb{N}\times\mathbb{N}\)
 \[(i_{1},j_{1})< (i_{2},j_{2})\text{ sii }i_{1}+j_{1}<i_{2}+j_{2}\text{ o bien }i_{1}+j_{1}=i_{2}+j_{2}\text{ e }i_{1}<i_{2}\]
@@ -2051,9 +2056,9 @@ abierta $r$ de $T$ con la fórmula \(\gamma_{i}(t_{j})\) donde el par \((i,j)\in
     \right.
   \end{displaymath}
 \end{comment}
- tal que $\gamma_{i}\in\Gamma_r$,
+ tal que $\gamma_{i}\in\Gamma_r$ está a altura $\leq n$,
   \(\gamma_{i}(t_{j})\not\in\Gamma_{r}\) y \(t_{j}\) es adecuado
-  para \(\Gamma_{r}\). Si no hay ningún término adecuado para \(\Gamma_{r}\), aplicamos la regla considerando como término adecuado una constante auxiliar.
+  para \(\Gamma_{r}\). Si no hay ningún término adecuado para \(\Gamma_{r}\), aplicamos la regla considerando como término adecuado la primera constante auxiliar.
 \end{itemize}
 \begin{center}
   \includegraphics[scale = 0.55]{figures/gamma.png}
@@ -2079,7 +2084,7 @@ Luego definimos para $n\geq 1$:
 \begin{displaymath}
   \begin{array}{l@{\ =\ }l}
     T_{n}^{1}& \mathbf{ABSD}(T_{n-1}, n)\\
-    T_{n}^{2}& \mathbf{G}(T_{n}^{1}) \\
+    T_{n}^{2}& \mathbf{G}(T_{n}^{1}, n) \\
     T_{n} & \mathbf{EF}(T_{n}^{2}, n)\\
   \end{array}
 \end{displaymath}
@@ -2089,9 +2094,8 @@ Tenemos así una secuencia de árboles
   T_{0}\subseteq T_{1}\subseteq\ldots T_{k}\subseteq T_{k+1}\subseteq\ldots
 \end{displaymath}
 El \textit{tableau} canónico de un conjunto de fórmulas \(\Phi\), que denotaremos
-por \(T_{\Phi}\) se construye como se indica a continuación.
-En la secuencia anterior se cumple una de las siguientes condiciones.
-De tal forma que se cumple una de las siguientes condiciones
+por \(T_{\Phi}\), se construye como se indica a continuación.
+En la secuencia anterior se cumple una de las siguientes condiciones:
 \begin{itemize}
 
 \item Existe $n$ tal que \(T_{n}=T_{n+1}\) y $T_n$ no tiene fórmulas a altura $>n$. Eso significa, por como están definidas las reglas, que \(T_{k}=T_{k+1}\) para todo $k\geq n$. El \textit{tableau} canónico es
@@ -2113,10 +2117,11 @@ todos los árboles
   \begin{center}
     \includegraphics[scale= 0.6]{figures/prof.png}
   \end{center}
-  \end{comment}
-  \begin{proof}
+    \begin{proof}
 
   \end{proof}
+  \end{comment}
+
 
 \end{prop}
 
@@ -2194,7 +2199,7 @@ Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos q
   Sea $S$ una signatura, \(\Phi\subseteq FORM_S\).
   \begin{enumerate}[label=\alph*)]
   \item Si $\text{Insat}(\Phi)$, existe $\Phi_{\mathit{fin}}\subseteq\Phi$ finito tal
-    que $\text{Insat}(\Phi)$.
+    que $\text{Insat}(\Phi_{\mathit{fin}})$.
   \item Si todo conjunto finito $\Phi_{\mathit{fin}}\subseteq\Phi$ verifica
     $Sat(\Phi_{\mathit{fin}})$, entonces $Sat(\Phi)$.
   \end{enumerate}

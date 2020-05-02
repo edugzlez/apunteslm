@@ -32,9 +32,11 @@
 \usepackage{tikz-cd}
 \usepackage{framed,enumitem} 
 \usepackage{syllogism}
+\usepackage{bussproofs} 
+% ^ este es para hacer reglas de inferencia. 
 
 
-\usetikzlibrary{matrix}
+\usetikzlibrary{matrix, positioning}
 \usepackage[T1]{fontenc}
 \usepackage{titlesec, blindtext, color}
 \definecolor{gray75}{gray}{0.75}
@@ -72,7 +74,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\tr}{\mathrm{tr}}
-
+\newcommand{\idash}{\quad}
 
 %Para poner gorritos:
 \usepackage{scalerel,stackengine}
@@ -90,6 +92,10 @@
 %Para poner diagramas:
 \usetikzlibrary{matrix,arrows,decorations.pathmorphing}
 \tikzset{commutative diagrams/.cd}
+
+
+\def\regla#1{\ensuremath\mathbf{(#1)}}
+
 
 
 
@@ -138,6 +144,7 @@
 
 \include{cap1}
 \include{cap2}
+\include{cap3}
 \appendix
 %    Include appendix "chapters" here.
 
