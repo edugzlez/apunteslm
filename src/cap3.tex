@@ -161,7 +161,7 @@ A lo largo de la exposición, veremos que existen reglas que no necesitan de pre
     \UnaryInfC{$\Gamma \idash \psi $}(\textbf{DN}!)
    \end{prooftree}
    
-   Esta regla se dice \emph{no constructiva}. La lógica intuicionista, por ejemplo, no la acepta.
+   Esta regla se dice \emph{no constructiva}. La lógica intuicionista, por ejemplo, no la acepta. Escribiremos signos `!' en toda regla derivada que use $(\textbf{DN}!)$ en su demostración.
    
    \item[($\forall \textbf{A}$)] Fórmula universal en el antecente: \emph{la fórmula universal se puede aplicar a cualquier término}.
    
@@ -474,7 +474,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
           node (4){\(\Gamma,\varphi,\varphi\rightarrow\psi\idash\psi\)}
           child{
             node
-            (6){\(\Gamma,\varphi,\varphi\rightarrow\psi\idash\varphi\rightarrow\psi\)}
+            (6){\(\Gamma,\varphi,\varphi\rightarrow\psi\idash\varphi\)}
           }
           child{node (7){\(\Gamma,\psi\idash\psi\)}}
         }
@@ -491,8 +491,8 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \node[below=0mm of 3] {\(\regla{RC}\)};
       \node[below=0mm of 4] {\(\regla{\rightarrow A}\)};
       \node[below=0mm of 5] {Premisa};
-      \node[below=0mm of 6] {Premisa};
-      \node[below=0mm of 7] {Premisa};
+      \node[below=0mm of 6] {SP};
+      \node[below=0mm of 7] {SP};
 
     \end{tikzpicture}
   \end{center}
@@ -960,10 +960,500 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
             \end{tikzpicture}
         \end{center}
     \end{proof}
+    
+
+    
+    \begin{center} 
+      \centerAlignProof
+       ($\neg\rightarrow\textbf{A}!$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma,\varphi, \neg \psi \idash \chi$}
+        \UnaryInfC{$\Gamma, \neg(\varphi \rightarrow \psi)\idash \chi$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} \hspace{1}
+        \begin{center}
+            \begin{tikzpicture}[sibling distance=5cm]
+                \node(0) {$\Gamma, \neg(\varphi \rightarrow \psi)\idash \chi$}
+                child {
+                    node(1){$\Gamma,\neg \chi\idash \varphi\rightarrow\psi$}
+                    child {
+                        node(2){$\Gamma,\neg \chi, \varphi\idash \psi$}
+                        child {
+                            node(3){$\Gamma,\varphi, \neg \psi\idash \chi$}
+                            edge from parent node[right]{$(\textbf{CP}_4!)$}
+                        }
+                        edge from parent node[right]{$(\rightarrow\textbf{C})$}
+                    }
+                    edge from parent node[right]{$(\textbf{CP}_4!)$}
+                }
+                ;
+                \node[below=0mm of 3]{$Premisa$};
+            \end{tikzpicture}
+        \end{center}
+    \end{proof}
+    \item Leyes de De Morgan.
+    
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{DM}_1$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg \varphi \lor \neg \psi\idash \neg(\varphi \land \psi)$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} \hspace{1}
+        \begin{center}
+            \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+                %uncomment if require: \path (0,488); %set diagram left start at 0, and has height of 488
+                % Text Node
+                \draw (648,30) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg \varphi \lor \neg \psi \quad \neg ( \varphi \land \psi )$};
+                % Text Node
+                \draw (645,103) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi \land \psi \quad \ \neg ( \neg \varphi \lor \neg \psi )$};
+                % Text Node
+                \draw (648,179) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\ \varphi ,\ \psi \quad \ \neg ( \neg \varphi \lor \neg \psi )$};
+                % Text Node
+                \draw (642,255) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\ \varphi ,\ \psi ,\ \neg \varphi \lor \neg \psi \quad \bot \ $};
+                % Text Node
+                \draw (558,342) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\ \varphi ,\ \psi ,\ \neg \varphi \quad \bot \ $};
+                % Text Node
+                \draw (766,342) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\ \varphi ,\ \psi ,\ \neg \psi \quad \bot \ $};
+                % Text Node
+                \draw (605.41,382.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( CP_{2})}$};
+                % Text Node
+                \draw (823.41,377.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( CP_{2})}$};
+                % Text Node
+                \draw (729.41,296.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\lor A}$};
+                % Text Node
+                \draw (759.41,228.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\neg C}$};
+                % Text Node
+                \draw (757.41,149.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\land A}$};
+                % Text Node
+                \draw (760.41,70.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{CP_{2}}$};
+                % Connection
+                \draw    (730.41,52) -- (730.1,97) ;
+                \draw [shift={(730.09,99)}, rotate = 270.39] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                % Connection
+                \draw    (730.26,125) -- (731.2,173) ;
+                \draw [shift={(731.24,175)}, rotate = 268.87] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                % Connection
+                \draw    (731.5,201) -- (731.5,249) ;
+                \draw [shift={(731.5,251)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                % Connection
+                \draw    (715.89,277) -- (644.15,336.72) ;
+                \draw [shift={(642.61,338)}, rotate = 320.22] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                % Connection
+                \draw    (746.97,277) -- (818,336.71) ;
+                \draw [shift={(819.53,338)}, rotate = 220.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+            
+            \end{tikzpicture}
+
+        \end{center}
+    \end{proof}
+    \begin{center}
+        \centerAlignProof
+       ($\textbf{DM}_2$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg (\varphi \land \psi) \idash \neg \varphi \lor \neg \psi$}
+      \DisplayProof
+    \end{center}
+    \begin{proof}\hspace{1}
+    \begin{center}
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,488); %set diagram left start at 0, and has height of 488
+
+
+% Text Node
+\draw (648,30) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg ( \varphi \land \psi ) \quad \neg \varphi \lor \neg \psi $};
+% Text Node
+\draw (645,103) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg ( \neg \varphi \lor \neg \psi ) \quad \varphi \land \ \psi $};
+% Text Node
+\draw (630.41,364.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( SP)}$};
+% Text Node
+\draw (760.41,72.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{CP_{4}} !$};
+% Text Node
+\draw (571,184) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg ( \neg \varphi \lor \neg \psi ) \quad \varphi $};
+% Text Node
+\draw (752,184) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg ( \neg \varphi \lor \neg \psi ) \quad \psi $};
+% Text Node
+\draw (711.15,134.09) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \land \mathbf{C}$};
+% Text Node
+\draw (572,254) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg \varphi \quad \ \neg \varphi \lor \neg \psi $};
+% Text Node
+\draw (670.41,229.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{CP_{4}} !$};
+% Text Node
+\draw (592,325) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg \varphi \quad \ \neg \varphi $};
+% Text Node
+\draw (814.41,359.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( SP)}$};
+% Text Node
+\draw (756,249) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg \psi \quad \ \neg \varphi \lor \neg \psi $};
+% Text Node
+\draw (854.41,224.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{CP_{4}} !$};
+% Text Node
+\draw (776,320) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\neg \psi \quad \ \neg \psi $};
+% Text Node
+\draw (651.15,289.09) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\lor C}$};
+% Text Node
+\draw (834.15,285.09) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\lor C}$};
+% Connection
+\draw    (730.41,52) -- (730.1,97) ;
+\draw [shift={(730.09,99)}, rotate = 270.39] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (715.31,125) -- (654.68,178.67) ;
+\draw [shift={(653.19,180)}, rotate = 318.48] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (744.36,125) -- (803.65,178.66) ;
+\draw [shift={(805.14,180)}, rotate = 222.15] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (638.04,206) -- (636.54,248) ;
+\draw [shift={(636.46,250)}, rotate = 272.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (635.82,276) -- (635.21,319) ;
+\draw [shift={(635.18,321)}, rotate = 270.81] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (819.91,271) -- (819.61,314) ;
+\draw [shift={(819.59,316)}, rotate = 270.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (819.6,206) -- (819.88,243) ;
+\draw [shift={(819.9,245)}, rotate = 269.56] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+\end{tikzpicture}
+\end{center}
+    \end{proof}
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{DM}_3$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg \varphi \land \neg \psi \idash \neg (\varphi \lor \psi)$}
+      \DisplayProof
+    \end{center}
+    
+    \begin{center}
+      \centerAlignProof
+       ($\textbf{DM}_4$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg (\varphi \lor \psi) \idash \neg \varphi \land \neg \psi)$}
+      \DisplayProof
+    \end{center}
+    \item Ley de Pierce
+    \begin{center} 
+      \centerAlignProof
+       
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma\idash ((\varphi\rightarrow \psi)\rightarrow\varphi)\rightarrow \varphi$}
+      \DisplayProof
+    \end{center}
+    \item Reglas de ejemplificación. ($t\in TERM_\overline{S}$)
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{E}\forall_1$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \forall x\ \varphi \idash \varphi[t/x]$}
+      \DisplayProof
+      \qquad
+      \centerAlignProof
+       ($\textbf{E}\forall_2$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma \idash \forall x\ \varphi$}
+        \UnaryInfC{$\Gamma \idash \varphi[t/x]$}
+      \DisplayProof
+    \end{center}
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{E}\forall_3$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma, \varphi[t/x] \idash \psi$}
+        \UnaryInfC{$\Gamma, \forall x\ \varphi \idash \psi$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} \hspace{1}
+    \begin{center}
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,712); %set diagram left start at 0, and has height of 712
+
+
+% Text Node
+\draw (462,44) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi \quad \varphi [ t/x]$};
+% Text Node
+\draw (433,112) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi ,\varphi [ t/x] \quad \varphi [ t/x]$};
+% Text Node
+\draw (548.41,87.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \forall \mathbf{A}$};
+% Text Node
+\draw (520.41,153.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( SP)}$};
+% Text Node
+\draw (478,243) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma \quad \varphi [ t/x]$};
+% Text Node
+\draw (409,306) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma \quad \forall x\ \varphi $};
+% Text Node
+\draw (539,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi \quad \varphi [ t/x]$};
+% Text Node
+\draw (519.41,282.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{RC}$};
+% Text Node
+\draw (592.41,344.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( E\forall _{1})}$};
+% Text Node
+\draw (439.41,345.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle Premisa$};
+% Text Node
+\draw (475,444) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi \quad \psi $};
+% Text Node
+\draw (355,514) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi \quad \varphi [ t/x]$};
+% Text Node
+\draw (411.41,554.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( E\forall _{1})}$};
+% Text Node
+\draw (541,511) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\forall x\ \varphi ,\ \varphi [ t/x] \quad \psi $};
+% Text Node
+\draw (518.41,483.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{RC}$};
+% Text Node
+\draw (564,589) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] \quad \psi $};
+% Text Node
+\draw (639.41,558.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{FS}$};
+% Text Node
+\draw (605.41,630.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle Premisa$};
+% Connection
+\draw    (521.4,66) -- (521.11,106) ;
+\draw [shift={(521.1,108)}, rotate = 270.42] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (500.82,265) -- (457.72,300.72) ;
+\draw [shift={(456.18,302)}, rotate = 320.34000000000003] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (533.16,265) -- (580.27,301.77) ;
+\draw [shift={(581.84,303)}, rotate = 217.97] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (497.56,466) -- (435.09,508.87) ;
+\draw [shift={(433.44,510)}, rotate = 325.53999999999996] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (535.13,466) -- (592.23,505.86) ;
+\draw [shift={(593.87,507)}, rotate = 214.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (612.42,533) -- (612.1,583) ;
+\draw [shift={(612.08,585)}, rotate = 270.37] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+\end{tikzpicture}
+
+
+    \end{center}
+    
+    \end{proof}
+    
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{E}\exists_1$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \varphi[t/x] \idash \exists x\ \varphi$}
+      \DisplayProof
+      \qquad
+      \centerAlignProof
+       ($\textbf{E}\exists_2$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma,  \exists x\ \varphi \idash \psi$}
+        \UnaryInfC{$\Gamma \idash \varphi[t/x]\idash \psi$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} \hspace{1}
+        \begin{center}
+            \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,712); %set diagram left start at 0, and has height of 712
+
+
+% Text Node
+\draw (468,92) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] \quad \exists x\ \varphi $};
+% Text Node
+\draw (460,160) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] \quad \varphi [ t/x]$};
+% Text Node
+\draw (555.41,134.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{\exists \ C}$};
+% Text Node
+\draw (525.41,202.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( SP)}$};
+% Text Node
+\draw (767,93) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] \quad \psi $};
+% Text Node
+\draw (645,162) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] ,\ \exists x\ \varphi \quad \psi $};
+% Text Node
+\draw (840,164) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\varphi [ t/x] \quad \exists x\ \varphi $};
+% Text Node
+\draw (900.41,202.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{( E\exists _{1})}$};
+% Text Node
+\draw (676,235) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle \Gamma ,\exists x\ \varphi \quad \psi $};
+% Text Node
+\draw (813.41,132.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{RC}$};
+% Text Node
+\draw (741.41,206.19) node  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle \mathbf{FS}$};
+% Text Node
+\draw (714.41,271.19) node  [font=\normalsize,color={rgb, 255:red, 65; green, 117; blue, 5 }  ,opacity=1 ] [align=left] {$\displaystyle Premisa$};
+% Connection
+\draw    (527.31,114) -- (526.72,154) ;
+\draw [shift={(526.69,156)}, rotate = 270.84000000000003] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (796.44,115) -- (736.7,156.85) ;
+\draw [shift={(735.06,158)}, rotate = 324.99] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (830.47,115) -- (882.5,158.71) ;
+\draw [shift={(884.03,160)}, rotate = 220.04] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (716.68,184) -- (717.29,229) ;
+\draw [shift={(717.32,231)}, rotate = 269.22] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+\end{tikzpicture}
+
+        \end{center}
+    \end{proof}
+    
+    \item Leyes de dualidad.
+    
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{SDM}_1$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \exists x \neg\varphi \idash \neg \forall x\ \varphi$}
+      \DisplayProof
+      \qquad
+      \centerAlignProof
+       ($\textbf{SDM}_2$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg \forall x\ \varphi  \idash \exists x \neg\varphi$}
+      \DisplayProof
+    \end{center}
+    
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{SDM}_3$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \forall x \neg\varphi \idash \neg \exists x\ \varphi$}
+      \DisplayProof
+      \qquad
+      \centerAlignProof
+       ($\textbf{SDM}_4$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\idash$}
+        \UnaryInfC{$\Gamma, \neg \exists x\ \varphi  \idash \forall x \neg\varphi$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} \hspace{1em}
+    \begin{center}
+       (PENDIENTE DE ACABAR)
+    \end{center}
+    \end{proof}
+    
+    \item Sustitución generalizada
+    \begin{center} 
+      \centerAlignProof
+       ($\textbf{SUST}_n$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma\idash \varphi[t_1/x_1, ..., t_n/x_n]$}
+        \UnaryInfC{$\Gamma, t_1 \doteq s_1, ..., t_1 \doteq s_1 \idash \varphi[s_1/x_1, ..., s_n/x_n]$}
+      \DisplayProof
+    \end{center}
+    \begin{proof} Por inducción sobre n. (PENDIENTE DE ACABAR)
+    \end{proof}
 \end{itemize}
 
-(PENDIENTE DE ACABAR)
+\section{Ejemplo de uso de deducción natural}
+Como ejemplo, intentaremos demostrar que se cumple la siguiente frase:\\
 
+\textit{No existe el barbero que sea el barbero que afeite a los barberos que no se afeitan a sí mismos.}\\
+
+Para formalizar esto, usaremos los predicados $p|_1$ y $a|_2$, donde $p(x)$ significa `$x$ es barbero' y $a(x,y)$ significa `$x$ afeita a $y$'.
+
+Entonces, la conclusión a la que queremos llegar es:
+
+\[\neg\exists x b(x)\land(\forall y b(y)\to(a(x,y)\leftrightarrow \neg a(y,y)))\]
+
+Y no tenemos ninguna premisa. Pasamos directamente al árbol de deducción:
+
+        \begin{center}
+            \begin{tikzpicture}[level 1/.style={sibling distance=55mm},level 9/.style={sibling distance=70mm},level 10/.style={sibling distance=35mm}]
+]
+                \node(0) {$\neg\exists x b(x)\land(\forall y b(y)\to(a(x,y)\leftrightarrow \neg a(y,y)))$}
+                child {
+                node(1){$\exists x b(x)\land(\forall y b(y)\to(a(x,y)\leftrightarrow \neg a(y,y)))\idash\bot$
+                }
+                child {
+                node(2){$b(c)\land(\forall y b(y)\to(a(c,y)\leftrightarrow \neg a(y,y)))\idash\bot$}
+                child{
+                node(3){$b(c),\forall y b(y)\to(a(c,y)\leftrightarrow \neg a(y,y))\idash\bot$}
+                child{
+                node(4){$b(c),\forall y b(y)\to(a(c,y)\leftrightarrow \neg a(y,y)),b(c)\to(a(c,c)\leftrightarrow \neg a(c,c))\idash\bot$}
+                child{
+                node(5){$b(c),b(c)\to(a(c,c)\leftrightarrow \neg a(c,c))\idash\bot$}
+                child{
+                node(6){$b(c),b(c)\to(a(c,c)\leftrightarrow \neg a(c,c))\idash b(c)$}
+                }
+                child{
+                node(7){$b(c),a(c,c)\leftrightarrow \neg a(c,c)\idash\bot$}
+                child{
+                node(8){$b(c),\neg a(c,c)\to a(c,c),a(c,c)\to\neg a(c,c)\idash\bot$}
+                child{
+                node(9){$\neg a(c,c)\to a(c,c),a(c,c)\to\neg a(c,c)\idash \bot$}
+                child{
+                node(10){$\neg a(c,c)\to a(c,c),\neg a(c,c)\idash \bot$}
+                child{
+                node(12){$\neg\neg a(c,c),\neg a(c,c)\idash\bot$}
+                }
+                child{
+                node(13){$\neg a(c,c), a(c,c)\idash\bot$}
+                }
+                }
+                child{
+                node(11){$\neg a(c,c)\to a(c,c),\neg a(c,c)\idash\bot$}
+                child{
+                node(14){$\neg\neg a(c,c),\neg a(c,c)\idash\bot$}
+                }
+                child{
+                node(15){$\neg a(c,c), a(c,c)\idash\bot$}
+                }
+                }
+                edge from parent node[right]{$\mathbf{FS}$}
+                }
+                edge from parent node[right]{$\land\textbf{A}$}
+                }
+                }
+                edge from parent node[right]{(\textbf{FS})}
+                }
+                edge from parent node[right]{($\forall\textbf{A}$)}
+                }
+                edge from parent node[right]{($\land\textbf{A}$)}
+                }
+                edge from parent node[right]{($\exists\textbf{A}$)}
+                }
+                edge from parent node[right]{($\neg\textbf{C}$)}
+                }
+                ;
+                \node[below=0mm of 5]{($\to\textbf{A}$)};
+                \node[below=0mm of 6]{($\textbf{SP}$)};
+                \node[below=0mm of 9]{($\to\textbf{A}!$)};
+                \node[below=0mm of 12]{($\textbf{CT}_2$)};
+                \node[below=0mm of 13]{($\textbf{CT}_2$)};
+                \node[below=0mm of 14]{($\textbf{CT}_2$)};
+                \node[below=0mm of 15]{($\textbf{CT}_2$)};
+                \node[below=0mm of 11]{($\to\textbf{A}!$)};
+                \node[below=0mm of 10]{($\to\textbf{A}!$)};
+            \end{tikzpicture}
+        \end{center}
+Como no hemos definido  reglas para dobles implicaciones, hemos tratado la doble implicación como si fuera la conjunción de las implicaciones en los dos sentidos.
 
 \section{Corrección}
 
@@ -998,7 +1488,7 @@ Conviene hacer notar que un axioma
 \end{prooftree}
 es correcto si $\Gamma \vDash \varphi$.
 
-\begin{prop}
+\begin{prop}\label{bacorr}
 Todas las reglas y axiomas básicos son correctos.
 \end{prop}
 \begin{proof}
@@ -1008,7 +1498,7 @@ Se comprueba directamente. Haremos algunas demostraciones a modo de ejemplo.
 \AxiomC{$\Gamma, \psi \idash \varphi$}
 \BinaryInfC{$\Gamma \idash \varphi$}(\textbf{RC})
 \end{prooftree}
-Supongamos que $\Gamma \vDash \psi$, $\Gamma, \psi \vDash \varphi$. Sea una interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Gamma$. Al ser $\Gamma \vDash \psi$, $\mathfrak{I} \vDash \psi$ y por tanto $\mathfrak{I} \vDash \Gamma \cup \{\psi\}$, y como $\Gamma, \psi \vDash \varphi$, $\mathfrak{I} \vDash \varphi$. Como esto lo cumple cualquier modelo $\mathfrak{I}$, tenemos que $\Gamma \vDash \varphi$.
+Supongamos que $\Gamma \vDash \psi$, $\Gamma, \psi \vDash \varphi$. Sea una interpretación $\mathfrak{I}$ tal que $\mathfrak{I} \vDash \Gamma$ (si no existe tal interpretación, el enunciado es trivial). Al ser $\Gamma \vDash \psi$, $\mathfrak{I} \vDash \psi$ y por tanto $\mathfrak{I} \vDash \Gamma \cup \{\psi\}$, y como $\Gamma, \psi \vDash \varphi$, $\mathfrak{I} \vDash \varphi$. Como esto lo cumple cualquier modelo $\mathfrak{I}$, tenemos que $\Gamma \vDash \varphi$.
 \\
  \begin{prooftree}
     \AxiomC{$\Gamma, \varphi \rightarrow \psi \idash \varphi$}
@@ -1030,4 +1520,241 @@ Supongamos que $\Gamma, \varphi \rightarrow \psi \vDash \varphi$, $\Gamma, \psi 
         $t\in TERM_{\overline{S}}$
     \end{center}
 Sea $\mathfrak{I} \vDash \Gamma \cup \{\forall x \, \varphi\}$. Entonces, para todo $a \in A$ (con $A$ conjunto soporte de $\mathfrak{I}$), $\mathfrak{I}[a/x] \vDash \varphi$ y, por ser $t^{\mathfrak{I}} \in A$, tenemos que $\mathfrak{I}[t^{\mathfrak{I}}/x]\vDash \varphi$. Por el Lema de Sustitución, $\mathfrak{I} \vDash \varphi[t/x]$. Por tanto, $\mathfrak{I} \vDash \Gamma \cup \{\forall x \, \varphi, \varphi[t/x]\}$ y, como suponemos que $\Gamma, \forall x \, \varphi, \varphi[t/x] \vDash \psi$, obtenemos que $\mathfrak{I} \vDash \psi$, lo que nos da el resultado.
+
+\begin{center}
+      \centerAlignProof
+        ($\forall \textbf{C}*$)
+      \quad
+      \centerAlignProof
+        \AxiomC{$\Gamma\idash\varphi[c/x]$}
+        \UnaryInfC{$\Gamma\idash\forall x \varphi$}
+      \DisplayProof
+      \quad
+      \centerAlignProof
+        $c$ variable nueva
+    \end{center}
+Sea $\mathfrak{I}$ interpretación tal que $\mathfrak{I}\vDash\Gamma$. Como suponemos $\Gamma\idash\varphi[c/x]$ correcta, tenemos $\mathfrak{I}\vDash\varphi[c/x]$. 
+Ahora queremos demostrar $\mathfrak{I}\vDash\forall x\varphi$. Es decir, dada $a\in A$ cualquiera, queremos demostrar $\mathfrak{I}[a/x]\vDash\varphi$.\\
+
+Sea $\mathfrak{I}'=\mathfrak{I}[a/c]$, es decir, igual que $\mathfrak{I}$ salvo que $c^{\mathfrak{I}'}=a$. Como $c$ no está en ninguna fórmula de $\Gamma$ y $\mathfrak{I}\vDash\varphi\;\;\forall\varphi\in\Gamma$, por el lema de coincidencia \ref{coinc} se cumplirá que $\mathfrak{I}'\vDash\varphi\;\;\forall\varphi\in\Gamma$. \\
+
+Por tanto, como estamos suponiendo que $\Gamma\vDash\varphi[c/x]$, tenemos que $\mathfrak{I}'\vDash\varphi[c/x]$. Equivalentemente, $\mathfrak{I}'[c^{\mathfrak{I}'}/x]\vDash\varphi$, es decir, $\mathfrak{I}'[a/x]\vDash\varphi$.\\
+De modo que, como $c\notin voc(\varphi)$ y por tanto $\mathfrak{I}\sim_{\varphi}\mathfrak{I}'$, por el lema de coincidencia también se cumple que $\mathfrak{I}[a/x]\vDash\varphi$, como queríamos.
 \end{proof}
+
+Ahora que tenemos que las reglas básicas son correctas, el último paso que nos queda para demostrar la corrección es demostrar que las reglas derivables también son correctas.
+
+\begin{prop}\label{derivcorr}
+Sea \regla{R} $\displaystyle\frac{\Gamma_1\idash\varphi_1\dots\Gamma_n\idash\varphi_n}{\Gamma\idash\Phi}$ una regla derivada usando reglas correctas. Entonces \regla{R} es correcta.
+\end{prop}
+\begin{proof}
+Ya que \regla{R} es derivada, existe un árbol de deducción que tiene a $\Gamma\idash\varphi$ en la raíz y axiomas o elementos de $\{\Gamma_1\idash\varphi_1,\dots,\Gamma_n\idash\varphi_n\}$ en las hojas. Vamos a demostrar el resultado por inducción en $m$, siendo $m$ la profundidad del árbol de deducción.
+\begin{itemize}
+    \item $m=1$; Entonces el árbol solo tiene un nodo, la secuencia $\Gamma\idash\varphi$. Como esta secuencia es a la vez una hoja, o bien es $\Gamma_i\idash\varphi_i$ para algún $i\in\{1,\dots,n\}$, en cuyo caso el enunciado se cumple trivialmente, o bien $\displaystyle\frac{}{\Gamma\idash\varphi}$ es un axioma correcto, en cuyo caso tanto se cumple $\Gamma\vDash\varphi$ y también se cumple el enunciado.
+    \item Sea $m>1$ y supongamos que el árbol de deducción para \regla{R} tiene altura $m$. Entonces es de la forma:
+\begin{center}
+    \includegraphics[scale = 0.3]{figures/arbol3.png}
+\end{center}
+\begin{comment}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAZgBoAGAXVJADcBDAGwFcYkQAdDgcXoFs+9LgEdhzelC4MATmgAWWEAF9S6TLnyEUARlLbqdJq3YBBAPraRYiVzTYLy1SAzY8BImX00GLNok4cAMZQEDgIKmqumkQArHoGPsb+5gDWVuKSHHZYZimOkRruKOSkAEwJRn4g+c7qblrIpWUVvuw1LoUNACzN3pVtEbVRRcgAbL2Grf7KBjBQAObwRKAAZtIQfEglIDgQSGSTSWDMjIw0jPQARjCMAAp10f6MMCs4IDRyMBLskGBsg2sNlsaLskLpDn5jqdzlcbvdhloQM9Xu8QJ9vv5fv8nIDNohwaDED0IUgoWckbC7g8ikiXm8Pl8oD8CNjVus8QS9og4iTEGSYdcqQj2Mj6WjGcy-jVcfsQVzxrz+RTBfDOiK6aj0UzMSzpezZTsuQB2PpTJUXFXUxGizUSnVSgH6olypA8xJVAAqDgFcKt6pRDIx4F1jqBiAVhJNvJAXryPqFaqeGsD2uDDpxTp5hOJWslbFNSQCOBgAA88DhgCYS-hBHBSAACJRcXgCehmLDpGwcGTyHKKUN4qOEhW5+356NcYtl3CV6sbeh1xvN-iCdudzI9hTtmZKIA
+\begin{tikzcd}
+                              &                                                         &                                                                       & \Gamma\qquad\varphi \arrow[rrd, no head] \arrow[lld, no head] &                               &                                                         &                                                                       \\
+                              & A_1\qquad\psi_1 \arrow[ld, no head] \arrow[rd, no head] &                                                                       & \cdots                                                        &                               & A_k\qquad\psi_k \arrow[ld, no head] \arrow[rd, no head] &                                                                       \\
+{} \arrow[rr, "T_1", no head] &                                                         & {} \arrow[ll, "{\textit{Axiomas, }\Gamma_i\qquad\varphi_i}", no head] &                                                               & {} \arrow[rr, "T_k", no head] &                                                         & {} \arrow[ll, "{\textit{Axiomas, }\Gamma_i\qquad\varphi_i}", no head]
+\end{tikzcd}
+
+\end{comment}
+donde 
+\begin{prooftree}
+\AxiomC{$A_1 \idash \psi_1$}
+\AxiomC{$A_k \idash \psi_k$}
+\BinaryInfC{$\Gamma \idash \varphi$}(R')
+\end{prooftree}
+es una regla correcta, y cada $A_l\idash\psi_l$ tiene un árbol de deducción $T_l$ de altura $<m$.\\
+
+Como el árbol de deducción $T_l$ tiene altura $<m$, y tiene en la raíz a $A_l\idash\psi_l$ y en las hojas axiomas o elementos de $\{\Gamma_1\idash\varphi_1,\dots,\Gamma_n\idash\varphi_n\}$, por hipótesis de inducción tenemos que la regla
+
+\begin{prooftree}
+\AxiomC{$\Gamma_1 \idash \varphi_1$}
+\AxiomC{$\Gamma_n \idash \varphi_n$}
+\BinaryInfC{$A_l \idash \psi_l$}($R_l$)
+\end{prooftree}
+es correcta, para $l=1,\dots,k$.\\
+
+De modo que si suponemos que $\Gamma_1 \idash \varphi_1$,\dots,$\Gamma_n \idash \varphi_n$ son correctas, entonces $A_l \idash \psi_l$ es correcta para $l=1,\dots,k$. Por tanto, como \regla{R'} es correcta, $\Gamma \idash \varphi$ también es correcta. Por tanto \regla{R} es correcta.
+\end{itemize}
+\end{proof}
+
+\begin{cor}\label{derivcorr2}
+Toda regla derivada es correcta.
+\end{cor}
+\begin{proof}
+Directo usando \ref{bacorr} y \ref{derivcorr}.
+\end{proof}
+\begin{cor}\textit{(Corrección)} Si $\Phi\vdash\varphi$, entonces $\Phi\vDash\varphi$.
+\end{cor}
+\begin{proof}
+Por definición, si $\Phi\vdash\varphi$, hay un subconjunto finito $\Gamma\subseteq\Phi$ tal que $\vdash\Gamma\idash\varphi$. Es decir, $\displaystyle\frac{}{\Gamma\idash\varphi}$ es un axioma derivado, y por \ref{derivcorr2} es correcto. De modo que se cumple $\Gamma\vDash\varphi$. Esto, a su vez, implica que $\Phi\vDash\varphi$.
+\end{proof}
+
+\section{Completitud}
+Como en el caso de los \textit{tableaux} de primer orden, la completitud va a ser más complicada de demostrar que la corrección.
+
+\begin{definition}
+Decimos que un conjunto $\Phi$ es \textit{consistente}, $con(\Phi)$, si $\Phi\nvdash\bot$, es decir, no existe un subconjunto finito $\Gamma\subseteq\Phi$ tal que $\vdash\Gamma\idash\bot$.
+\end{definition}
+
+El resultado que nos llevará la gran mayoría de la sección será demostrar el teorema \ref{corsat}, que dice que si un conjunto $\Phi$ es consistente, entonces es satisfactible. Una vez demostrado este teorema, la completitud se deducirá sin mucho esfuerzo. Comenzamos con el siguiente lema:
+
+\begin{lema}\label{regder}
+Las siguientes reglas son derivadas:
+\begin{enumerate}
+    \item Si $\alpha$ es $\alpha$-fórmula, $$(\alpha) \frac{\Gamma, \alpha_1, \alpha_2, \alpha \idash \chi}{\Gamma, \alpha \qquad \chi}$$
+    \item Si $\beta$ es $\beta$-fórmula, $$(\beta)\frac{\Gamma, \beta_1, \beta \idash \chi \quad\quad \Gamma, \beta_2, \beta \idash \chi}{\Gamma, \beta \idash \chi}$$
+    \item Si $\sigma$ es $\sigma$-fórmula, $$(\sigma)\frac{\Gamma, \sigma, \sigma_1 \idash \chi}{\Gamma, \sigma \idash \chi}$$
+    \item SI $\gamma$ es $\gamma$-fórmula y $t\in TERM_S$ $$(\gamma)\frac{\Gamma, \gamma(t), \gamma \idash \chi}{\Gamma, \gamma \idash \chi}$$
+    \item Si $\delta$ es $\delta$-fórmula y $c\in C_A$ es nueva, $$(\delta)\frac{\Gamma, \delta(c), \delta \idash \chi}{\Gamma, \delta \idash \chi}$$
+    \item Si $\theta \in EQ_S$ es $\theta$-fórmula, $$(\theta)\frac{\Gamma, \theta \idash \chi}{\Gamma \idash \chi}$$
+\end{enumerate}
+\end{lema}
+
+\begin{proof} No se incluye. En cada apartado es necesario dividir en casos y crear árboles de deducción para cada caso.
+\begin{comment}
+No se va a hacer explícitamente. Requiere crear árboles de deducción para todas estas reglas. En los apartados 1 y 2, dada la definición  por casos de las reglas $\alpha$ y $\beta$, esto requiere 3 árboles en cada apartado. De igual forma hacen falta 3 árboles en el apartado 3, y 2 árboles en los apartados 4 y 5. El apartado 6 se divide en más casos y el caso de los axiomas $(ST_1)$ y $(ST_2)$ es más complicado y requiere argumentos inducción y la ley de sustitución generalizada.
+\end{comment}
+\end{proof}
+
+
+\begin{prop}\label{condramas}
+Sea $T$ tableau finito para $\Phi$. Sean:
+$$\Gamma := \{\varphi \in \Phi \, \, | \, \, \varphi \text{ aparece en } T\}$$
+$$\Gamma_r:= \{\varphi \,\, | \,\, \varphi \text{ aparece en la rama } r\}$$
+Si para toda rama $r$ de $T$ se cumple que, dada la fórmula $\chi$, $\vdash \Gamma_r \idash \chi$, entonces $\vdash \Gamma \idash \chi$. 
+\end{prop}
+\begin{proof}
+Sea $T$ \textit{tableau} finito para $\Phi$. Entonces se puede construir en un número finito de pasos $T_0, \dots, T_n$ mediante la aplicación de las reglas $R_1, \dots, R_n$.
+
+Realizamos la demostración por inducción sobre $n$. Denotamos $\Gamma_k :=  \{\varphi \in \Phi \, \, | \, \, \varphi \text{ aparece en } T_k\}$.
+
+Si $n = 0$ entonces tenemos un \textit{tableaux} inicial $T_0 =$
+\begin{tikzcd}
+\varphi_1 \arrow[d, no head]          \\
+\varphi_2 \arrow[dd, no head, dotted] \\
+                                      \\
+\varphi_k                            
+\end{tikzcd}, con $\{\varphi_1, \dots, \varphi_k\} \subseteq \Phi$. Por tanto, solo tenemos una rama $r$ que además verifica que $\Gamma = \Gamma_r$, de lo que se sigue el resultado.
+
+Sea $n\geq 1$, supongamos que el resultado se cumple para $T_{n-1}$. Para ver que se cumple en $T_n$, tenemos que distinguir casos dependiendo de la regla que sea $R_n$. En todos los casos, usaremos la letra $r$ para nombrar las ramas de $T_{n-1}$ y $s$ para nombrar a las ramas de $T_n$.
+\begin{itemize}
+    \item Si $R_n = R_{\alpha}$, entonces en $T_{n-1}$ tenemos una rama $r_0$ conteniendo la $\alpha$-fórmula $\alpha$, y esa misma rama se extiende añadiendo $\alpha_1$ y $\alpha_2$ a la rama $s_0$ de $T_n$. \\
+    
+    Supongamos ahora que $\vdash\Gamma_s\idash\chi$ para toda rama $s$ de $T_{n}$ y queremos llegar a que se cumple $\vdash\Gamma_n\idash\chi$. Veamos primero que para toda rama $r$ en $T_{n-1}$, tenemos $\vdash\Gamma_r\idash\chi$. Para ello basta comprobar que $\vdash\Gamma_{r_0}\idash\chi$, ya que el resto de ramas $r$ que no son $r_0$ no se han extendido y son también ramas de $T_n$.\\
+    
+    Pero sabemos que $\vdash\Gamma_{s_0}\idash\chi$. Además, como $\alpha\in\Gamma_{r_0}$ y $\Gamma_{s_0}=\Gamma_{r_0}\cup\{\alpha_1,\alpha_2\}$, por el apartado 1 de \ref{regder} la regla $\frac{\Gamma_{s_0}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada. Por tanto como se cumple $\vdash\Gamma_{s_0}\idash\chi$, también se cumple $\vdash\Gamma_{r_0}\idash\chi$.\\
+    
+    Como tenemos $\vdash\Gamma_r\idash\chi$ para toda rama $r$ de $T_{n-1},$ por hipótesis de inducción $\vdash\Gamma_{n-1}\idash\chi$. Como $\Gamma_{n-1}\subseteq\Gamma_n$, esto implica $\vdash\Gamma_n\idash\chi$.\\
+    
+    \item Si $R_n = R_{\beta}$, entonces en $T_{n-1}$ tenemos una rama $r_0$ conteniendo la $\beta$-fórmula $\beta$, y esa misma rama se extiende añadiendo $\beta_1$ y $\beta_2$ a las ramas $s_1$ y $s_2$ de $T_n$, respectivamente. \\
+    
+    Supongamos ahora que $\vdash\Gamma_s\idash\chi$ para toda rama $s$ de $T_{n}$ y queremos llegar a que se cumple $\vdash\Gamma_n\idash\chi$. Veamos primero que para toda rama $r$ en $T_{n-1}$, tenemos $\vdash\Gamma_r\idash\chi$. Para ello basta comprobar que $\vdash\Gamma_{r_0}\idash\chi$, ya que el resto de ramas $r$ que no son $r_0$ no se han extendido y son también ramas de $T_n$.\\
+    
+    Pero sabemos que $\vdash\Gamma_{s_0}\idash\chi$. Además, como $\beta\in\Gamma_{r_0}$ y $\Gamma_{s_1}=\Gamma_{r_0}\cup\{\beta_1\}$, $\Gamma_{s_2}=\Gamma_{r_0}\cup\{\beta_2\}$ por el apartado 2 de \ref{regder} la regla $\frac{\Gamma_{s_1}\idash\chi\qquad \Gamma_{s_2}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada. Por tanto como se cumplen $\vdash\Gamma_{s_1}\idash\chi$ y $\vdash\Gamma_{s_2}\idash\chi$, también se cumple $\vdash\Gamma_{r_0}\idash\chi$.\\
+    
+    Como tenemos $\vdash\Gamma_r\idash\chi$ para toda rama $r$ de $T_{n-1},$ por hipótesis de inducción $\vdash\Gamma_{n-1}\idash\chi$. Como $\Gamma_{n-1}\subseteq\Gamma_n$, esto implica $\vdash\Gamma_n\idash\chi$.\\
+
+
+
+    \item Si $R_n = R_{\sigma}$, entonces en $T_{n-1}$ tenemos una rama $r_0$ conteniendo la $\sigma$-fórmula $\sigma$, y esa misma rama se extiende añadiendo $\sigma_1$ a la rama $s_0$ de $T_n$. \\
+    
+    Supongamos ahora que $\vdash\Gamma_s\idash\chi$ para toda rama $s$ de $T_{n}$ y queremos llegar a que se cumple $\vdash\Gamma_n\idash\chi$. Veamos primero que para toda rama $r$ en $T_{n-1}$, tenemos $\vdash\Gamma_r\idash\chi$. Para ello basta comprobar que $\vdash\Gamma_{r_0}\idash\chi$, ya que el resto de ramas $r$ que no son $r_0$ no se han extendido y son también ramas de $T_n$.\\
+    
+    Pero sabemos que $\vdash\Gamma_{s_0}\idash\chi$. Además, como $\sigma\in\Gamma_{r_0}$ y $\Gamma_{s_0}=\Gamma_{r_0}\cup\{\sigma_1\}$, por el apartado 3 de \ref{regder} la regla $\frac{\Gamma_{s_0}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada. Por tanto como se cumple $\vdash\Gamma_{s_0}\idash\chi$, también se cumple $\vdash\Gamma_{r_0}\idash\chi$.\\
+    
+    Como tenemos $\vdash\Gamma_r\idash\chi$ para toda rama $r$ de $T_{n-1},$ por hipótesis de inducción $\vdash\Gamma_{n-1}\idash\chi$. Como $\Gamma_{n-1}\subseteq\Gamma_n$, esto implica $\vdash\Gamma_n\idash\chi$.\\
+    
+\item Las reglas $\gamma,\delta$ siguen el mismo razonamiento que la $\sigma$ cambiando $\sigma$ por $\gamma/\delta$ y $\sigma_1$ por $\gamma(t)/\sigma(c)$ respectivamente, y usando los apartados $4/5$ de \ref{regder}.
+
+La regla $\theta$ también se hace de forma similar, viendo que si en la regla añadimos una fórmula $\theta$ a una rama $r_0$ de $T_{n-1}$ para obtener una rama $s_0$ de $T_n$, entonces por el apartado 6 de \ref{regder}, la regla $\frac{\Gamma_{s_0}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada.
+
+\item Si $R_n=R_{hip}$ PENDIENTE DE DEMOSTRAR
+
+
+
+    
+
+\end{itemize}
+\end{proof}
+
+\begin{cor}
+Si el conjunto de fórmulas $\Phi$ tiene un tableau cerrado, entonces $\Phi \vdash \bot$.
+\end{cor}
+\begin{proof}
+Sea $T$ un \textit{tableau} cerrado para $\Phi$. Sea $r$ rama de $T$. Si $\bot \in \Gamma_r$, entonces $\vdash \Gamma_r \idash \bot$, por $\mathbf{(SP)}$. Si existe cierta $\varphi$ tal que $\varphi, \neg\varphi\in \Gamma_r$, entonces, por $\mathbf{(CT_2)}$, $\vdash \Gamma_r \idash \bot$. 
+
+De modo que como para cada rama $r$ se cumple $\vdash \Gamma_r \idash \bot$, por \ref{condramas} tenemos $\vdash \Gamma \idash \bot$, con $\Gamma := \{\varphi\in \Phi \, \, | \, \, \varphi \text{ está en } T\}$. Como $\Gamma$ es subconjunto finito de $\Phi$, $\Phi \vdash \bot$.
+\end{proof}
+
+
+
+\begin{theorem}\label{corsat}
+Si $con(\Phi)$, entonces $Sat(\Phi)$.
+\end{theorem}
+\begin{proof}
+Es la forma contrarrecíproca del resultado anterior.
+\end{proof}
+
+\begin{cor}(Completitud)
+Si $\Phi \vDash \varphi$, entonces $\Phi \vdash \varphi$.
+\end{cor}
+\begin{proof}
+Si $\Phi \vDash \varphi$ entonces $Insat(\Phi \cup \{\neg \varphi\})$, es decir, por \ref{corsat} es falso que $con(\Phi\cup \{\neg \varphi\})$, y entonces existe un subconjunto finito $\Gamma\subseteq\Phi\cup \{\neg \varphi\}$ tal que $\vdash\Gamma\idash\bot$.
+Tenemos, por tanto, 
+\begin{center}
+    \includegraphics[scale = 0.3]{figures/arbol4.png}
+\end{center}
+Veamos si existe un subconjunto finito $\Delta \subseteq \Phi$ tal que $\vdash\Delta\idash\bot$.
+\begin{itemize}
+    \item Si $\neg \varphi \notin \Gamma$, tomando $\Delta := \Gamma$ obtenemos:
+\begin{center}
+    \includegraphics[scale = 0.25]{figures/arbol5.png}
+\end{center}
+\begin{comment}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAZgBoAGAXVJADcBDAGwFcYkQAdDgcXoFs+9LgEdhzelC4MATmgAWWEAF9S6TLnyEUARlLbqdJq3ZdeA+gAIRYiVY4AjCDmWqQGbHgJEy+mgxZsiCAAFFw4MAAeOPYAZsAASgDCSgCULmoemkQArHoG-sZBpvyCpHaOOHai4lB2MvKKKhkaXijkpABM+UaBIOlu6p5ayB2d3QHs-e4tw7ldfj3soQ5OXII4crHAAIKpygYwUADm8ESgMdIQfEjtIDgQSGSGE4hgzIyMNIz09jCMAAqDLJBRgwGLOGhyGASdiQMBsJogC5XG40e5IXTPQpvD5fH5-QGZVogUHgkCQ6FQWEEBGuZHXRCY9GIAAsCxeOM+JPxAKBxNJEJAUJhQThtPOlwZTIeiFyWMCnLxv15RK0JLBguFVNFNP69KQbLuMrlBV6ABVydzlYSZuwBZatdT4XrJUg5czDaakIqrQS+Wr7RSReBdUpKEogA
+\begin{tikzcd}
+                            &                                                            &                        & \Gamma\qquad\varphi \arrow[rrd, no head] \arrow[lld, no head] &  &                               \\
+                            & \Gamma \qquad \bot \arrow[ld, no head] \arrow[rd, no head] &                        & (\textbf{RC})                                                 &  & {\Gamma, \bot \qquad \varphi} \\
+{} \arrow[rr, "T", no head] &                                                            & {} \arrow[ll, no head] &                                                               &  & (\bot\mathbf{A})             
+\end{tikzcd}
+\end{comment}
+
+    \item Si $\neg \varphi \in \Delta$, tomando $\Delta := \Gamma \setminus \{\neg \varphi\}$ obtenemos:
+\begin{center}
+    \includegraphics[scale = 0.23]{figures/arbol6.png}
+\end{center} 
+\begin{comment}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAmAXVJADcBDAGwFcYkQAdDgERkZ3qkABFzAwA5lwYAnNAAssXAI5Lm9KFwBGEHCAC+pdJlz5CKAAykAzNTpNW7fYZAZseAkXLXbDFm0QgTkZupkRkxD72-pw8fAIiHCpqUAlikhxpUvSyCkEuxu5mJKTmkX7sXLz89AlJ6gky8lhC+rYwUOLwRKAAZtIQALZIliA4EEhkduWIYMyMjDSM9Jp8AAoFoQGMMD26NHIw6uyQYnl9g8M0Y0heUw4zcwsgSyuM6yEeWzt7IAdHASc2AZev0hohJtdELdfPcQAAVECLZZrDafZ7fRG-Q5QY4EIHOc5g26QyZ-HEAvGYmHRACCAA98AN6AhgSBCZdRuNEFZ9tjcacka93iY0dIsOI5D9qewABSiCRcHAwOk4TQ9YAAYT0AEozqCkDzOUgACy8-7gSmClEfMwgMUSqVRWWK5Wq9XcAByAEIda09EA
+\begin{tikzcd}
+                            & \Delta \qquad \varphi                                                                                           &                                   \\
+                            & \Delta \qquad \neg\neg\varphi \arrow[u, "(\textbf{DN!})"', no head]                                             &                                   \\
+                            & {\Delta, \neg\varphi\qquad\bot} \arrow[ld, no head] \arrow[rd, no head] \arrow[u, "(\neg\textbf{C})"', no head] &                                   \\
+{} \arrow[rr, "T", no head] &                                                                                                                 & {} \arrow[ll, "Axiomas", no head]
+\end{tikzcd}
+\end{comment}
+\end{itemize}
+de modo que en ambos casos se cumple el enunciado.
+\end{proof}
+
+De modo que hemos visto que si $S$ es signatura numerable y $\Phi \subseteq FORM_S$ es insatisfactible, entonces $\Phi$ tiene \textit{tableau} cerrado y es, por tanto, inconsistente. De hecho, este resultado también se puede demostrar cuando $S$ no es numerable.\footnote{Este resultado se puede encontrar en el capítulo 5 del libro \textit{Mathematical Logic}, de los autores H.-D. Ebbinghaus, J. Flum y W. Thomas.}
+
+
+Finalmente, demos una visión global de lo que hemos estudiado en estas últimas subsecciones. Partiendo de los dos pares de conceptos \textit{deducción formal}-\textit{consistencia}  y \textit{corrección}-\textit{satisfactibilidad} hemos establecido un nexo entre las perspectivas sintáctica y semántica, respectivamente representadas por cada par de tales conceptos. Este nexo consiste en los Teoremas de Corrección y Completitud, que nos permiten pasar `de un lado a otro'.
+
+A continuación mostramos la correspondencia que hemos definido:
+\begin{align*}
+    \text{\large Sintaxis} & \qquad  \text{\large Semántica} \\   
+    \text{Fórmulas} & \Longleftrightarrow  \text{ Modelos} \\
+    \Phi \vdash \varphi \quad (\Phi \vdash_{tb} \varphi) & \Longleftrightarrow  \Phi \vDash \varphi \\
+    con(\Phi) & \Longleftrightarrow sat(\Phi) \\
+    \vdash \varphi \leftrightarrow \psi & \Longleftrightarrow \varphi \sim \psi \\
+    \vdash \varphi & \Longleftrightarrow \vDash \varphi
+\end{align*}

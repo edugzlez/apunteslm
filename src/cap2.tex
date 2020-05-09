@@ -1397,13 +1397,13 @@ Necesitamos el siguiente resultado técnico de la teoría de grafos:
 Sea $T$ un árbol con raíz con infinitos nodos tal que cada nodo tiene finitos hijos. Entonces $T$ tiene una rama infinita.
 \end{theorem}
 \begin{proof}
-\begin{comment}
+
 Supongamos que tenemos una ordenación de los vértices, $(v_n)_{n\in\mathbb{N}}$. La raíz del árbol será $v_{i_0}$. Dados dos nodos $a$ y $b$ distintos, decimos que $b$ es descendiente de $a$ si el único camino simple $c_b$ desde $v_0$ hasta $b$ pasa por $a$. Como $b\neq a$, en $c_b$ tenemos un vértice siguiente a $a$, que por tanto es hijo de $a$. De modo que cualquier descendiente de un vértice es uno de sus hijos o descendiente de uno de sus hijos.\\[-7pt]
 
 Entonces, $v_{i_0}$ tiene infinitos descendientes (todos los vértices salvo $v_0$). Estos infinitos descendientes contienen a los finitos hijos de $v_{i_0}$ y a sus descendientes. Por tanto alguno de sus hijos tiene que tener infinitos descendientes. Sea $v_{i_1}$ el menor de ellos. Como $v_{i_1}$ tiene infinitos descendientes, de la misma forma que antes escogemos el menor de sus hijos, $v_{i_2}$, que tiene infinitos descendientes.\\[-7pt]
 
 De este modo creamos una sucesión de vértices $(v_{i_n})_{n\in\mathbb{N}}$. Como por definición $v_{i_n}$ tiene altura $n$, no se repiten vértices. Por tanto la sucesión de aristas $a_n$ que unen $v_{i_n}$ con $v_{i_{n+1}}$ forman una rama infinita.
-\end{comment}
+
 \end{proof}
 
 
@@ -1550,7 +1550,7 @@ t\doteq s$.
         \neg t \doteq s \in \Phi\ \ o\ \ s \doteq t \in \Phi
     \]
     Como se sabe ya que $t \doteq s \in \Phi$ no queda otra que $s \doteq t \in \Phi$, que equivale a que $s\equiv_{\Phi} t$, como queríamos probar.
-    \item \textit{Propiedad transitiva.} Dados $t,s,r\in T_{\Phi}$ tal que $t\equiv_{\Phi} s$ y  $s\equiv_{\Phi} r$, hay que desmostrar que $t\equiv_{\Phi} r$. El axioma de transitividad está en $\Phi$, luego:
+    \item \textit{Propiedad transitiva.} Dados $t,s,r\in T_{\Phi}$ tal que $t\equiv_{\Phi} s$ y  $s\equiv_{\Phi} r$, hay que demostrar que $t\equiv_{\Phi} r$. El axioma de transitividad está en $\Phi$, luego:
     \[
         \gamma\ :=\ (\forall x\forall y \forall z\ x\doteq y \land y\doteq z \rightarrow x\doteq z) \in \Phi
     \]
@@ -1899,7 +1899,7 @@ Ahora podemos demostrar el resultado que buscamos.
 \end{theorem}
 
 
-\subsection{\textit{Tableau} canónico}
+\subsection{\textit{Tableau} canónico. Teorema de compacidad}
 
 Volvemos a considerar el concepto de
 \emph{tableau completo}, análogo al visto en lógica proposicional:
