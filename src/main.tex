@@ -34,6 +34,8 @@
 \usepackage{syllogism}
 \usepackage{bussproofs} 
 % ^ este es para hacer reglas de inferencia. 
+\usepackage{xfrac}
+\usepackage{collectbox}%Para hacer cajitas de algoritmos
 
 
 \usetikzlibrary{matrix, positioning}
@@ -44,19 +46,38 @@
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
 \newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{theorem*}[theorem]{*Teorema}
 \newtheorem{prop}[theorem]{Proposición}
 \newtheorem{lema}[theorem]{Lema}
 \newtheorem{cor}[theorem]{Corolario}
 
+\newtheorem{prop*}[theorem]{*Proposición}
+\newtheorem{lema*}[theorem]{*Lema}
+\newtheorem{cor*}[theorem]{*Corolario}
+
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definición}
+\newtheorem{definition*}[theorem]{*Definición}
 \newtheorem{defs}[theorem]{Definiciones}
+\newtheorem{defs*}[theorem]{*Definiciones}
 \newtheorem{example}[theorem]{Ejemplo}
 \newtheorem{ex}[theorem]{Ejercicio}
 \newtheorem{note}[theorem]{Nota}
 
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Nota}
+
+\newtheoremstyle{jeje} % name
+    {\topsep}                    % Space above
+    {\topsep}                    % Space below
+    {}                   % Body font
+    {}                           % Indent amount
+    {\itshape}                   % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+\theoremstyle{jeje}
+\newtheorem*{sketchproof}{Sketch de demostración}
 
 \DeclareMathOperator{\Tr}{Tr}
 \newcommand{\N}{\mathbb{N}}
@@ -95,6 +116,24 @@
 
 
 \def\regla#1{\ensuremath\mathbf{(#1)}}
+
+%Para poner cajitas en los algoritmos:
+\makeatletter
+\newcommand{\sqbox}{%
+    \collectbox{%
+        \@tempdima=\dimexpr\width-\totalheight\relax
+        \ifdim\@tempdima<\z@
+            \fbox{\hbox{\hspace{-.5\@tempdima}\BOXCONTENT\hspace{-.5\@tempdima}}}%
+        \else
+            \ht\collectedbox=\dimexpr\ht\collectedbox+.5\@tempdima\relax
+            \dp\collectedbox=\dimexpr\dp\collectedbox+.5\@tempdima\relax
+            \fbox{\BOXCONTENT}%
+        \fi
+    }%
+}
+\makeatother
+
+
 
 
 
@@ -145,6 +184,7 @@
 \include{cap1}
 \include{cap2}
 \include{cap3}
+\include{cap4}
 \appendix
 %    Include appendix "chapters" here.
 

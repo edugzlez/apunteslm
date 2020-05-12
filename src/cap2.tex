@@ -285,7 +285,7 @@ Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Definimos el \textit{
 Hasta ahora hemos venido considerando cuestiones sintácticas sobre las fórmulas. Lo que queremos ahora es abordar su semántica, esto es, su comportamiento cuando les damos una interpretación determinada. Comenzamos definiendo la estructura de la que tomamos el significado de los símbolos de una signatura:
 
 \begin{definition}
-Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ una signatura. Una \textit{S-álgebra} es una tupla 
+Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ una signatura. Una \textit{S-álgebra} o \textit{S-estructura} es una tupla 
 $$\mathfrak{A} := \langle A, \{ c^{\mathfrak{A}} \, | \, c \in Ct_S\}, \{f^{\mathfrak{A}} \, | \, f \in Fn_S\}, \{p^{\mathfrak{A}} \, | \, p \in Pd_S\}\rangle$$
 De modo que:
 \begin{itemize}
@@ -465,7 +465,7 @@ $\varphi_{=2} := (\exists x \, \exists y \, \neg x \doteq y) \land \forall z \, 
 
 
 \subsection{Axiomas de Peano}
-Recordemos la signatura $Nat$ definida en \ref{nat}. Este lenguaje fue introducido por Peano para describir los números naturales usando los símbolos de suma, producto, sucesor y menor o igual. También introdujo los que ahora conocemos como \textit{axiomas de Peano}:
+Recordemos la signatura $Nat$ definida en \ref{nat}. Este lenguaje fue introducido por Peano para describir los números naturales usando los símbolos de suma, producto, sucesor y menor o igual. Para describir los naturales podrían considerarse estos axiomas:
 \begin{enumerate}
     \item $\forall x \; \neg s(x)\doteq 0$
     \item $\forall x \, \forall y \; s(x)\doteq s(y)\to x\doteq y$
@@ -475,8 +475,8 @@ Recordemos la signatura $Nat$ definida en \ref{nat}. Este lenguaje fue introduci
     \item $\forall x \, \forall y \; x*s(y)\doteq (x*y)+x$
     \item $\forall x \, \forall y \; (x<y \leftrightarrow \exists z \; x+s(z)\doteq y)$
 \end{enumerate}
-Llamamos $\Phi_{Peano}$ al conjunto de las anteriores sentencias.
-Es fácil comprobar que en la $Nat$-álgebra $\mathfrak{A}_{Nat}$, introducida en \ref{anat}, cualquier interpretación satisface los axiomas de Peano. Sin embargo, también hay otras estructuras con esta propiedad.
+Llamamos $\Phi_N$ al conjunto de las anteriores sentencias.
+Es fácil comprobar que en la $Nat$-álgebra $\mathfrak{A}_{Nat}$, introducida en \ref{anat}, cualquier interpretación satisface los axiomas de Peano. Sin embargo, también hay otras estructuras con esta propiedad. De hecho, como veremos en \ref{infnocat}, cualquier conjunto de sentencias que se cumplan en los naturales también se cumplirán en alguna estructura de conjunto soporte no numerable.
 
 \begin{comment}
 como la siguiente:
@@ -746,7 +746,7 @@ Queda entonces comprobar que $h$ es isomorfismo entre las álgebras de $\mathfra
 
 El siguiente resultado muestra que los isomorfismos entre $S$-interpretaciones se extienden a las fórmulas y los términos de tal signatura $S$.
 
-\begin{theorem}
+\begin{theorem}(Lema de Isomorfía)\label{isomorf}
 Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sea $h$ isomorfismo entre las $S$-interpretaciones $\mathfrak{I}_1$ y $\mathfrak{I}_2$. Entonces:
 \begin{enumerate}
     \item Para todo $t \in TERM_S$, $h(t^{\mathfrak{I}_1}) = t^{\mathfrak{I}_2}$.
@@ -2222,7 +2222,7 @@ Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos q
 
 
 
-\begin{example}
+\subsection{Ejemplo de \textit{tableau} canónico abierto}
 Veamos un ejemplo de \textit{Tableau} canónico abierto. Este ejemplo no tiene funciones, ya que cuando hay funciones el \textit{Tableau} resultante es infinito, al haber infinitos términos que sustituir en las reglas \mathbf{G}. El tableaux siguiente corresponde al conjunto de fórmulas \[\Phi=\{\forall x\;P(x)\lor Q(x),\neg(\forall x\; P(x)\lor \forall x\; Q(x))\}=\{\varphi_0,\varphi_1\}\]
 Veremos que este tableau es satisfactible, de modo que al acabar de desarrollarlo tendremos ramas abiertas que nos permitirán encontrar modelos que satisfagan $\Phi$.\\
 
@@ -2233,7 +2233,7 @@ También para simplificar, vamos a enumerar las fórmulas según su altura. Esto
 Otra anotación importante es que en la versión teórica del algoritmo, tenemos una numeración predefinida de los términos y de las $\gamma$-fórmulas. Sin embargo, en la práctica obviamente solo haremos \textit{tableaux} finitos. Como da igual cambiar el orden de finitos términos, podemos establecer el orden de los finitos términos o $\gamma$-fórmulas que usemos según nos convenga.\\
 
 Se muestra primero el \textit{tableau} construido y a continuación explicamos su construcción paso a paso. 
-\end{example}
+
 
 
 \hspace{-2cm}
