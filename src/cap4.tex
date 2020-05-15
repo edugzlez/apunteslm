@@ -4,7 +4,9 @@
 Vamos a dedicar esta sección a estudiar las nociones y resultados más importantes de este manual.
 
 
-\section{Teorema de Compacidad. Modelos}
+\section{Teorema de Compacidad y modelos}
+
+Comencemos demostrando una versión más general de \ref{compacidad}, que se convertirá en una de nuestras herramientas básicas en las siguientes secciones: 
 
 \begin{theorem}\label{comp2} (Teorema de compacidad)
 Sea $S$ signatura, $\Phi\subseteq PROP_S$, $\varphi\in PROP_S$. Entonces,
@@ -33,13 +35,13 @@ Ahora supongamos que tenemos una signatura $S$, una $S$-álgebra $\mathfrak{A}$ 
 Es decir, que una interpretación $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ verifique o no una sentencia solo depende de $\mathfrak{A}$, no de $\sigma$. Por tanto, es natural introducir la siguiente definición:
 
 \begin{definition}
-Dadas una signatura $S$, una $S$-álgebra $\mathfrak{A}$ y una sentencia $\varphi\in Sent_S$, decimos que $\mathfrak{A}\vDash\varphi$, $\mathfrak{A}$\textit{ es un modelo de $\Phi$}, cuando para alguna asignación $\sigma : Var \rightarrow A$ la $S$-interpretación $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ verifica $\varphi$.
+Dadas una signatura $S$, una $S$-álgebra $\mathfrak{A}$ y una sentencia $\varphi\in Sent_S$, decimos que $\mathfrak{A}\vDash\varphi$, $\mathfrak{A}$\textit{ es un modelo de $\varphi$}, cuando para alguna asignación $\sigma : Var \rightarrow A$ la $S$-interpretación $\mathfrak{I} := \langle \mathfrak{A}, \sigma \rangle$ verifica $\varphi$.
 \end{definition}
 
 \begin{definition}
 Si $\Phi\subseteq Sent_S$, definimos la siguiente clase:
 \[Mod_S(\Phi)=\{\mathfrak{A}\, \, |\, \, \mathfrak{A} \text{ \textit{S}-álgebra y }\mathfrak{A}\vDash\varphi \text{ para toda $\varphi\in\Phi$}\}.\]
-Así, decimos que una álgebra $\mathfrak{A}$ es modelo de $\Phi$ si $\mathfrak{A}\vDash\varphi \text{ para toda $\varphi\in\Phi$}$.
+Así, decimos que una álgebra $\mathfrak{A}$ es modelo de $\Phi$ si $\mathfrak{A}\vDash\varphi \text{ para toda $\varphi\in\Phi$}$. \\
 \end{definition}
 
 \begin{theorem}\label{fintoinf}
@@ -57,14 +59,14 @@ $\vdots$\\
 
 No es difícil verificar que una estructura es modelo de $\varphi_n$ si y solo si su soporte tiene al menos $n$ elementos.
 Ahora definimos el conjunto de sentencias $\hat{\Phi}:=\Phi\cup\{\varphi_n\}_{n\geq2}$.
-Si comprobamos que $\hat{\Phi}$ es satisfactible habremos acabado, ya que cualquier modelo de $\hat{\Phi}$ tiene que tener infinitos elementos en su soporte. Pero por el Teorema de Compacidad, para esto nos basta comprobar que cualquier subconjunto finito de $\hat{\Phi}$ es satisfactible.\\
+Si comprobamos que $\hat{\Phi}$ es satisfactible habremos acabado, ya que cualquier modelo de $\hat{\Phi}$ tiene que tener infinitos elementos en su soporte. Pero por el Teorema de Compacidad, para esto nos basta comprobar que cualquier subconjunto finito de $\hat{\Phi}$ es satisfactible.
 
 Sea $\Phi_0\subseteq\hat{\Phi}$ finito. Entonces podemos definir $n_0:=\max\{n\in\mathbb{N}|\varphi_n\in\Phi_0\}$. Y está claro que $\mathfrak{A}_{n_0}$ es modelo de $\Phi_0$, ya que es modelo de $\Phi$ y de $\varphi_n$ para cualquier $n\leq n_0$. Por tanto $\Phi_0$ es satisfactible.
 \end{proof}
 
 \section{Teoremas de Löwenheim-Skolem}
 
-Nos disponemos ahora a ver los teoremas de Löwenheim-Skolem que, dado un conjunto de sentencias $\Phi$, nos garantizan la existencia de modelos para $\Phi$ de cardinales grandes (versión ascendente del teorema) o pequeños (versión descendente del teorema). En los siguientes teoremas, con el cardinal de una signatura' nos referimos al cardinal del conjunto de constantes, funciones y predicados de la signatura, y con el `cardinal de un modelo' nos referimos al cardinal de su conjunto soporte.
+Nos disponemos ahora a ver los teoremas de Löwenheim-Skolem que, dado un conjunto de sentencias $\Phi$, nos garantizan la existencia de modelos para $\Phi$ de cardinales grandes (versión ascendente del teorema) o pequeños (versión descendente del teorema). En los siguientes teoremas, con el `cardinal de una signatura' nos referimos al cardinal del conjunto de constantes, funciones y predicados de la signatura, y con el `cardinal de un modelo' nos referimos al cardinal de su conjunto soporte.
 
 \begin{theorem}
 (Teorema de Löwenheim-Skolem, caso numerable descendente)\\
@@ -75,7 +77,7 @@ Como $S$ es numerable y $\Phi$ es satisfactible, el \textit{tableau} canónico p
 
 Esta interpretación satisface $\Gamma_r$, de modo que como $\Phi\subseteq\Gamma_r$, también satisface $\Phi$. Es decir, su álgebra $\mathfrak{T}_{\Gamma_r}$ es modelo de $\Phi$.
 
-Además, su conjunto soporte es $T_{\Gamma_r}/\equiv_{\Gamma_r}$. Pero $|T_{\Gamma_r}/\equiv_{\Gamma_r}|\leq|T_{\Gamma_r}|\leq|FORM_S|$. Como $FORM_S$ es numerable, este es el modelo con soporte numerable que buscábamos.
+Además, su conjunto soporte es $T_{\Gamma_r}/\equiv_{\Gamma_r}$. Pero $\abs{T_{\Gamma_r}/\equiv_{\Gamma_r}}\leq|T_{\Gamma_r}|\leq|FORM_S|$. Como $FORM_S$ es numerable, este es el modelo con soporte numerable que buscábamos.
 \end{proof}
 
 Pasamos a ver la versión general del teorema anterior, de la cual no se incluye demostración.
@@ -97,7 +99,7 @@ Sea la signatura $S=\langle0,1,\cdot,+,<\rangle$ y el álgebra habitual de los r
 
 Entonces podemos definir el conjunto de sentencias que cumple $\mathbb{R}^<$:
 
-\[Th(\mathbb{R}^<)=\{\varphi\in Sent_S\, \, | \, \, \mathbb{R}^<\vDash\varphi\})\]
+\[Th(\mathbb{R}^<) :=\{\varphi\in Sent_S\, \, | \, \, \mathbb{R}^<\vDash\varphi\})\]
 
 El teorema \ref{LSD} nos dice que de hecho hay un modelo numerable $\mathbb{R}^!$ que también verifica $Th(\mathbb{R}^<)$, es decir, cualquier sentencia que cumpla $\mathbb{R}^<$ también la cumple este modelo numerable $\mathbb{R}^!$.
 \end{example}
@@ -117,15 +119,15 @@ De modo que sea $\Phi_0\subseteq\Phi'$ finito, veamos que es satisfactible. Sean
 
 Pero $\Phi_1$ es satisfactible, ya que como $\Phi$ tiene un modelo infinito $\mathfrak{A}$ en $S$, podemos elegir el modelo $\mathfrak{A}$ para $\Phi_1$ en $S'$, asignando $k$ elementos distintos del conjunto soporte a $c_{a_1},\dots,c_{a_k}$ y asignando los valores que queramos al resto de constantes.\\
 
-Por tanto por el Teorema de Compacidad ya tenemos que $\Phi'$ es satisfactible en la signatura $S'$. Sea $\mathfrak{A}_0$ una $S'$-álgebra que satisface $\Phi'$. Entonces, el cardinal de $\mathfrak{A}_0$ es $\geq\kappa$, ya que tenemos $\kappa$ constantes distintas y $\Phi'$ afirma que representan distintos elementos del conjunto soporte. Hemos encontrado una $S'$-álgebra que satisface $\Phi$ de cardinal $\geq\kappa$. Para probar el enunciado, queremos una $S$-álgebra que cumpla lo mismo.\\
+Por tanto, por el Teorema de Compacidad, ya tenemos que $\Phi'$ es satisfactible en la signatura $S'$. Sea $\mathfrak{A}_0$ una $S'$-álgebra que satisface $\Phi'$. Entonces, el cardinal de $\mathfrak{A}_0$ es $\geq\kappa$, ya que tenemos $\kappa$ constantes distintas y $\Phi'$ afirma que representan distintos elementos del conjunto soporte. Hemos encontrado una $S'$-álgebra que satisface $\Phi$ de cardinal $\geq\kappa$. Para probar el enunciado, queremos una $S$-álgebra que cumpla lo mismo.\\
 
 Para ello basta definir la $S$-álgebra $\mathfrak{A}_1$, que tiene el mismo soporte que $\mathfrak{A}_0$ y asigna a cada constante, función y predicado de $S$ lo mismo que $\mathfrak{A}_0$. Como $\mathfrak{A}_0$ es modelo de $\Phi$, $\mathfrak{A}_1$ también será modelo de $\Phi$. Por tanto, ya hemos encontrado una $S-$álgebra que satisface $\Phi$, y de cardinal $\geq\kappa$, como queríamos.
 \end{proof}
 
-\begin{theorem}(Teorema de Löwenheim-Skolem-Tarski) Sean $S$ signatura, $\Phi \subseteq Sent_S$ con modelos infinitos y $\kappa$ cardinal tal que $\kappa \geq |FORM_S|$. Entonces existe $\mathfrak{A} \in Mod(\Phi)$ tal que $|\mathfrak{A}| = \kappa$.
+\begin{theorem}(Teorema de Löwenheim-Skolem-Tarski)\label{LST} Sean $S$ signatura, $\Phi \subseteq Sent_S$ con modelos infinitos y $\kappa$ cardinal tal que $\kappa \geq |FORM_S|$. Entonces existe $\mathfrak{A} \in Mod(\Phi)$ tal que $|\mathfrak{A}| = \kappa$.
 \end{theorem}
 \begin{proof}
-Usando la misma notación que en el teorema anterior, podemos obtener una $S'$-álgebra de cardinal $\kappa$ que consiste en añadir constantes a $\Phi$ y un conjunto de sentencias $\Phi'\subseteq FORM_S$ satisfactible y tal que cualquier modelo de $\Phi'$ tiene cardinal $\geq\kappa$.\\
+Usando la misma notación que en el teorema anterior, podemos obtener una $S'$-álgebra de cardinal $\kappa$ que consiste en añadir constantes a $\Phi$ y un conjunto de sentencias $\Phi'\subseteq FORM_{S'}$ satisfactible y tal que cualquier modelo de $\Phi'$ tiene cardinal $\geq\kappa$.\\
 
 Pero entonces, por el Teorema de Löwenheim descendente, \ref{LSD}, tenemos que hay una $S'$-álgebra $\mathfrak{A}$ que satisface $\Phi'$ y de cardinal $\leq\kappa$. Como es modelo de $\Phi'$, tiene cardinal $\geq\kappa$, por tanto $\mathfrak{A}$ tiene  cardinal exactamente $\kappa$.\\
 
@@ -133,6 +135,7 @@ Ahora, igual que en el teorema anterior, creamos una $S$-álgebra $\mathfrak{A}_
 \end{proof}
 
 \section{Axiomatizabilidad}
+
 
 \begin{defs}
 Dada $S$ signatura, sea $\mathcal{K}$ clase de $S$-álgebras.
@@ -204,7 +207,7 @@ De aquí se sigue que, si $f, g \in \Z[x]$ son coprimos en $\Q[x]$, entonces son
 
 \begin{defs}
 \begin{itemize}\mbox{}
-    \item Sea $S$ una signatura, $\mathfrak{A}$ una $S$-álgebra. Definimos:
+    \item Sea $S$ una signatura, $\mathfrak{A}$ una $S$-álgebra. Definimos \textit{la teoría de} $\mathfrak{A}$ como:
 $$Th(\mathfrak{A}) := \{\sigma \in Sent_S \, \, | \, \, \mathfrak{A}\vDash \sigma\}$$
     \item Dos $S$-álgebras $\mathfrak{A}, \mathfrak{B}$ se dicen \textit{elementalmente equivalentes}, $\mathfraq{A} \equiv \mathfrak{B}$ si $Th(\mathfrak{A}) = Th(\mathfrak{B})$.
 \end{itemize}
@@ -278,20 +281,19 @@ Un cuerpo ordenado $C$ se dice \textit{arquimediano} si para cada $x \in C$, exi
 Sea $S := \langle 0, 1; +, \cdot; <\rangle$ y sea $\mathcal{K}$ tal clase. Supongamos que existe $\Phi \subseteq Sent_S$ tal que $\mathcal{K} = Mod(\Phi)$. Consideremos:
 $$\Psi := \Phi \cup \{1 < c, 1+1<c, \dots\} \text{, con \textit{c} constante que no usamos en los axiomas.}$$
 
-Entonces $\Psi$ no puede ser satisfactible. Ya que supongamos que $\mathfrak{A}$ $S$-álgebra tal que $\mathfrak{A}\vDash \Psi$. Entonces, $\mathfrak{A}\vDash \Phi$, por tanto $\mathfrak{A}$ es arquimediano, pero $\mathfrak{A} \vDash  1  \underbrace{+ \cdots +}_\text{$n$ veces} 1 < c$ para todo $n$, lo cual contradice que $\mathfrak{A}$ sea arquimediano. Por tanto $\Psi$ no es satisfactible, y por el teorema de compacidad tiene un subconjunto finito $\Psi_0$ insatisfactible.\\
-
+Entonces $\Psi$ no puede ser satisfactible. Supongamos que $\mathfrak{A}$ $S$-álgebra tal que $\mathfrak{A}\vDash \Psi$. Entonces, $\mathfrak{A}\vDash \Phi$, por tanto $\mathfrak{A}$ es arquimediano, pero $\mathfrak{A} \vDash  1  \underbrace{+ \cdots +}_\text{$n$ veces} 1 < c$ para todo $n$, lo cual contradice que $\mathfrak{A}$ sea arquimediano. Por tanto $\Psi$ no es satisfactible, y por el teorema de compacidad tiene un subconjunto finito $\Psi_0$ insatisfactible.
 
 Sea $k$ el mayor entero tal que
 $$\Psi_0 \subseteq \Phi \cup \{1 < c,1+1<c, \dots, 1  \underbrace{+ \cdots +}_\text{$k$ veces} 1 < c\}$$
-Tomando como modelo al usual de $\R$ y haciendo $c = k+1$ obtenemos que $\Psi_0$ es satisfactible, y tenemos una constradicción. Por tanto efectivamente los cuerpos arquimedianos no pueden ser axiomatizados por un conjunto de sentencias de primer orden.
+Tomando como modelo al usual de $\R$ y haciendo $c = k+1$ obtenemos que $\Psi_0$ es satisfactible, y tenemos una constradicción. Por tanto, efectivamente, los cuerpos arquimedianos no pueden ser axiomatizados por un conjunto de sentencias de primer orden.
 \end{example}
 
 
-\section{Teorías y enumerabilidad efectiva}
+\section{Teorías y enumerabilidad efectiva}\label{teoyenum}
 
 \subsection{Ideas básicas}
 
-En esta sección vamos a hacer referencia constantemente al concepto intuitivo de \textit{algoritmo} o \textit{procedimiento efectivo}. Un algoritmo es una serie de reglas o instrucciones de longitud finita y que se puedan ejecutar mecánicamente, es decir, de forma precisa, sin ambiguedades, no abierta a interpretaciones. El ejemplo más claro de algoritmos son los programas que ejecutan los ordenadores.\\
+En esta sección vamos a hacer referencia constantemente al concepto intuitivo de \textit{algoritmo} o \textit{procedimiento efectivo}. Un algoritmo es una serie de reglas o instrucciones de longitud finita y que se puedan ejecutar mecánicamente, es decir, de forma precisa, sin ambiguedades, no abiertas a interpretaciones. El ejemplo más claro de algoritmos son los programas que ejecutan los ordenadores.\\
 
 Así, por ejemplo, \textit{para sumar dos números naturales a y b, exprésalos como una hilera de barras, una a continuación de la otra, cada barra correspondiendo a una unidad, y cuenta el número total de barras} es un algoritmo, pero \textit{para sumar dos números naturales a y b, reflexiona hasta llegar a la solución} no lo es.\\
 
@@ -314,9 +316,9 @@ Un conjunto $A$ se dice \textit{decidible} si existe un algoritmo el cual, dado 
 
 % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAJgBoAGAXVJADcBDAGwFcYkR6AdTrMAAgCCIAL6l0mXPkIpypAIzU6TVu3oixIDNjwEic+YoYs2iENzgBHAEYQAHsAGMA5gDph68dqlEyxQ8pMObkg8fiFhRRgoJ3giUAAzACcIAFskfRAcCCQyJWMkMGZGRhpGeisYRgAFCR1pEEYYeJwPECTUnJospFk8lVMAZSwQUvLKmq9dU15sWFb2tMRc7sQAZhojfpAAOWzRiura72mwWbYI4SA
 \begin{tikzcd}
-            &                                                                        & a\in A    \\
+            &                                                                        & 1 \text{; si } a\in A    \\
 a \arrow[r] & \sqbox{Alg.} \arrow[ru, "Si" description] \arrow[rd, "No" description] &           \\
-            &                                                                        & a\notin A
+            &                                                                        & 0 \text{; si } a\notin A
 \end{tikzcd}
 
 \begin{example}
@@ -360,14 +362,14 @@ Sea $U$ efectivamente enumerable, sea $A\subseteq U$. $A$ es decidible si y solo
 \begin{note}
 Existen conjuntos efectivamente enumerables no decidibles. Una forma de entender esto es que si un conjunto $A$ es efectivamente enumerable por un algoritmo $M_1$, entonces hay un algoritmo $M_2$ que responde $a\in A$ si un elemento $a$ está en $A$: en efecto, basta con que este algoritmo ejecute los pasos de $M_1$ hasta que llegue al elemento $a$ de $A$, y entonces $M_2$ dice que  $a\in A$.
 
-Sin  embargo, no tiene por qué haber un algoritmo que nos diga que un  elemento $b$ \textit{no} está en $A$: no podemos ejecutar el algoritmo $M_1$ durante `infinitos pasos' para  que compare $b$ a  todos los elementos de $A$ y deduzca que $b$ no está  en $A$. De ahí que en el teorema \ref{enumequiv} necesitemos  tanto  que $A$  como que $A^{\complement}$ sean efectivamente enumerable.
+Sin  embargo, no tiene por qué haber un algoritmo que nos diga que un  elemento $b$ \textit{no} está en $A$: no podemos ejecutar el algoritmo $M_1$ durante `infinitos pasos' para  que compare $b$ a  todos los elementos de $A$ y deduzca que $b$ no está  en $A$. De ahí que en el teorema \ref{enumequiv} necesitemos  tanto  que $A$  como que $A^{\complement}$ sean efectivamente enumerables.
 \end{note}
 
 \subsection{Teorema de Enumeración}
 
 Veamos los resultados que se siguen de las nociones que hemos introducido. 
 
-A partir de este momento y a lo largo de las siguientes secciones, consideraremos una signatura $S$ y un conjunto de variables $Var$ que sean \textbf{efectivamente enumerables}. Esto nos permitirá, además de usar los resultados que requieren $S$ y $Var$ efectivamente enumerables, usar los teoremas de corrección  y completitud.
+Durante el resto de la sección \ref{teoyenum}, consideraremos una signatura $S$ y un conjunto de variables $Var$ que sean \textbf{efectivamente enumerables}. Esto nos permitirá usar, además de algunos resultados que hemos presentado en las secciones anteriores, los teoremas de corrección  y completitud.
 
 \begin{lema*}\label{cosasenum}
 Sea $S$ signatura efectivamente enumerable. Entonces:
@@ -416,7 +418,7 @@ Consideremos las enumeraciones respectivas de $\Phi$ y del conjunto de los árbo
 
 Construyamos otro algoritmo con un bucle. En la etapa $n$-ésima consideramos los árboles de deducción ya enumerados, de modo que cada uno de los árboles $A_i$ tiene por raíz a una secuencia $\Gamma_i \idash \psi_i$, con $i \leq n$. De este modo, si $\Gamma_i \subseteq \{\varphi_1, \dots, \varphi_n\}$ y $A_i$ tiene axiomas en las hojas, incorporamos $\psi_i$ a nuestra enumeración.
 
-Veamos que así conseguimos enumerar $Th(\Phi)$. Sea $\sigma \in Th(\Phi)$. Entonces, $\Phi \vDash \sigma$ y $\Phi \vdash \sigma$. De aquí se sigue, por compacidad, que existe $\Gamma \subseteq \Phi$ finito tal que $\vdash \Gamma \idash \sigma$. Por ser finito, tenemos que existen los enteros: (i) $k_1$ tal que $\Gamma \subseteq \{\varphi_1, \dots, \varphi_{k_1}\}$, (ii) $k_2$, que es la profundidad del árbol de deducción para $\vdash \Gamma \idash \sigma$ y (iii) $k_3$, que es la posición del árbol de deducción en la enumeración $a_2$.
+Veamos que así conseguimos enumerar $Th(\Phi)$. Sea $\sigma \in Th(\Phi)$. Entonces, $\Phi \vDash \sigma$ y $\Phi \vdash \sigma$. De modo que existe $\Gamma \subseteq \Phi$ finito tal que $\vdash \Gamma \idash \sigma$. Por ser finito, tenemos que existen los enteros: (i) $k_1$ tal que $\Gamma \subseteq \{\varphi_1, \dots, \varphi_{k_1}\}$, (ii) $k_2$, que es la profundidad del árbol de deducción para $\vdash \Gamma \idash \sigma$ y (iii) $k_3$, que es la posición del árbol de deducción en la enumeración $a_2$.
 Tomando $k = \max\{k_1, k_2, k_3\}$, enumeramos $\sigma$ en la etapa $k$-ésima del algoritmo que hemos descrito.\qed
 \end{sketchproof}
 
@@ -439,7 +441,7 @@ Dada $S$ signatura, $\mathfrak{A}$ $S$-álgebra, $Th(\mathfrak{A})$ es teoría.
 \begin{itemize}
     \item Una teoría $T$ es \textit{finitamente axiomatizable} si existe $\Phi \subseteq Sent_S$ finito tal que $T=Th(\Phi)$.
     \item Una teoría $T$ es \textit{efectivamente axiomatizable} si existe $\Phi \subseteq Sent_S$ decidible tal que $T=Th(\Phi)$.
-    \item Ua teoría $T$ es \textit{completa} si para toda $\varphi \in Sent_S$, $\varphi \in T$ o $\neg \varphi \in T$.
+    \item Una teoría $T$ es \textit{completa} si para toda $\varphi \in Sent_S$, $\varphi \in T$ o $\neg \varphi \in T$.
 \end{itemize}
 \end{defs*}
 
@@ -468,7 +470,7 @@ Sean $S$ signatura, $\mathfrak{A}$ $S$-álgebra. Entonces:
 \end{itemize}
 \end{proof}
 
-En lo que queda de sección vamos a intentar probar las siguientes implicaciones, siendo $T$ una teoría:
+En lo que queda de sección vamos a probar las siguientes implicaciones, siendo $T$ una teoría:
 
 \begin{center}
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
@@ -484,7 +486,7 @@ En lo que queda de sección vamos a intentar probar las siguientes implicaciones
 % Text Node
 \draw (96,60) node [anchor=north west][inner sep=0.75pt]  [rotate=-270.00] [font=\large, align=left] {$\displaystyle \Longrightarrow $};
 % Text Node
-\draw (117,40) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle {\displaystyle T\ completo}$};
+\draw (117,40) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {$\displaystyle {\displaystyle T\ completa}$};
 % Text Node
 \draw (3,73) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle T\ efectivamente\ enumerable$};
 % Text Node
@@ -544,7 +546,7 @@ Al ser efectivamente enumerable, existe el algoritmo $a_1: \varphi_1, \varphi_2,
 \begin{example}
 Veamos un ejemplo de teoría efectivamente axiomatizable pero no finitamente axiomatizable.
 
-Consideremos el conjunto $\Phi_{C_0}$ de los axiomas de cuerpos de característica 0. Entonces $\Phi_{C_0}$ es decidible (es fácil) y por tanto $T := Th(\Phi_{C_0})$ es efectivamente axiomatizable, pero veamos que no es finitamente axiomatizable.\\
+Consideremos el conjunto $\Phi_{C_0}$ de los axiomas de cuerpos de característica 0. Entonces $\Phi_{C_0}$ es decidible (es fácil) y por tanto $T := Th(\Phi_{C_0})$ es efectivamente axiomatizable, pero veamos que no es finitamente axiomatizable.
 
 Si fuera finitamente axiomatizable, $T=Th(\{\varphi_1,\dots,\varphi_n\})$, entonces tendríamos que la fórmula $\varphi=\varphi_1\land\dots\land\varphi_n$ se cumple exactamente en los cuerpos de característica 0. Pero esto significaría que $\neg\varphi$ se cumpliría en los cuerpos de característica finita (de hecho, en cualquier estructura que no fuera un cuerpo de característica 0). Sin embargo, se puede demostrar de forma similar a \ref{fintoinf} que si un conjunto de fórmulas tiene de modelos cuerpos de característica arbitrariamente grande, entonces tiene de modelo algún cuerpo de característica 0, de modo que tenemos una contradicción.
 \end{example}
@@ -560,7 +562,7 @@ Sea $S$ signatura. Una teoría $T$ se dice \textit{categórica} si $\mathfrak{A}
 \end{definition}
 
 \begin{prop}
-Sea $S$ signatura, $T$ teoría. Si $T$ es categórica, es completa.
+Sea $S$ signatura efectivamente numerable, $T$ teoría. Si $T$ es categórica, es completa.
 \end{prop}
 \begin{proof}
 Sean $\mathfrak{A}, \mathfrak{B} \in Mod(T)$ $S$-álgebras. Entonces, por categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, y por tanto, $\mathfrak{A} \equiv \mathfrak{B}$. Como esto se cumple para cualesquiera $\mathfrak{A}, \mathfrak{B} \in Mod(T)$, por \ref{complet} $T$ es completa.
@@ -570,7 +572,7 @@ Sean $\mathfrak{A}, \mathfrak{B} \in Mod(T)$ $S$-álgebras. Entonces, por catego
 Sea $S$ signatura, sea $T$ teoría. Si $T$ tiene modelos infinitos, no es categórica.
 \end{prop}
 \begin{proof}
-Sea la $S$-álgebra infinita $\mathfrak{A}\vDash T$ y llamamos $\kappa= |\mathfrak{A}|$. Por ser infinito, \ref{noiso} nos dice que existe una $S$-álgebra $\mathfrak{A}^{*}$ no isomorfa a $\mathfrak{A}$ y tal que $\mathfrak{A} \equiv \mathfrak{A}^{*}$. Por tanto, $\mathfrak{A}^{*} \vDash T$, y $T$ no es categórica.
+Sea la $S$-álgebra infinita $\mathfrak{A}\vDash T$ y llamamos $\kappa= |\mathfrak{A}|$. Por ser $\kappa$ infinito, \ref{noiso} nos dice que existe una $S$-álgebra $\mathfrak{A}^{*}$ no isomorfa a $\mathfrak{A}$ y tal que $\mathfrak{A} \equiv \mathfrak{A}^{*}$. Por tanto, $\mathfrak{A}^{*} \vDash T$, y $T$ no es categórica.
 \end{proof}
 
 Esta es una proposición bastante sorprendente que nos hace darnos cuenta de las limitaciones de la lógica de primer orden. Nos dice que cualquier estructura infinita en la que pensemos, por ejemplo los naturales $\mathbb{N}$ con su buen orden, el grupo de los enteros $\mathbb{Z}$, o el cuerpo ordenado $\mathbb{R}$, ninguna de ellas puede \textit{caracterizarse} mediante axiomas de primer orden.
@@ -580,10 +582,10 @@ Sea $S$ signatura. Una teoría $T$ se dice $\kappa$-\textit{categórica} si $\ma
 \end{definition}
 
 \begin{theorem}
-Sea $S$ signatura. Si $T$ es una teoría satisfactible, sin modelos finitos y $\kappa$-categórica para algún cardinal $\kappa \geq|\mathbb{N}|=\omega$, entonces es completa.
+Sea $S$ signatura efectivamente numerable. Si $T$ es una teoría satisfactible, sin modelos finitos y $\kappa$-categórica para algún cardinal $\kappa \geq|\mathbb{N}|=\omega$, entonces es completa.
 \end{theorem}
 \begin{proof}
-Supongamos que $T$ no es completa. Entonces existe $\sigma \in Sent_S$ tal que $\sigma, \neg\sigma \notin T$, es decir, tal que $T \nvDash \sigma, \neg\sigma$ y entonces $T\cup\{\sigma\}$ y $T\cup\{\neg\sigma\}$ son satisfactibles y por \ref{LSD} existen dos $S$-álgebras $\mathfrak{A}, \mathfrak{B}$ tales que $\mathfrak{A}\vDash T\cup \{\sigma\}$ y $\mathfrak{B}\vDash T\cup\{\neg\sigma\}$ y de modo que $\kappa = |\mathfrak{A}| = |\mathfrak{B}|$. Entonces, al ser $\mathfrak{A} \vDash T$ y $\mathfrak{B} \vDash T$, y por $\kappa$-categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, lo que es imposible, ya que $\mathfrak{A}\vDash \sigma$ y $\mathfrak{B}\vDash \neg\sigma$.
+Supongamos que $T$ no es completa. Entonces existe $\sigma \in Sent_S$ tal que $\sigma, \neg\sigma \notin T$, es decir, tal que $T \nvDash \sigma, \neg\sigma$ y entonces $T\cup\{\sigma\}$ y $T\cup\{\neg\sigma\}$ son satisfactibles y por \ref{LST} existen dos $S$-álgebras $\mathfrak{A}, \mathfrak{B}$ tales que $\mathfrak{A}\vDash T\cup \{\sigma\}$ y $\mathfrak{B}\vDash T\cup\{\neg\sigma\}$ y de modo que $\kappa = |\mathfrak{A}| = |\mathfrak{B}|$. Entonces, al ser $\mathfrak{A} \vDash T$ y $\mathfrak{B} \vDash T$, y por $\kappa$-categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, lo que es imposible, ya que $\mathfrak{A}\vDash \sigma$ y $\mathfrak{B}\vDash \neg\sigma$.
 \end{proof}
 
 

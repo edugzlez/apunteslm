@@ -2,7 +2,7 @@
 
 \section{Introducción}
 
-En los anteriores capítulos hemos desarrollado unos sistemas formales fundamentados en semántica y valores de verdad, es decir, a cada fórmula le asociamos un valor de verdad, $V$ o $F$, que se puede obtener mediante interpretaciones. Sin embargo, si un objetivo de la lógica es formalizar razonamientos, nos interesa estudiar también un sistema formal centrado en cómo deducir unas proposiciones de otras, sin hacer falta la noción de verdad.\\
+En los anteriores capítulos hemos desarrollado unos sistemas formales fundamentados en semántica y valores de verdad, es decir, a cada fórmula le asociamos un valor de verdad, $V$ o $F$, que se puede obtener mediante interpretaciones. Sin embargo, si uno de los objetivos de la lógica es formalizar razonamientos, nos interesa estudiar también un sistema formal centrado en cómo deducir unas proposiciones de otras, independientemente de la noción de verdad asociada a ellas.\\
 
 Por ejemplo, supongamos que queremos demostrar un teorema, que vendrá expresado por una fórmula $\psi$, y para deducirlo necesitamos unas fórmulas $\varphi_1,\varphi_2,\dots,\varphi_n$. Lo que queremos es una serie de reglas que nos digan cuándo una fórmula se deduce de otras, de modo que partiendo de unos axiomas y aplicando repetidamente estas reglas, podamos llegar en finitos pasos a que $\psi$ se deduce de $\varphi_1,\varphi_2,\dots,\varphi_n$.\\
 
@@ -259,7 +259,7 @@ A lo largo de la exposición, veremos que existen reglas que no necesitan de pre
 
 Una vez descritas las reglas básicas y dada una secuencia, para verificar si tal secuencia es o no correcta la descomponemos en las reglas básicas conocidas, es decir, revertimos la aplicación de las reglas básicas. La siguiente definición aclara estas nociones:
 \begin{definition}
-Un \textit{árbol de deducción} para una secuencia $\Gamma \idash \psi$ es un árbol de forma que nos nodos están etiquetados con secuencias, la raíz es $\Gamma \idash \psi$ y, dados un nodo $\Gamma_0 \idash \psi_0$ y sus hijos:
+Un \textit{árbol de deducción} para una secuencia $\Gamma \idash \psi$ es un árbol de forma que los nodos están etiquetados con secuencias, la raíz es $\Gamma \idash \psi$ y, dados un nodo $\Gamma_0 \idash \psi_0$ y sus hijos:
 \begin{center}
 \begin{tikzcd}
                                            & \Gamma_0 \idash \psi_0 \arrow[rd, no head] &                        \\
@@ -268,8 +268,8 @@ Un \textit{árbol de deducción} para una secuencia $\Gamma \idash \psi$ es un �
 \end{center}
 se cumple que
 \begin{prooftree}
-\AxiomC{$\Gamma_0 \idash \psi_0 \quad \cdots \quad \Gamma_n \idash \psi_n$}
-\UnaryInfC{$\Gamma \idash \psi$}
+\AxiomC{$\Gamma_1 \idash \psi_1 \quad \cdots \quad \Gamma_n \idash \psi_n$}
+\UnaryInfC{$\Gamma_0 \idash \psi_0$}
 \end{prooftree}
 es una regla.
 \end{definition}
@@ -344,7 +344,7 @@ En la segunda rama, tenemos $\psi,\neg\psi,\bot\idash\varphi$. Esta regla es un 
                 node(2){\(p(c)\rightarrow q(c), p(c)\quad p(c)\)}
               }
               child{
-                node (3){\(p(c)\rightarrow q(c), q(c)\quad q(c)\)}
+                node (3){\(p(c), q(c)\quad q(c)\)}
               }
               edge from parent node[right]{\(\regla{FS}\)}
             }
@@ -412,7 +412,7 @@ donde en el árbol $T$ solo se usan reglas básicas y axiomas. Se puede demostra
 De modo que por lo que acabamos de ver, si tenemos un árbol para $\Gamma\idash\varphi$ que usa reglas básicas y derivadas, se cumple que $\Gamma\idash\varphi$ es formalmente deducible. Esto quiere decir que podemos usar sin problemas reglas derivadas que conocemos en los árboles de deducción.
 
 \subsection{Repertorio de reglas derivadas}
-En esta sección expondremos muchas reglas derivadas que permiten ver cómo razonamientos que hacemos habitualmente se expresan en el cálculo de secuencias. Para cada regla derivada incluímos su árbol de deducción.
+En esta sección expondremos muchas reglas derivadas que permiten ver cómo razonamientos que hacemos habitualmente se expresan en el cálculo de secuencias. Para casi todas las reglas derivadas incluímos sus árboles de deducción.
 
 \begin{itemize}
     \item Eliminación de una conjunción: \emph{siempre podemos demostrar un resultado más fuerte}. Son dos reglas simétricas.
@@ -751,7 +751,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
                     node(2){$\Gamma, \neg\varphi, \psi \idash \varphi$}
                     child {
                         node(4){$\Gamma, \psi \idash \varphi$}
-                        edge from parent node[right]{($\textbf{SP}$)}
+                        edge from parent node[right]{($\textbf{FS}$)}
                     }
                 }
                 child {
@@ -870,7 +870,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
             \node(0) {$\Gamma\idash \varphi \lor\neg\varphi$}
             child {
                 node(1) {$\Gamma, \neg\varphi \idash \neg\varphi$}
-                edge from parent node[right]{($\textbf{VC}!$)}
+                edge from parent node[right]{($\lor\textbf{C}!$)}
             }
             
             ;
@@ -1325,7 +1325,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \quad
       \centerAlignProof
         \AxiomC{$\Gamma\idash \varphi[t_1/x_1, ..., t_n/x_n]$}
-        \UnaryInfC{$\Gamma, t_1 \doteq s_1, ..., t_1 \doteq s_1 \idash \varphi[s_1/x_1, ..., s_n/x_n]$}
+        \UnaryInfC{$\Gamma, t_1 \doteq s_1, ..., t_n \doteq s_n \idash \varphi[s_1/x_1, ..., s_n/x_n]$}
       \DisplayProof
     \end{center}
     \begin{proof} Por inducción sobre n.
@@ -1621,7 +1621,7 @@ Sea $n\geq 1$, supongamos que el resultado se cumple para $T_{n-1}$. Para ver qu
     
     Supongamos ahora que $\vdash\Gamma_s\idash\chi$ para toda rama $s$ de $T_{n}$ y queremos llegar a que se cumple $\vdash\Gamma_n\idash\chi$. Veamos primero que para toda rama $r$ en $T_{n-1}$, tenemos $\vdash\Gamma_r\idash\chi$. Para ello basta comprobar que $\vdash\Gamma_{r_0}\idash\chi$, ya que el resto de ramas $r$ que no son $r_0$ no se han extendido y son también ramas de $T_n$.\\
     
-    Pero sabemos que $\vdash\Gamma_{s_0}\idash\chi$. Además, como $\beta\in\Gamma_{r_0}$ y $\Gamma_{s_1}=\Gamma_{r_0}\cup\{\beta_1\}$, $\Gamma_{s_2}=\Gamma_{r_0}\cup\{\beta_2\}$ por el apartado 2 de \ref{regder} la regla $\frac{\Gamma_{s_1}\idash\chi\qquad \Gamma_{s_2}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada. Por tanto como se cumplen $\vdash\Gamma_{s_1}\idash\chi$ y $\vdash\Gamma_{s_2}\idash\chi$, también se cumple $\vdash\Gamma_{r_0}\idash\chi$.\\
+    Pero sabemos que $\vdash\Gamma_{s_1}\idash\chi$ y $\vdash\Gamma_{s_2}\idash\chi$. Además, como $\beta\in\Gamma_{r_0}$ y $\Gamma_{s_1}=\Gamma_{r_0}\cup\{\beta_1\}$, $\Gamma_{s_2}=\Gamma_{r_0}\cup\{\beta_2\}$ por el apartado 2 de \ref{regder} la regla $\frac{\Gamma_{s_1}\idash\chi\qquad \Gamma_{s_2}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada. Por tanto como se cumplen $\vdash\Gamma_{s_1}\idash\chi$ y $\vdash\Gamma_{s_2}\idash\chi$, también se cumple $\vdash\Gamma_{r_0}\idash\chi$.\\
     
     Como tenemos $\vdash\Gamma_r\idash\chi$ para toda rama $r$ de $T_{n-1},$ por hipótesis de inducción $\vdash\Gamma_{n-1}\idash\chi$. Como $\Gamma_{n-1}\subseteq\Gamma_n$, esto implica $\vdash\Gamma_n\idash\chi$.\\
 
@@ -1635,7 +1635,7 @@ Sea $n\geq 1$, supongamos que el resultado se cumple para $T_{n-1}$. Para ver qu
     
     Como tenemos $\vdash\Gamma_r\idash\chi$ para toda rama $r$ de $T_{n-1},$ por hipótesis de inducción $\vdash\Gamma_{n-1}\idash\chi$. Como $\Gamma_{n-1}\subseteq\Gamma_n$, esto implica $\vdash\Gamma_n\idash\chi$.\\
     
-    \item Las reglas $\gamma,\delta$ siguen el mismo razonamiento que la $\sigma$ cambiando $\sigma$ por $\gamma/\delta$ y $\sigma_1$ por $\gamma(t)/\sigma(c)$ respectivamente, y usando los apartados $4/5$ de \ref{regder}.
+    \item Las reglas $\gamma,\delta$ siguen el mismo razonamiento que la $\sigma$ cambiando $\sigma$ por $\gamma/\delta$ y $\sigma_1$ por $\gamma(t)/\delta(c)$ respectivamente, y usando los apartados $4/5$ de \ref{regder}.
 
     La regla $\theta$ también se hace de forma similar, viendo que si en la regla añadimos una fórmula $\theta$ a una rama $r_0$ de $T_{n-1}$ para obtener una rama $s_0$ de $T_n$, entonces por el apartado 6 de \ref{regder}, la regla $\frac{\Gamma_{s_0}\idash\chi}{\Gamma_{r_0}\idash\chi}$ es derivada.
 
@@ -1682,11 +1682,11 @@ Tenemos, por tanto,
 \begin{center}
     \includegraphics[scale = 0.3]{figures/arbol4.png}
 \end{center}
-Veamos si existe un subconjunto finito $\Delta \subseteq \Phi$ tal que $\vdash\Delta\idash\bot$.
+Veamos si existe un subconjunto finito $\Delta \subseteq \Phi$ tal que $\vdash\Delta\idash\varphi$.
 \begin{itemize}
     \item Si $\neg \varphi \notin \Gamma$, tomando $\Delta := \Gamma$ obtenemos:
 \begin{center}
-    \includegraphics[scale = 0.25]{figures/arbol5.png}
+    \includegraphics[scale = 0.23]{figures/arbol5.png}
 \end{center}
 \begin{comment}
 % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAZgBoAGAXVJADcBDAGwFcYkQAdDgcXoFs+9LgEdhzelC4MATmgAWWEAF9S6TLnyEUARlLbqdJq3ZdeA+gAIRYiVY4AjCDmWqQGbHgJEy+mgxZsiCAAFFw4MAAeOPYAZsAASgDCSgCULmoemkQArHoG-sZBpvyCpHaOOHai4lB2MvKKKhkaXijkpABM+UaBIOlu6p5ayB2d3QHs-e4tw7ldfj3soQ5OXII4crHAAIKpygYwUADm8ESgMdIQfEjtIDgQSGSGE4hgzIyMNIz09jCMAAqDLJBRgwGLOGhyGASdiQMBsJogC5XG40e5IXTPQpvD5fH5-QGZVogUHgkCQ6FQWEEBGuZHXRCY9GIAAsCxeOM+JPxAKBxNJEJAUJhQThtPOlwZTIeiFyWMCnLxv15RK0JLBguFVNFNP69KQbLuMrlBV6ABVydzlYSZuwBZatdT4XrJUg5czDaakIqrQS+Wr7RSReBdUpKEogA

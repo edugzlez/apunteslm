@@ -15,9 +15,9 @@ Consideremos el silogismo:
 En este caso, podríamos pensar que la consecuencia lógica se trata de una del tipo $p \land (p \rightarrow q) \rightarrow q$. Pero, por otro lado, parece evidente que depende de elementos más básicos que los símbolos de proposición. Sería, entonces, más conveniente una formalización del tipo:
 
 \begin{center}
-\syllog{Para todo $x$, si $x$ es hombre entonces es mortal}
-{\textit{Sócrates} es hombre}
-{\textit{Sócrates} es mortal}
+\syllog{\textit{Para todo} $x$, si $x$ \textit{es hombre} entonces \textit{es mortal}}
+{\textit{Sócrates es hombre}}
+{\textit{Sócrates es mortal}}
 \end{center}
 
 Hemos empleado los términos `hombre', `mortal' y `para todo' en un sentido puramente formal. Como ocurría con las proposiciones, existen múltiples frases y expresiones informales distintas que corresponden al silogismo que acabamos de exponer.$\\$
@@ -1926,15 +1926,14 @@ finito de pasos. Podemos, en cambio, decir cómo se construye cada
 uno de esos pasos. El límite de los árboles construidos mediante esos pasos será tal \emph{tableau} canónico.
 
 De ahora en adelante, para la construcción del \textit{tableau} canónico, nos vamos a restringir a
-signaturas numerables, es decir, aquéllas en que el conjunto de todos los símbolos es numerable.
+signaturas numerables, es decir, aquéllas en que el conjunto de todos los símbolos es numerable.\footnote{En la práctica, necesitaremos algo más fuerte: que la signatura sea efectivamente enumerable, es decir, que haya un algoritmo que permita obtener una numeración de los símbolos. Más información en la sección \ref{teoyenum}.}
 
 A continuación obtenemos un resultado relativo al cierre de Kleene:
 \begin{lema}
   Si un conjunto \(A\) es numerable, \(A^{*}\) es numerable.
  \end{lema}
   \begin{proof}
-    Consideremos $A_{0}=\{\epsilon\}$\footnote{Recordemos que \(\epsilon\) denota la
-      cadena vacía}. Sea:
+    Consideremos $A_{0}=\{\epsilon\}$, donde $\epsilon$ es la cadena vacía. Sea:
     \begin{displaymath}
       A_{n} = A_{n-1}\cup\{a\omega\ |\ a\in A\ \omega\in
       A_{n-1}\}\footnote{\(a\omega\) denota la concatenación de
@@ -2195,7 +2194,7 @@ Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos q
     \(T_{\Phi}\) ha de ser cerrado. Por el lema \ref{cefi}, el tableau es finito.
   \end{proof}
 
-\begin{theorem}(Teorema de compacidad)
+\begin{theorem}(Teorema de compacidad)\label{compacidad}
   Sea $S$ una signatura, \(\Phi\subseteq FORM_S\).
   \begin{enumerate}[label=\alph*)]
   \item Si $\text{Insat}(\Phi)$, existe $\Phi_{\mathit{fin}}\subseteq\Phi$ finito tal
