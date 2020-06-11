@@ -93,13 +93,15 @@ Definimos una \textit{secuencia de formación} para cierto $\varphi\in A_{SP}^*$
 \end{itemize}
 \end{definition}
 
-Como veremos en los ejercicios, toda proposición puede construirse mediante una secuencia de formación, y recíprocamente si $\varphi$ tiene una secuencia de formación, entonces $\varphi\in PROP_{SP}$.
+No es difícil comprobar que toda proposición puede construirse mediante una secuencia de formación, y recíprocamente si $\varphi$ tiene una secuencia de formación, entonces $\varphi\in PROP_{SP}$.
 
 \section{Inducción estructural y recursión}
 
-Análogamente al método de inducción en los naturales, el método de inducción estructural nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.$\\$
+Análogamente al método de inducción en los naturales, el método de inducción estructural nos servirá para demostrar que todas las fórmulas cumplen una \textit{propiedad}\footnote{No hemos definido rigurosamente el concepto de "propiedad", pero esencialmente significa algo que las proposiciones pueden cumplir o no. Una forma rigurosa de definir propiedad consiste en definirla como un subconjunto $P\subseteq PROP_{SP}$, de modo que decimos que una proposición cumple la propiedad $P$ si y solo si pertenece a $P$.} en dos pasos: demostrar que todas las proposiciones atómicas cumplen dicha propiedad, y demostrar que si dos proposiciones $\varphi_1,\varphi_2$ cumplen una propiedad, entonces $(\neg\varphi_1)$ y $(\varphi_1\square\varphi_2)$ también la cumplen.\\
 
-\begin{prop}\label{indest} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$\footnote{Usamos la notación $P(\varphi)$ para decir que la fórmula $\varphi$ cumple la propiedad $p$.} para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera). Entonces basta comprobar que:
+Usaremos la notación $P(\varphi)$ para decir que la fórmula $\varphi$ cumple la propiedad $P$.
+
+\begin{prop}\label{indest} (Inducción estructural) Supongamos que queremos probar $P(\varphi)$ para todo $\varphi\in PROP_{SP}$ (siendo $P$ una propiedad cualquiera). Entonces basta comprobar que:
 \begin{enumerate}
     \item $P(\varphi)$ para toda $\varphi\in AT$.
     \item Si $P(\varphi)$ entonces $P((\neg \varphi))$.
@@ -204,7 +206,7 @@ Para evitar este tipo de situaciones, necesitamos las siguientes reglas de omisi
 \begin{enumerate}
     \item Los paréntesis externos pueden omitirse. Esto no da lugar a ambigüedad.
     \item Las conectivas se aplicarán en este orden: $\neg, \land, \lor, \to, \leftrightarrow$.
-    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre por la izquierda.
+    \item Cuando hay varias conectivas del mismo tipo seguidas, se asocia siempre empezando por la izquierda.
 \end{enumerate}
 Algunos ejemplos de aplicación de estas reglas:$\\[8pt]$
 \begin{equation*}
@@ -221,7 +223,7 @@ Algunos ejemplos de aplicación de estas reglas:$\\[8pt]$
 
 Algo a tener en cuenta al leer libros sobre lógica es que las reglas que adoptamos no son universales y varían de autor a autor (por ejemplo, en  muchos casos se asocia por la derecha en vez de por la izquierda).\\
 
-Comprobaremos que las conectivas $\land$ y $\lor$ son asociativas y conmutativas, por tanto, en ese sentido, no importa el orden en que se asocien. De modo que, cuando una conectiva se repita varias veces seguidas, podemos usar la siguiente notación:
+Comprobaremos cuando veamos semántica que las conectivas $\land$ y $\lor$ son asociativas y conmutativas, por tanto, en ese sentido, no importa el orden en que se asocien. De modo que, cuando una conectiva se repita varias veces seguidas, podemos usar la siguiente notación:
 \[\bigwedge\limits_{i\in I} p_i:=p_{i_1}\land\dots\land p_{i_n}\]
 \[\bigvee\limits_{i\in I} p_i:=p_{i_1}\lor\dots\lor p_{i_n},\]
 siendo $I=\{i_1,\dots,i_n\}$ un conjunto finito de índices.$\\$
@@ -391,9 +393,9 @@ A continuación presentamos algunos resultados básicos de semántica.
 \begin{enumerate}
     \item $Mod(\emptyset) = \{v | v: SP \rightarrow Bool\}$.
     \item Si $\Phi = \emptyset$ y $\Phi \vDash \varphi$, entonces $\varphi$ es tautología. 
-    \item Demostrar que $Mod(PROP_{SP}) = \emptyset$.
-    \item Demostrar que $Mod(\Phi) \cap Mod(\Psi) = Mod(\Phi \cup \Psi)$.
-    \item Demostrar que $Mod(\Phi) \cup Mod(\Psi) \subseteq Mod(\Phi \cap \Psi)$. 
+    \item $Mod(PROP_{SP}) = \emptyset$.
+    \item $Mod(\Phi) \cap Mod(\Psi) = Mod(\Phi \cup \Psi)$.
+    \item $Mod(\Phi) \cup Mod(\Psi) \subseteq Mod(\Phi \cap \Psi)$. 
 \end{enumerate}
 \begin{proof} \mbox{}
 \begin{enumerate}
@@ -429,7 +431,7 @@ Recíprocamente, si $Mod(\Phi \cup \{\neg \varphi\}) = \emptyset$, sea $v \in Mo
 
 \end{proof} 
 De ahora en adelante, escribiremos $\Phi, \varphi \vDash \psi$ en vez de $\Phi \cup \{\varphi\} \vDash \psi$.$\\\\$
-Dada una valoración $v$, para cualesquiera fórmulas $\varphi_1,\varphi_2$ en que aparecen los símbolos $p_1,\dots,p_n$ y $q_1,\dots,q_m$, respectivamente, está claro, por cómo hemos definido las valoraciones, que $\hat{v}(\varphi_1)$ depende de $v(p_1),\dots,v(p_n)$, y $\hat{v}(\varphi_2)$ depende de $v(q_1),\dots,v(q_m)$. De modo que para comprobar que $\varphi_1\vDash\varphi_2$ nos basta con comprobar que, para cada una de las posibles valoraciones de $p_1,\dots,p_n,q_1,\dots,q_m$, $\hat{v}(\varphi_2)=V$ si $\hat{v}(\varphi_1)=V$. Este es nuestro primer procedimiento para demostrar consecuencias lógicas entre fórmulas, que resumiremos gráficamente en tablas de verdad.
+Dada una valoración $v$, para cualesquiera fórmulas $\varphi_1,\varphi_2$ en que aparecen los símbolos $p_1,\dots,p_n$ y $q_1,\dots,q_m$, respectivamente, está claro, por cómo hemos definido las valoraciones, que $\hat{v}(\varphi_1)$ depende de $v(p_1),\dots,v(p_n)$, y $\hat{v}(\varphi_2)$ depende de $v(q_1),\dots,v(q_m)$\footnote{Este hecho se probará y generalizará para lógica de primer orden en el lema de coincidencia, \ref{coinc}.}. De modo que para comprobar que $\varphi_1\vDash\varphi_2$ nos basta con comprobar que, para cada una de las posibles valoraciones de $p_1,\dots,p_n,q_1,\dots,q_m$, $\hat{v}(\varphi_2)=V$ si $\hat{v}(\varphi_1)=V$. Este es nuestro primer procedimiento para demostrar consecuencias lógicas entre fórmulas, que resumiremos gráficamente en tablas de verdad.
 
 \begin{example} Consideremos $\Phi = \{\neg p \land q \rightarrow r, \ \neg p, \ \neg r \}$, $\varphi = \neg q$. Para demostrar que $\Phi \vDash \varphi$ basta realizar la tabla de verdad correspondiente y comparar los valores de verdad de las premisas del conjunto $\Phi$ con los de $\varphi$. En $\Phi$ y $\varphi$ aparecen los símbolos $p$, $q$ y $r$, por tanto tenemos la siguiente tabla de verdad:
 \begin{table}[H] \begin{center} \begin{tabular}{|c|c|c|c|c|c|c|}\hline $p$&$q$&$r$&$(\neg p \land q) \rightarrow r$&$\neg p$&$\neg r$&$\neg q$ \\\hline \hline V&V&V&V&F&F&F \\ \hline V&V&F&V&F&V&F \\ \hline V&F&V&V&F&F&V \\ \hline V&F&F&V&F&V&V \\ \hline F&V&V&V&V&F&F \\ \hline F&V&F&F&V&V&F \\ \hline F&F&V&V&V&F&V \\ \hline F&F&F&V&V&V&V \\ \hline \end{tabular}\end{center} \end{table}
@@ -593,7 +595,9 @@ Y aplicando de nuevo el lema~\ref{sust2} con $\psi_1=p_1\lor p_2\lor p_3\to q$, 
 
 \section{Completitud funcional}
 
-En~\ref{def : ext} definimos recursivamente una serie de asignaciones de verdad que correspondían a los símbolos de las conectivas lógicas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. En general, a cualquier tabla de verdad dada por $v_{\$}: Bool^{n} \rightarrow Bool$ podemos asignarle un símbolo de conectiva $n$-aria\footnote{Decimos que una conectiva es $n$-aria si se  escribe con $n$ símbolos de proposición, por ejemplo, las conectivas $\land, \lor,\rightarrow, \leftrightarrow$ son binarias (2-arias) y la conectiva $\neg$ es 1-aria.}, $\$(p_1,\dots,p_n)$\footnote{Aunque sintácticamente escribiremos las conectivas como $\$(p_1,\dots,p_n)$, semánticamente el valor de verdad de $\$(p_1,\dots,p_n)$ solo dependerá de los valores de verdad de $p_1,\dots,p_n$, no de $p_1,\dots,p_n$, al igual que con las conectivas conocidas anteriormente.}. Según esta definición, podemos interpretar los símbolos $\top,\bot$ como conectivas 0-arias, dadas por las tablas de verdad:
+Hasta ahora solo hemos tratado con cinco conectivas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. En esta sección vamos a considerar de forma más general los símbolos de conectiva y su interpretación semántica. Dado un símbolo de conectiva $\$$, decimos que $\$$ es $n$-aria si con ella se forman fórmulas con $n$ símbolos de proposición, de la forma $\$(p_1,\dots,p_n)$. Por ejemplo, las conectivas $\land, \lor,\rightarrow, \leftrightarrow$ son binarias (2-arias) y la conectiva $\neg$ es 1-aria. Esto puede resultar extraño ya que hasta ahora hemos usado expresiones de tipo $(p_1\square p_2)$, en vez de  $\square(p_1,p_2)$. Sin embargo, también se puede formular la lógica proposicional usando esta nueva notación\footnote{De hecho, la conocida \textit{notación polaca} prescinde de los paréntesis y escribe las conectivas de forma $\$ p_1\dots p_n$, sin que esa falta de paréntesis dé problemas en la estructura del lenguaje.}.\\
+
+En~\ref{def : ext} definimos recursivamente una serie de asignaciones de verdad que correspondían a los símbolos de las conectivas lógicas, $\neg, \land, \lor,\rightarrow, \leftrightarrow$. En general, a cualquier tabla de verdad dada por $v_{\$}: Bool^{n} \rightarrow Bool$ podemos asignarle una conectiva $n$-aria, $\$(p_1,\dots,p_n)$\footnote{Aunque sintácticamente escribiremos las conectivas como $\$(p_1,\dots,p_n)$, semánticamente el valor de verdad de $\$(p_1,\dots,p_n)$ solo dependerá de los valores de verdad de $p_1,\dots,p_n$, no de $p_1,\dots,p_n$, al igual que con las conectivas conocidas anteriormente.}. En general supondremos que $n\geq1$, pero según esta definición, podríamos interpretar los símbolos $\top,\bot$ como conectivas $0$-arias, dadas por las tablas de verdad:
 
 \begin{table}[H]
 \begin{center}
@@ -632,7 +636,7 @@ Sin embargo, en cierto sentido, estas nuevas conectivas son redundantes, ya que 
 \noindent Es natural, por tanto, preguntarse si cualquier conectiva $n$-aria será expresable en función de nuestras conectivas, como lo son $\veebar,\downarrow y\uparrow$. Para formalizar esta cuestión, introducimos dos nociones de gran importancia:
 
 \begin{definition}
-Una conectiva $n$-aria $\$$ dada por $v_{\$}: Bool^{n} \rightarrow Bool$ se dice expresable en términos de un conjunto de conectivas $C$ si existe una fórmula $\varphi$ que tiene por conectivas a elementos de $C$ y por símbolos de proposición a $p_1, ..., p_n$, tal que $\varphi \sim \$(p_1, ..., p_n)$. 
+ Una conectiva $n$-aria $\$$ dada por $v_{\$}: Bool^{n} \rightarrow Bool$ se dice expresable en términos de un conjunto de conectivas $C$ si existe una fórmula $\varphi$ que tiene por conectivas a elementos de $C$ y por símbolos de proposición a ciertos $p_1, ..., p_k$, tal que $\varphi \sim \$(p_1, ..., p_k)$.
 \end{definition}
 
 
@@ -653,7 +657,7 @@ Ahora ya podemos dar respuesta a la pregunta que nos formulamos antes:
 $\{\neg, \land, \lor\}$ es funcionalmente completo.
 \end{prop}
 \begin{proof}\label{def:compfunc}
-Sea $\$$ conectiva $n$-aria. Procedamos por inducción sobre $n$. \\ \\
+Sea $\$$ conectiva $n$-aria. Procedemos por inducción sobre $n$. \\ \\
 Si $n = 1$, es fácil comprobar que tenemos cuatro conectivas posibles, y que éstas corresponden a la identidad (es decir, $\$(p) \sim p$), $\neg$, $\top \sim p \lor \neg p$ y $\bot \sim p \land \neg p$, con lo que se verifica el enunciado.  \\ \\
 Supongamos que es válido para $n-1$ y veámoslo para $n$. Sea $\$(p_1, ..., p_n)$ una conectiva dada por la siguiente tabla de verdad:
 \begin{table}[H]
@@ -714,7 +718,7 @@ Dado un conjunto finito de fórmulas $\Psi$, nos interesa encontrar un método s
 
 Nuestro objetivo es tomar los datos anteriores como vértices de un grafo y construir un \textit{árbol}, es decir, un diagrama (llamado `\textit{tableau}') en el que conectaremos las distintas fórmulas mediante aristas, formando \textit{ramas} y de modo que, dados dos elementos del árbol, si pertenecen a la misma rama entonces se encuentran en conjunción y, si son de ramas distintas, se encuentran en disyunción. De esta forma, y a partir de una serie de reglas de construcción, el problema de la insatisfactibilidad de $\Psi$ quedará reducido a comprobar que un \textit{tableau} suyo tiene todas las ramas \textit{cerradas}, esto es, contienen una contradicción. $\\$
 
-Construiremos nuestro diagrama de árbol, cuyos vértices serán proposiciones, de arriba hacia abajo. Llamamos al vértice de arriba del todo \textit{raíz}. Llamaremos \textit{hojas} a los vértices $v$ tales que no haya ningún vértice $v'$ debajo de $v$ y unido por una arista a $v$. Llamaremos \textit{rama} a una sucesión de vértices 
+Construiremos nuestro diagrama de árbol, cuyos vértices serán proposiciones, de arriba hacia abajo. Llamamos al vértice de arriba del todo \textit{raíz}\footnote{Todos estos conceptos, que por ahora se van a explicar de forma intuitiva, quedarán mejor formalizados en lógica de primer orden, en las definiciones \ref{defsgraf1} a \ref{defsgraf2}.}. Llamaremos \textit{hojas} a los vértices $v$ tales que no haya ningún vértice $v'$ debajo de $v$ y unido por una arista a $v$. Llamaremos \textit{rama} a una sucesión de vértices 
 $\langle v_1, \dots, v_n\rangle$ en que:
 \begin{itemize}
     \item $v_1$ es la raíz.
@@ -1165,10 +1169,10 @@ Sean $\Phi \subseteq PROP_{SP}$, $T$ \textit{tableau} de $\Phi$. $T$ se dice \te
 \end{definition}
 
 \begin{prop}\label{compi}
-Sea $\Phi \subseteq PROP_{SP}$ finito\footnote{Veremos que se puede prescindir de esta hipótesis, es decir, el enunciado sigue siendo cierto si $\Phi$ es infinito.}. Entonces existe un \textit{tableau} completo para $\Phi$.
+Sea $\Phi \subseteq PROP_{SP}$ finito. Entonces existe un \textit{tableau} completo para $\Phi$.
 \end{prop}
 \begin{proof}
-En el siguiente capítulo probaremos una generalización de este teorema.
+En \ref{tabcomp} probaremos una generalización de este teorema para lógica de primer orden.
 
 \begin{comment}
 De todas formas, esta es una posible demostración de \ref{compi}:$\\\\$

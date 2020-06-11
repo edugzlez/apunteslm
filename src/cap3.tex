@@ -274,7 +274,7 @@ se cumple que
 es una regla.
 \end{definition}
 
-\begin{definition} \hspace{1} \\
+\begin{definition} \mbox{} \\
 \begin{enumerate}
     \item  Una secuencia $\Gamma \idash \psi$ se dice \textit{formalmente deducible}, $\vdash \Gamma \idash \psi$, si existe un árbol de deducción para $\Gamma \idash \psi$ con axiomas en las hojas. Si $\Gamma = \emptyset$, en vez de $\Gamma \idash \psi$ escribimos $\vdash \psi$.
     \begin{center}
@@ -290,7 +290,7 @@ es una regla.
 \end{definition}
 $\Phi \vdash \varphi$ y $\vdash \Phi \idash \varphi$ son equivalentes si $\Phi$ es finito. $\Phi \vdash \varphi$ permite que $\Phi$ sea infinito y con $\vdash \Phi\idash \varphi$ se asume la finitud de $\Phi$. \\ \\
 Veamos un primer ejemplo detallado de árbol de deducción:
-\begin{example}\label{primerejemplo} \hspace{1} \\
+\begin{example}\label{primerejemplo} \mbox{} \\
 \begin{center}
   \begin{tikzpicture}[sibling distance=5cm]
   \node (1) {\(\varphi\lor\psi,\neg\psi\idash\varphi\)}
@@ -321,7 +321,7 @@ En la segunda rama, tenemos $\psi,\neg\psi,\bot\idash\varphi$. Esta regla es un 
 
 \end{example}
 
-\begin{example} \hspace{1} \\
+\begin{example} \mbox{} \\
     \begin{center}
   \begin{tikzpicture}
     \node{\(\forall x\, p(x)\rightarrow q(x)\quad \bigl(\forall x\,
@@ -430,7 +430,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma \idash \varphi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
           \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
           \node (1) {\(\Gamma\idash \varphi\)}
@@ -461,7 +461,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma \idash \psi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
     \begin{tikzpicture}[sibling distance=5cm]
       \node (1){\(\Gamma\idash \psi\)}
@@ -507,7 +507,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \varphi, \psi \idash \varphi\land\psi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
          \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
               \node (1){\(\Gamma,\varphi,\psi\idash \varphi\land\psi\)}
@@ -539,7 +539,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \psi \idash \varphi\lor\psi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
          \begin{center}
             \begin{tikzpicture}
               \node{\(\Gamma,\varphi\idash \varphi\lor\psi\)}
@@ -563,7 +563,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma \idash \varphi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}
           \node{\(\Gamma\idash \varphi\)}
@@ -592,7 +592,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \DisplayProof
     \end{center}
     
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=5cm]
           \node(0){\(\Gamma\idash \varphi\)}
@@ -636,7 +636,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \DisplayProof
     \end{center}
     
-        \begin{proof} \hspace{1}
+        \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0){$\Gamma, \varphi, \neg\varphi \idash \psi$}
@@ -675,7 +675,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \DisplayProof
     \end{center}
     
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0){$\Gamma \idash \neg\neg\varphi$}
@@ -741,7 +741,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \DisplayProof
     \end{center}
     
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0) {$\Gamma,\neg\varphi \idash \neg\psi$}
@@ -785,7 +785,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma,\neg\psi \idash \varphi $}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0) {$\Gamma,\psi \idash \varphi$}
@@ -821,7 +821,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
       \DisplayProof
     \end{center}
     
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0) {$\Gamma\idash \varphi \lor\psi$}
@@ -864,7 +864,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma\idash \varphi \lor\neg\varphi $}
       \DisplayProof
     \end{center}
-     \begin{proof} \hspace{1}
+     \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0) {$\Gamma\idash \varphi \lor\neg\varphi$}
@@ -891,7 +891,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma\idash \psi$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
         \begin{tikzpicture}[sibling distance=4cm]
             \node(0) {$\Gamma\idash \psi$}
@@ -927,7 +927,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \varphi \rightarrow \psi \idash \chi$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
                 \node(0) {$\Gamma, \varphi \rightarrow \psi \idash \chi$}
@@ -972,7 +972,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \neg(\varphi \rightarrow \psi)\idash \chi$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
                 \node(0) {$\Gamma, \neg(\varphi \rightarrow \psi)\idash \chi$}
@@ -1004,7 +1004,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \neg \varphi \lor \neg \psi\idash \neg(\varphi \land \psi)$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
             \node(0) {$\Gamma, \neg\varphi\lor\neg\psi\idash \neg(\varphi\land\psi)$}
@@ -1046,7 +1046,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \neg (\varphi \land \psi) \idash \neg \varphi \lor \neg \psi$}
       \DisplayProof
     \end{center}
-    \begin{proof}\hspace{1}
+    \begin{proof}\mbox{}
     \begin{center}
 
     \begin{tikzpicture}[sibling distance=5cm]
@@ -1115,7 +1115,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma\idash ((\varphi\rightarrow \psi)\rightarrow\varphi)\rightarrow \varphi$}
       \DisplayProof
     \end{center}
-    \item Reglas de ejemplificación. ($t\in TERM_\overline{S}$)
+    \item Reglas de ejemplificación. ($t\in TERM_{\overline{S}}$)
     \begin{center} 
       \centerAlignProof
        ($\textbf{E}\forall_1$)
@@ -1142,7 +1142,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \forall x\ \varphi \idash \psi$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
     \begin{center}
     \begin{tikzpicture}[sibling distance=5cm]
             \node(0) {$\Gamma, \forall x \varphi\idash \varphi[t/x]$}
@@ -1153,7 +1153,8 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
             ;
             \node[below=0mm of 1]{($\textbf{SP}$)};
     \end{tikzpicture}
-    \vspace{4em} \\ \\
+    \end{center}
+    \begin{center}
     \begin{tikzpicture}[sibling distance=5cm]
             \node(0) {$\Gamma \idash \varphi[t/x]$}
             child {
@@ -1167,7 +1168,8 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
             \node[below=0mm of 1]{Premisa};
             \node[below=0mm of 2]{$(\textbf{E}\forall_1)$};
     \end{tikzpicture}
-    \vspace{4em} \\ \\
+    \end{center}
+    \begin{center}
     \begin{tikzpicture}[sibling distance=5cm]
             \node(0) {$\Gamma, \forall x \varphi \idash \psi$}
             child {
@@ -1208,7 +1210,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \varphi[t/x]\idash \psi$}
       \DisplayProof
     \end{center}
-    \begin{proof} \hspace{1}
+    \begin{proof} \mbox{}
         \begin{center}
             
         
@@ -1221,7 +1223,8 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
                 ;
                 \node[below=0mm of 1]{($\textbf{SP}$)};
         \end{tikzpicture}
-        \vspace{4em} \\ \\
+        \end{center}
+        \begin{center}
         \begin{tikzpicture}[sibling distance=5cm]
                 \node(0) {$\Gamma, \varphi[t/x] \idash \psi$}
                 child {
@@ -1280,7 +1283,7 @@ En esta sección expondremos muchas reglas derivadas que permiten ver cómo razo
         \UnaryInfC{$\Gamma, \neg \exists x\ \varphi  \idash \forall x \neg\varphi$}
       \DisplayProof
     \end{center}
-       \begin{proof} Se demuestran la segunda y la cuarta. \hspace{1}
+       \begin{proof} Se demuestran la segunda y la cuarta.
         \begin{center}
             \begin{tikzpicture}[sibling distance=5cm]
                 \node(0) {$\Gamma, \neg \forall x\ \varphi  \idash \exists x \neg\varphi$}
@@ -1508,13 +1511,13 @@ De modo que, como $c\notin voc(\varphi)$ y por tanto $\mathfrak{I}\sim_{\varphi}
 Ahora que tenemos que las reglas básicas son correctas, el último paso que nos queda para demostrar la corrección es demostrar que las reglas derivables también son correctas.
 
 \begin{prop}\label{derivcorr}
-Sea \regla{R} $\displaystyle\frac{\Gamma_1\idash\varphi_1\dots\Gamma_n\idash\varphi_n}{\Gamma\idash\Phi}$ una regla derivada usando reglas correctas. Entonces \regla{R} es correcta.
+Sea $\regla{R}$ $\displaystyle\frac{\Gamma_1\idash\varphi_1\dots\Gamma_n\idash\varphi_n}{\Gamma\idash\Phi}$ una regla derivada usando reglas correctas. Entonces $\regla{R}$ es correcta.
 \end{prop}
 \begin{proof}
-Ya que \regla{R} es derivada, existe un árbol de deducción que tiene a $\Gamma\idash\varphi$ en la raíz y axiomas o elementos de $\{\Gamma_1\idash\varphi_1,\dots,\Gamma_n\idash\varphi_n\}$ en las hojas. Vamos a demostrar el resultado por inducción en $m$, siendo $m$ la profundidad del árbol de deducción.
+Ya que $\regla{R}$ es derivada, existe un árbol de deducción que tiene a $\Gamma\idash\varphi$ en la raíz y axiomas o elementos de $\{\Gamma_1\idash\varphi_1,\dots,\Gamma_n\idash\varphi_n\}$ en las hojas. Vamos a demostrar el resultado por inducción en $m$, siendo $m$ la profundidad del árbol de deducción.
 \begin{itemize}
     \item $m=1$; Entonces el árbol solo tiene un nodo, la secuencia $\Gamma\idash\varphi$. Como esta secuencia es a la vez una hoja, o bien es $\Gamma_i\idash\varphi_i$ para algún $i\in\{1,\dots,n\}$, en cuyo caso el enunciado se cumple trivialmente, o bien $\displaystyle\frac{}{\Gamma\idash\varphi}$ es un axioma correcto, en cuyo caso tanto se cumple $\Gamma\vDash\varphi$ y también se cumple el enunciado.
-    \item Sea $m>1$ y supongamos que el árbol de deducción para \regla{R} tiene altura $m$. Entonces es de la forma:
+    \item Sea $m>1$ y supongamos que el árbol de deducción para $\regla{R}$ tiene altura $m$. Entonces es de la forma:
 \begin{center}
     \includegraphics[scale = 0.3]{figures/arbol3.png}
 \end{center}
@@ -1544,7 +1547,7 @@ Como el árbol de deducción $T_l$ tiene altura $<m$, y tiene en la raíz a $A_l
 \end{prooftree}
 es correcta, para $l=1,\dots,k$.\\
 
-De modo que si suponemos que $\Gamma_1 \idash \varphi_1$,\dots,$\Gamma_n \idash \varphi_n$ son correctas, entonces $A_l \idash \psi_l$ es correcta para $l=1,\dots,k$. Por tanto, como \regla{R'} es correcta, $\Gamma \idash \varphi$ también es correcta. Por tanto \regla{R} es correcta.
+De modo que si suponemos que $\Gamma_1 \idash \varphi_1,\dots,\Gamma_n \idash \varphi_n$ son correctas, entonces $A_l \idash \psi_l$ es correcta para $l=1,\dots,k$. Por tanto, como $\regla{R'}$ es correcta, $\Gamma \idash \varphi$ también es correcta. Por tanto $\regla{R}$ es correcta.
 \end{itemize}
 \end{proof}
 

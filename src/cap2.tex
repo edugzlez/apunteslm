@@ -400,7 +400,7 @@ Describamos el concepto de \textit{consecuencia lógica} para lógica de primer 
 
 \begin{definition}
 Sea $S$ signatura. Sean $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$, $\mathfrak{I}$ $S$-interpretación. Decimos que $\mathfrak{I}$ \textit{satisface} $\varphi$, $\mathfrak{I} \vDash \varphi$, si $\varphi^{\mathfrak{I}} = V$. 
-Análogamemente, $\mathcal{\A}$ \textit{satisface} $\Phi$, $\mathfrak{I} \vDash \Phi$, si $\psi^{\mathfrak{I}} = V$, para cada $\psi \in \Phi$.
+Análogamemente, $\mathcal{A}$ \textit{satisface} $\Phi$, $\mathfrak{I} \vDash \Phi$, si $\psi^{\mathfrak{I}} = V$, para cada $\psi \in \Phi$.
 \end{definition}
 
 \begin{definition}
@@ -510,7 +510,7 @@ De ahora en adelante, denotamos vectores de elementos de un determinado conjunto
 Comenzamos definiendo la sustitución para términos:
 
 \begin{definition}
-Sea $S$ signatura. Sean $t \in TERM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} \bar{s} \textit{en t} como:
+Sea $S$ signatura. Sean $t \in TERM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} $\bar{s}$ \textit{en t} como:
 \begin{itemize}
     \item Si $t \in Ct_S$, $t[\bar{s}/\bar{x}] = t$.
     \item Si $t \in Var$, $t[\bar{s}/\bar{x}] = s_i$ si $t = x_i$, para cierto $i$, y $t[\bar{s}/\bar{x}] = t$ si $t \neq x_i$, para todo $i$.
@@ -520,7 +520,7 @@ Sea $S$ signatura. Sean $t \in TERM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de
 
 Pasamos a la sustitución para fórmulas:
 \begin{definition}
-Sea $S$ signatura. Sean $\varphi \in FORM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} \bar{s} \textit{en $\varphi$} como:
+Sea $S$ signatura. Sean $\varphi \in FORM_S$, $\bar{x} := (x_1, \dots, x_n)$ vector de $Var$ y $\bar{s} := (s_1, \dots, s_n)$ vector de $TERM_S$. Definimos la \textit{sustitución de} $\bar{x}$ \textit{por} $\bar{s}$ \textit{en $\varphi$} como:
 \begin{itemize}
     \item Caso base:
     \begin{itemize}
@@ -679,10 +679,10 @@ Es decir, la primera parte nos dice que el significado de un término bajo una i
 \end{enumerate}
 \end{proof}
 
-\begin{example}
+\begin{note}
 Sean $t \in TERM_S$, $\varphi \in FORM_S$ tales que existen $x_1, \dots, x_n \in Var$ de modo que $var(t) \subseteq \{x_1, \dots, x_n\}$ y $lib(\varphi) \subseteq \{x_1, \dots, x_n\}$. El Lema de Coincidencia nos dice que el significado que tome cada variable que no pertenezca a $\{x_1, \dots, x_n \}$ no afectará a los significados de $t$ y $\varphi$.\\
 Es decir, dada una interpretación $\mathfrak{I}=\langle \mathfrak{A}, \sigma \rangle$, $\varphi^\mathfrak{I}$ solo depende de $\mathfrak{A}$ y de $\sigma(x_1),\dots,\sigma(x_n)$.
-\end{example}
+\end{note}
 
 \begin{example}
 En el ejemplo anterior, si $\varphi$ es una fórmula cerrada, $lib(\varphi) = \emptyset$ y entonces podemos tomar $n=0$. Es decir, el significado de $\varphi$ depende solo de el álgebra, no de la interpretación.
@@ -771,7 +771,7 @@ Sea $S = \langle Ct_{S}, Fn_{S}, Pd_{S}\rangle$ signatura. Sea $h$ isomorfismo e
                 \begin{itemize}
                     \item Si $\varphi = \top$, entonces $\varphi^{\mathfrak{I}_1} = \top^{\mathfrak{I}_1} = V = \top^{\mathfrak{I}_2} = \varphi^{\mathfrak{I}_2}$ y análogo con $\bot$.
                     \item Si $\varphi = t \doteq s$ para $t, s \in TERM_S$, entonces $\mathfrak{I}_1 \vDash \varphi$ si y solo si $t^{\mathfrak{I}_1} = s^{\mathfrak{I}_1}$ si y solo si (por ser $h$ inyectiva) $h(t^{\mathfrak{I}_1}) = h(s^{\mathfrak{I}_1})$ si y solo si $t^{\mathfrak{I}_2} = s^{\mathfrak{I}_2}$ si y solo si  $\mathfrak{I}_1 \vDash \varphi$.
-                    \item Si $\varphi = p(t_1, \dots, t_n)$, con $p|_n \in Pd_S$ y $t_1, \dots, t_n \in TERM_S$ cumplen el enunciado, entonces $p(t_1, \dots, t_n)^{\mathfrak{I}_1} = V$, si y solo si $p^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1}, \dots, t_n^{\mathfrak{I}_1}) = V$ si y solo si  $p^{\mathfrak{A}_2}(h(t_1^{\mathfrak{I}_1}), \dots, h(t_n^{\mathfrak{I}_1})) = V$ si y solo si  $p^{\mathfrak{A}_2}(t_1^{\mathfrak{I}_2}, \dots, t_n^{\mathfrak{I}_2}) = V$
+                    \item Si $\varphi = p(t_1, \dots, t_n)$, con $p|_n \in Pd_S$ y $t_1, \dots, t_n \in TERM_S$ cumplen el enunciado, entonces $p(t_1, \dots, t_n)^{\mathfrak{I}_1} = V$, si y solo si $p^{\mathfrak{A}_1}(t_1^{\mathfrak{I}_1}, \dots, t_n^{\mathfrak{I}_1}) = V$ si y solo si  $p^{\mathfrak{A}_2}(h(t_1^{\mathfrak{I}_1}), \dots, h(t_n^{\mathfrak{I}_1})) = V$ si y solo si  $p^{\mathfrak{A}_2}(t_1^{\mathfrak{I}_2}, \dots, t_n^{\mathfrak{I}_2}) = V$ si y solo si $p(t_1, \dots, t_n)^{\mathfrak{I}_2} = V$.
                 \end{itemize}
             \item Caso recursivo:
                 \begin{itemize}
@@ -871,7 +871,7 @@ Sea $S$ signatura, $\varphi, \psi \in FORM_S$. Entonces son equivalentes:
 \end{enumerate}
 \end{prop}
 \begin{proof}$\\$
-\be
+
 (1)$\implies$(2): Si $\varphi \sim \psi$, $\varphi^{\mathfrak{I}} = \psi^{\mathfrak{I}}$ para toda $S$-interpretación $\mathfrak{I}$, por tanto toda interpretación $\mathfrak{I}$ cumple $\mathfrak{I} \vDash \varphi\leftrightarrow \psi$, como queríamos.\\
 
 \noindent (2)$\implies$(3):  Si $\vDash \varphi \leftrightarrow \psi$, toda interpretación $\mathfrak{I}$ solo puede satisfacer $\varphi$ y $\psi$ o no satisfacer $\varphi$ ni $\psi$. Por tanto, si una interpretación satisface $\varphi$, satisface $\psi$ y viceversa.  \\
@@ -973,7 +973,7 @@ La demostración se lleva a cabo por inducción estructural. Es rutinaria salvo 
 \noindent ($\neg$) Sea $\varphi=\neg \varphi_1$. Por hipótesis de inducción, existe $\psi \in FORM_S$ en forma prenexa tal que $\varphi_1 \sim \psi$, con $\psi = Q_1 x_1 \, \dots Q_n x_n \, \chi$. Entonces $\varphi\sim\neg \varphi_1 \sim \neg \psi \sim Q'_1 x_1 \, \dots Q'_n x_n \, \neg \chi$, donde $Q'_i = \forall$ si $Q_i = \exists$ y $Q'_i = \exists$ si $Q'_i = \forall$, para cada $1 \leq i \leq n$. $\\$
 
 \noindent ($\lor$) Sea $\varphi=\varphi_1 \lor \varphi_2$. Por hipótesis de inducción, existen los respectivos núcleos $\chi_1$, $\chi_2$, tales que $\varphi_1 \sim Q^{1}_1 x_1 \, \dots Q^{1}_n x_n \, \chi_1$ y $\varphi_2 \sim Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2$. Consideremos los vectores de variables nuevas $\bar{u}= (u_1, \dots, u_n)$ y $\bar{v} = (v_1, \dots, v_m)$. Entonces, $\varphi_1 \sim Q^{1}_1 u_1 \, \dots Q^{1}_n u_n \, \chi_1[\bar{u}/\bar{x}]$ y $\varphi_2 \sim Q^{2}_1 v_1 \, \dots Q^{2}_m v_m \, \chi_2[\bar{v}/\bar{y}]$. Ahora, como $\bar{u}$ y $\bar{v}$ son variables nuevas, aplicando repetidamente el lema \ref{lemita2345}, obtenemos:
-
+$$
 \begin{array}{ccl}
  \varphi_1 \lor \varphi_2 &\sim&Q^{1}_1 x_1(Q^1_2 x_2 \, \dots Q^{1}_n x_n \, \chi_1)\lor Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2 \\
      &\sim& Q^{1}_1u_1(Q^{1}_2 x_2 \, \dots Q^{1}_n x_n \, \chi_1[u_1/x_1]\lor Q^{2}_1 y_1 \, \dots Q^{2}_m y_m \, \chi_2)\\
@@ -984,7 +984,7 @@ La demostración se lleva a cabo por inducción estructural. Es rutinaria salvo 
      &\vdots&\\
      &\sim& Q^1_1 u_1\dots Q^1_n u_n Q^2_1 v_1\dots Q^2_m v_m(\chi_2[\bar{v}/\bar{y}]\lor \chi_1[\bar{u}/\bar{x}]),
 \end{array}
-
+$$
 y ya tenemos una forma prenexa.
 \end{proof}
 
@@ -1032,11 +1032,11 @@ Las fórmulas que pueden aparecer ahora en nuestros \textit{tableaux} obviamente
     
     \item \textit{Axiomas de igualdad}, $EQ_S$:
     \begin{itemize}
-        \item[(RF)] $\forall x \, x \doteq x$.
-        \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$.
-        \item[(TR)] $\forall x \, \forall y \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$.
-        \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
-        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \to  (p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)).$$
+        \item[($\text{RF}$)] $\forall x \, x \doteq x$.
+        \item[($\text{IM}$)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$.
+        \item[($\text{TR}$)] $\forall x \, \forall y \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$.
+        \item[($\text{ST}_{1}$)] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
+        \item[($\text{ST}_{2}$)] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \to  (p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)).$$
     \end{itemize}
 \end{itemize}
 Los nombres de las reglas $RF,IM,TR$ se deben a que a estas propiedades se conocen como reflexiva, simétrica y transitiva. En el caso de las dos últimas se debe a que son reglas de sustitución.
@@ -1203,7 +1203,7 @@ Vamos a comprobar que el método de los \textit{tableaux} de primer orden tiene 
 
 Comencemos con el siguiente:
 
-\begin{lema}\label{eq}
+\begin{lema}\label{eq1}
 Para todo $\theta \in EQ_S$, $\vDash \theta$. 
 \end{lema}
 \begin{proof} \mbox{}
@@ -1211,7 +1211,7 @@ Para todo $\theta \in EQ_S$, $\vDash \theta$.
         \item[(RF)] $\forall x \, x \doteq x$ es tautología ya que dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x] \vDash x \doteq x$ para todo $a \in A$, ya que obviamente $a=a$.
         \item[(IM)] $\forall x \, \forall y \, x \doteq y \rightarrow y \doteq x$ es tautología ya que, dada una interpretación $\mathfrak{I}$, se cumple $\mathfrak{I}[a/x][b/y] \vDash x \doteq y \rightarrow y \doteq x$ para todos $a,b \in A$, ya que si $a=b$, $\mathfrak{I}[a/x][b/y]$ verifica $x \doteq y$ y $y \doteq x$, por tanto verifica $x \doteq y \rightarrow y \doteq x$. Si $a\neq b$, $\mathfrak{I}[a/x][b/y]$ no verifican $x \doteq y$ ni $y \doteq x$, por tanto de nuevo verifica $x \doteq y \rightarrow y \doteq x$.
         \item[(TR)] $\forall x \, \forall t \, \forall z \, x \doteq y \land y \doteq z \rightarrow x \doteq z$ es una tautología. Este caso se demuestra de forma similar a los anteriores, comprobando que $\mathfrak{I}[a/x][b/y][c/z]$ siempre verifica $x \doteq y \land y \doteq z \rightarrow x \doteq z$. Se puede hacer como el apartado anterior dividiendo en los casos $a\neq b$, $a=b\neq c$, $a=b=c$.
-        \item[(ST_{1})] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
+        \item[($\text{ST}_{1}$)] Sea $f|_n \in Fn_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \rightarrow f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
         \begin{comment}
         Este caso se demuestra por inducción en $n$.
         \begin{itemize}
@@ -1223,7 +1223,7 @@ Para todo $\theta \in EQ_S$, $\vDash \theta$.
             $$\neg (x_1\doteq y_1)\lor\forall x_2, \dots, \forall x_n \, \forall y_2, \dots, \forall y_n \, (\bigvee\limits_{i = 1}^{n} \neg (x_i \doteq y_i)) \lor f(x_1, \dots, x_n) \doteq f(y_1, \dots, y_n).$$
         \end{itemize}
         \end{comment}
-        \item[(ST_{2})] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \to  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
+        \item[($\text{ST}_{2}$)] Sea $p|_n \in Pd_S$. Entonces, $$\forall x_1, \dots, \forall x_n \, \forall y_1, \dots, \forall y_n \, \bigwedge\limits_{i = 1}^{n} x_i \doteq y_i \to  p(x_1, \dots, x_n) \rightarrow p(y_1, \dots, y_n)$$ es una tautología. Se omite la demostración.
 \end{itemize}
 \end{proof}
 
@@ -1258,7 +1258,7 @@ Y dado que $\mathfrak{I}'[a/x] \sim_{\varphi} \mathfrak{I}[a/x]$ por ser $c$ nue
 $$\varphi^{\mathfrak{I}'[a/x]} = \varphi^{\mathfrak{I}[a/x]} = V.$$
 Lo que nos da el resultado. \\
 
-Finalmente, (6) se deduce de \ref{eq}. 
+Finalmente, (6) se deduce de \ref{eq1}. 
 \end{proof}
 
 Del siguiente resultado se deducirá como corolario la corrección del método de los \textit{tableaux} de primer orden:
@@ -1312,7 +1312,7 @@ Finalmente, obtenemos el resultado al que hemos dedicado esta subsección:
 Sean $S$ signatura, $\Phi \subseteq FORM_S$, $\varphi \in FORM_S$. Entonces, si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \vDash \varphi$.
 \end{cor}
 \begin{proof}
-Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \cup \{\neg \varphi \}$ tiene un \textit{tableau} cerrado y, por \ref{ccc}, $\Phi \cup \{\neg \varphi \}$ es insatisfactible. Por el resultado análogo a \ref{\text{Insat}} para lógica de primer orden, esto implica que $\Phi \vDash \varphi$.
+Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \cup \{\neg \varphi \}$ tiene un \textit{tableau} cerrado y, por \ref{ccc}, $\Phi \cup \{\neg \varphi \}$ es insatisfactible. Por el resultado análogo a \ref{insat} para lógica de primer orden, esto implica que $\Phi \vDash \varphi$.
 \end{proof}
 
 
@@ -1320,8 +1320,8 @@ Si $\Phi \vdash_{tb} \varphi$, entonces $\Phi \cup \{\neg \varphi \}$ tiene un \
 
 El estudio de la completitud va a ser más complicado que en lógica proposicional. Para poder estudiarla, vamos a necesitar introducir una serie de nociones fundamentales de teoría de grafos: 
 
-\begin{defs}\mbox{}
-\begin{enumerate}[label=\bold{\arabic*})]
+\begin{defs}\mbox{}\label{defsgraf1}
+\begin{enumerate}[label=\arabic*)]
     \item Un \textit{grafo no dirigido} es un par ordenado $T = \langle N, E \rangle$, donde $N$ es el conjunto de \textit{nodos} y $E$ es el conjunto de \textit{aristas}, que son pares sin ordenar de nodos distintos.
     \item Un camino es una sucesión de $(\geq1)$ aristas $(a_1,\dots,a_n)$ de forma que  $a_i$ comparte uno de sus vértices con $a_{i-1}$ y el otro con $a_{i+1}$ para $i=2,3,\dots,n-1$. Llamamos a $n$ \textit{longitud del camino}.
     \item Decimos que el camino es \textit{simple} si cada vértice del camino solo aparece hasta dos veces, una al final de una arista y otra al principio de la siguiente. Decimos que un camino es un \textit{ciclo} si es simple y el primer vértice de la primera arista es el segundo vértice de la última arista.
@@ -1345,8 +1345,8 @@ Sea $T = \langle N, E \rangle$ un grafo:
 Se omite la demostración.
 \end{proof}
 
-\begin{defs}\mbox{}
-\begin{enumerate}[label=\bold{\arabic*})]
+\begin{defs}\mbox{}\label{defsgraf2}
+\begin{enumerate}[label=\arabic*)]
     \item Un árbol $T = \langle N, E \rangle$ se llama \textit{árbol con raíz} si se selecciona un elemento especial de $N$, llamado \textit{raíz} de $T$.
     \item Sea $T = \langle N, E \rangle$ árbol con raíz $n_0$. Se llama \textit{altura} de $n \in N$, $h(n)$, a la longitud del único camino simple que une $n_0$ con $n$.
     \item Sea $T = \langle N, E \rangle$ árbol de raíz $n_0$. Se dice que $n_1\in N$ es \textit{hijo de} $n$ si hay una arista que conecta $n$ y $n_1$ y $h(n_1)=h(n)+1$. Se dice que $n_1$ y $n_2$ son \textit{hermanos} si son hijos del mismo nodo.
@@ -1367,7 +1367,7 @@ Sean $T_1 := \langle N_1, E_1 \rangle$, $T_2 :=  \langle N_2, E_2 \rangle$ dos �
 \begin{definition}
 Sean $T_0, \dots, T_k, \dots$ árboles tales que $T_0 \leq \dots \leq T_k \leq \dots$. Definimos:
 $$\lim_{n \in \mathbb{N}} T_n := \langle N, E \rangle$$
-siendo $N := \bigcup_{n\in \mathbb{N}} N_{n}$ y $E := \bigcup_{n\in \mathbb{N}} E_{n}$ y con la misma raíz que la de T_0.
+siendo $N := \bigcup_{n\in \mathbb{N}} N_{n}$ y $E := \bigcup_{n\in \mathbb{N}} E_{n}$ y con la misma raíz que la de $T_0$.
 \end{definition}
 
 \begin{prop}
@@ -1461,7 +1461,7 @@ para un conjunto de fórmulas $\Phi\subseteq FORM_S$
   \item $var(t)\subseteq lib(\Phi):=\bigcup\limits_{\varphi\in\Phi} lib(\varphi)$
   \end{itemize}
 \end{definition}
-\\ \\
+
 \noindent Puede darse el caso de que no encontremos ningún término adecuado para un conjunto de fórmulas. Por ejemplo consideremos el conjunto de fórmulas
 \begin{displaymath}
   \Phi = \{\exists x\ (p(x)\to q(x))\}
@@ -1496,7 +1496,7 @@ $(voc(\Phi)\cap\mathit{Ct}_{S})\cup lib(\Phi)=\emptyset$, por tanto no podemos c
     \(\theta\in\Phi\).
   \end{itemize}
 \end{definition}
- \\ \\ \\
+
 
 Consideremos a continuación una signatura cualquiera $S$. Nuestra intención es demostrar que todo conjunto $\Phi\subseteq FORM_S$ de Hintikka es satisfactible. Es decir, tenemos que crear una interpretación, con una álgebra $\mathfrak{T}$ y una asignación de  variables $\sigma_\Phi$, que haga ciertas todas las fórmulas de $\Phi$. El primer paso  para ello  es encontrar un conjunto soporte para nuestra álgebra. \\
 Una opción a considerar es el \textit{álgebra libre de términos}, una álgebra conocida que tiene como como conjunto soporte a $TERM_S$. Sin embargo, esta álgebra no es suficiente: Supongamos que tenemos la signatura de
@@ -1644,20 +1644,20 @@ Veamos a continuación que el valor de una clase está bien definido, es decir, 
     \begin{array}{l}
       \displaystyle\gamma_{1}=\gamma_{0}(t_{1}),\ \ \gamma_{2}=\gamma_{1}(t_{2}),\ \ 
       \dots\ \ \gamma_{k}=\gamma_{k-1}(t_{k})\\
-      \gamma_{k+1}=\gamma_{k}(s_{1}),\  \gamma_{k+2}(s_{2}),\ 
-      \displaystyle\dots\ \gamma_{2k}=\gamma_{2k-1}(s_{k})\\
+      \gamma_{k+1}=\gamma_{k}(s_{1}),\ 
+      \displaystyle\dots\ ,\gamma_{2k}=\gamma_{2k-1}(s_{k})\\
       \gamma_{2k}\ =\ t_{1}\doteq s_{1}\land\dots\land t_{k}\doteq s_{k}\rightarrow
       f(t_{1},\dots, t_{k})\doteq f(s_{1},\dots, s_{k})
     \end{array}
   \end{displaymath}
   Resulta que \(\gamma_{2k}\) es una \(\beta\)-fórmula.
-  Por tanto \(\neg(t_{1}\doteq s_{1}\y\dots t_{k}\doteq s_{k})
+  Por tanto \(\neg(t_{1}\doteq s_{1}\land\dots\land t_{k}\doteq s_{k})
   \in\Phi\) o
   \(f(t_{1},\dots, t_{k})\doteq f(s_{1},\dots, s_{k})\in\Phi\).
   Hay 2 casos:
   \begin{itemize}
   \item
-    \(\neg(t_{1}\doteq s_{1}\y\dots t_{k}\doteq s_{k})
+    \(\neg(t_{1}\doteq s_{1}\land\dots\land t_{k}\doteq s_{k})
     \in\Phi\). Esta es una \(\beta\)-fórmula.
     En este caso, aplicando la regla $\beta$ repetidamente llegamos a que alguna de las fórmulas $\neg (t_{i}\doteq
     s_{i})$ está en $\Phi$. Por otro lado,
@@ -1685,7 +1685,7 @@ Pasamos ahora a los símbolos de predicado. Nos vale probar que si $p(t_{1},\ldo
   De forma similar a la vista los símbolos de función, llegamos a que la siguiente fórmula está en $\Phi$:  
 \[\gamma_{2k}\ =\ t_{1}\doteq s_{1}\land\dots\land t_{k}\doteq s_{k}\rightarrow
       (p(t_{1},\dots, t_{k})\to p(s_{1},\dots, s_{k}))\]
-  Por tanto, \(\neg(t_{1}\doteq s_{1}\y\dots t_{k}\doteq s_{k})
+  Por tanto, \(\neg(t_{1}\doteq s_{1}\land\dots\land t_{k}\doteq s_{k})
   \in\Phi\) o
   \(p(t_{1},\dots, t_{k})\to p(s_{1},\dots, s_{k})\in\Phi\).
   Hay 2 casos. En el primer caso, igual que con los símbolos de función llegamos a  un absurdo.  En el segundo caso, tenemos que $p(t_{1},\dots, t_{k})\to p(s_{1},\dots,
@@ -1709,7 +1709,7 @@ Además, consideremos la asignación de variables:
     \begin{array}{ll}
       [x] & \mbox{si } x \in T_{\Phi}\\
       \mbox{arbitrario} & \mbox{si no}
-    \end{array}
+    \end{array}\right.
 \end{displaymath}
 
 Y tomamos la interpretación:
@@ -1981,7 +1981,7 @@ Consideremos lo siguiente:
   \end{displaymath}
 \end{enumerate}
 
-\\\
+
 Pasamos ahora a construir el \textit{tableau} canónico, teniendo en cuenta todos los anteriores elementos.
 \\
 Dado un \textit{tableau} finito, vamos a definir varias formas de extenderlo. Esto dará lugar a lo que se llaman \textit{extensiones}. Enumerémoslas a continuación. 
@@ -2024,6 +2024,7 @@ las ramas que a profundidad $n$ tengan una fórmula de tipo \(\alpha\),
   a profundidad menor o igual que \(n\) una fórmula de tipo \(\delta\)
   no desplegada, aplicamos a esa fórmula la regla \(\delta\):
  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQQBfU9TXfQijLFqdJq3YAdSbEY56XHiAzY8BIuVIAmUQxZtEHbr1UCiZHTT0TDik-3Uot23eINGlKh4JKkAzK76UjIwcvQAFADGAJRcojBQAObwRKAAZgBOEAC2SJogOBBIZGJBiGDMjIw0jPQARqEACnxqgiCMMGk4IDQAFjD0UOyQYGzGIJk5eTSFSM6lNhVVNfVNLWaGHV09IP2DwwRjSpO5iPmziAAsVm5IS9Xtq4zNpo7tnd19A0OGI0fpWVOJQufhuZXuKwaz3Wby2n123wOox2DTAP3I4xOcxmRUQoIWBghjyhL287DhOz2P3AhzsE0BSHxF2uBLulQetRJMLaFK++1+tMxDLOOOKNFRPwA7CVGFhkYYoPQ4P0hnzqb16BkMAQmPD5FhGOxehAIABrXU7azuQhCqZ40WIACsaqRY0onCAA
+
   \begin{center}
     \includegraphics[scale =0.55]{figures/delta.png}
   \end{center}
@@ -2057,7 +2058,7 @@ abierta $r$ de $T$ con la fórmula \(\gamma_{i}(t_{j})\) donde el par \((i,j)\in
  tal que $\gamma_{i}\in\Gamma_r$ está a altura $\leq n$,
   \(\gamma_{i}(t_{j})\not\in\Gamma_{r}\) y \(t_{j}\) es adecuado
   para \(\Gamma_{r}\). Si no hay ningún término adecuado para \(\Gamma_{r}\), aplicamos la regla considerando como término adecuado la primera constante auxiliar.
-\end{itemize}
+
 \begin{center}
   \includegraphics[scale = 0.55]{figures/gamma.png}
 \end{center}
@@ -2105,7 +2106,7 @@ todos los árboles
 \end{displaymath}
 \end{itemize}
 
- \begin{comment}
+\begin{comment}
 \begin{prop}
  Sea $S$ una signatura y \(\Phi\subseteq FORM_S\). Consideremos la
   secuencia de árboles \(T_{i},\ i\in\mathbb{N}\) que da lugar al \textit{tableau}
@@ -2118,24 +2119,21 @@ todos los árboles
     \begin{proof}
 
   \end{proof}
-  \end{comment}
-
-
 \end{prop}
-
+\end{comment}
 
 \begin{prop}
-  Sea $S$ una signaturas, \(\Phi\subseteq FORM_S\), \(r\) una rama del
+  Sea $S$ una signatura, \(\Phi\subseteq FORM_S\), \(r\) una rama del
   \textit{tableau} canónico \(T_{\Phi}\) y \(\varphi\in\Gamma_{r}\) está a
   profundidad $k$. Entonces ha sido introducida en un paso $l<k$.
 \end{prop}
   \begin{proof}
 Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos que se cumple para $n-1$. Sea $\varphi$ fórmula en $r$ a profundidad $k$, y supongamos que la hemos introducido en el paso $l\geq k$. Pues bien, la fórmula $\psi$ que está encima de $\varphi$, que está a altura $k-1$, ha tenido que ser introducida en la rama en un paso $\leq k-2$ por hipótesis de inducción. Esto significa que desde el \textit{tableau} $T_{l-2}$ a $T_{l-1}$ (es decir, en el paso $l-1$) no se ha añadido ningún elemento a esa rama. El resto se reduce a comprobar regla a regla que si una rama tiene longitud $l-1$ y no hemos añadido ninguna fórmula al aplicar la regla a esa rama en el paso $l-1$, entonces tampoco se añade ninguna fórmula al aplicar esa regla a la rama en el paso $l$, lo cual es una contradicción.
-  \end{proof}
-\end{corollary}
+\end{proof}
 
-\begin{theorem}
-  Sea $S$ una signaturas y \(\Phi\subseteq FORM_S\). El \texit{tableau} canónico
+
+\begin{theorem}\label{tabcomp}
+  Sea $S$ una signaturas y \(\Phi\subseteq FORM_S\). El \textit{tableau} canónico
   \(T_{\Phi}\) es completo.
 
   \begin{proof}
@@ -2165,7 +2163,7 @@ Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos q
       \(\gamma\)-fórmulas) y $j\in\N$ tal que $t=t_{j}$ (en la
       numeración de los términos). Llamamos $l$ a la posición que ocupa el par $(i,j)$ en nuestro buen orden de \(\N\times\N\).\\[5pt]
       Por otro lado, como $t$ es adecuado para \(\Gamma_{r}\) y \(voc(t)\) y $var(t)$ son finitos, hay cierto $m$ tal que $voc(t)\subseteq voc(\Gamma_{r_m})$ y $var(t)\subseteq lib(\Gamma_{r_m})$, es decir, $t$ es adecuado para $\Gamma_{r_m}$, siendo $r_m$ la rama del \textit{tableau} $T_m$ que da lugar a $r$.\\[5pt]
-      Tras haber definido $n,m$ y $l$, está claro que en el \textit{tableau} $T_{n+m}$ se cumple que $t$ es adecuado para $\Gamma_{r_{n+m}}$ y $\gamma\in\Gamma_{r_{n+m}}$. De modo que, tras aplicar $l$ veces más la regla \mathbf{G}, es decir, en el \textit{tableau} $T_{n+m+l}$, tenemos que haber añadido en cierto punto la fórmula $\gamma(t)$. Por tanto para todo término $t$ adecuado para $\Gamma_r$, $\gamma(t)$ estará incluida en la rama, como queríamos.
+      Tras haber definido $n,m$ y $l$, está claro que en el \textit{tableau} $T_{n+m}$ se cumple que $t$ es adecuado para $\Gamma_{r_{n+m}}$ y $\gamma\in\Gamma_{r_{n+m}}$. De modo que, tras aplicar $l$ veces más la regla $\mathbf{G}$, es decir, en el \textit{tableau} $T_{n+m+l}$, tenemos que haber añadido en cierto punto la fórmula $\gamma(t)$. Por tanto para todo término $t$ adecuado para $\Gamma_r$, $\gamma(t)$ estará incluida en la rama, como queríamos.
     \end{description}
   \end{proof}
 \end{theorem}
@@ -2221,7 +2219,7 @@ Lo probamos por inducción. En el caso 0 está claro que se cumple. Supongamos q
 
 
 \subsection{Ejemplo de \textit{tableau} canónico abierto}
-Veamos un ejemplo de \textit{Tableau} canónico abierto. Este ejemplo no tiene funciones, ya que cuando hay funciones el \textit{Tableau} resultante es infinito, al haber infinitos términos que sustituir en las reglas \mathbf{G}. El tableaux siguiente corresponde al conjunto de fórmulas \[\Phi=\{\forall x\;P(x)\lor Q(x),\neg(\forall x\; P(x)\lor \forall x\; Q(x))\}=\{\varphi_0,\varphi_1\}\]
+Veamos un ejemplo de \textit{Tableau} canónico abierto. Este ejemplo no tiene funciones, ya que cuando hay funciones el \textit{Tableau} resultante es infinito, al haber infinitos términos que sustituir en las reglas $\mathbf{G}$. El tableaux siguiente corresponde al conjunto de fórmulas \[\Phi=\{\forall x\;P(x)\lor Q(x),\neg(\forall x\; P(x)\lor \forall x\; Q(x))\}=\{\varphi_0,\varphi_1\}\]
 Veremos que este tableau es satisfactible, de modo que al acabar de desarrollarlo tendremos ramas abiertas que nos permitirán encontrar modelos que satisfagan $\Phi$.\\
 
 Para simplificar el \textit{tableau}, al desarrollarlo se van a ignorar los axiomas de igualdad. Veremos que en este caso esto no va a ser un problema ya que vamos a poder encontrar los modelos igualmente.\\
