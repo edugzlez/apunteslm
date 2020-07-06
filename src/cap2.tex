@@ -555,7 +555,7 @@ Si llamamos $a:= h(x)$ y $b:= f(x, y)$, entonces $$f(x, y)[h(x)/x, f(x, y)/y] = 
 
 
 \begin{note}
-
+\begin{comment}
 Si no nombramos adecuadamente a las variables que estamos manipulando podemos llegar a tener una \textit{colisión}, es decir, que mediante una sustitución una variable pase de estar libre a estar ligada. 
  
 Por ejemplo, sean $\varphi := \forall z \, p(x, z)$ y $t := f(z)$. Entonces la sustitución 
@@ -563,6 +563,11 @@ $$\varphi[t/x] = \forall z \, p(f(z), z)$$
 daría lugar a una colisión porque la variable $z$ está libre en $t$, pero ligada al sustituirla en $\varphi$ por $x$. Por razones técnicas, esto no nos va a ser conveniente, es por eso que en estos casos cambiamos $t=f(z)$ por $f(y)$, obteniendo
 $$\varphi[t/x] = \forall z \, p(f(y), z),$$
 de modo que ya no tenemos el problema anterior.
+\end{comment}
+Vemos que el caso recursivo $Qx\varphi$ de la sustitución se divide en tres subcasos. El primer caso se da cuando no hay ningún problema. El segundo caso se introduce para no tener que sustituir variables ligadas.\\
+En el tercer caso, introducimos una variable nueva. Si no lo hiciéramos así, podría darse que al hacer la sustitución, una variable libre pasara a ser una variable ligada, un fenómeno conocido como \textit{colisión}. Por ejemplo, consideremos la fórmula 
+\[\psi=\exists x\;\; y<x.\]
+Si queremos sustituir $y$ por $x$ en esa fórmula, no nos gustaría obtener $\exists x\;\;x<x$. Esta fórmula tiene un significado claramente distinto a la anterior. Por eso en estos casos cambiamos la variable $x$ por una nueva variable $z$, obteniendo \[\psi[x/y]=\exists z\;\; (y<x)[z/x][x/y]=\exists z\;\; x<z\]
 \end{note}
 
 
@@ -852,7 +857,7 @@ Entonces:
 \end{proof}
 
 
-\section{Equivalencia lógica}
+\section{Equivalencia lógica. Forma prenexa}
 
 Algunos de los ejemplos precedentes muestran que operar con interpretaciones no es tarea cómoda. Por ello, debemos investigar relaciones entre los signos, que nos faciliten un futuro estudio de su semántica. De nuevo, la noción principal para este propósito es la de \textit{equivalencia lógica}:
 

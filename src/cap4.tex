@@ -562,7 +562,7 @@ Sea $S$ signatura. Una teoría $T$ se dice \textit{categórica} si $\mathfrak{A}
 \end{definition}
 
 \begin{prop}
-Sea $S$ signatura efectivamente numerable, $T$ teoría. Si $T$ es categórica, es completa.
+Sea $S$ signatura, $T$ teoría. Si $T$ es categórica, es completa.
 \end{prop}
 \begin{proof}
 Sean $\mathfrak{A}, \mathfrak{B} \in Mod(T)$ $S$-álgebras. Entonces, por categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, y por tanto, $\mathfrak{A} \equiv \mathfrak{B}$. Como esto se cumple para cualesquiera $\mathfrak{A}, \mathfrak{B} \in Mod(T)$, por \ref{complet} $T$ es completa.
@@ -582,13 +582,17 @@ Sea $S$ signatura. Una teoría $T$ se dice $\kappa$-\textit{categórica} si $\ma
 \end{definition}
 
 \begin{theorem}
-Sea $S$ signatura efectivamente numerable. Si $T$ es una teoría satisfactible, sin modelos finitos y $\kappa$-categórica para algún cardinal $\kappa \geq|\mathbb{N}|=\omega$, entonces es completa.
+Sea $S$ signatura. Si $T$ es una teoría satisfactible, sin modelos finitos y $\kappa$-categórica para algún cardinal $\kappa \geq|FORM_S|\geq\aleph_0=|\mathbb{N}|$, entonces es completa.
 \end{theorem}
 \begin{proof}
-Supongamos que $T$ no es completa. Entonces existe $\sigma \in Sent_S$ tal que $\sigma, \neg\sigma \notin T$, es decir, tal que $T \nvDash \sigma, \neg\sigma$ y entonces $T\cup\{\sigma\}$ y $T\cup\{\neg\sigma\}$ son satisfactibles y por \ref{LST} existen dos $S$-álgebras $\mathfrak{A}, \mathfrak{B}$ tales que $\mathfrak{A}\vDash T\cup \{\sigma\}$ y $\mathfrak{B}\vDash T\cup\{\neg\sigma\}$ y de modo que $\kappa = |\mathfrak{A}| = |\mathfrak{B}|$. Entonces, al ser $\mathfrak{A} \vDash T$ y $\mathfrak{B} \vDash T$, y por $\kappa$-categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, lo que es imposible, ya que $\mathfrak{A}\vDash \sigma$ y $\mathfrak{B}\vDash \neg\sigma$.
+Supongamos que $T$ no es completa. Entonces existe $\sigma \in Sent_S$ tal que $\sigma, \neg\sigma \notin T$, es decir, tal que $T \nvDash \sigma, \neg\sigma$ y entonces $T\cup\{\sigma\}$ y $T\cup\{\neg\sigma\}$ son satisfactibles con modelos infinitos (ya que $T$ no tiene modelos finitos) y por \ref{LST} existen dos $S$-álgebras $\mathfrak{A}, \mathfrak{B}$ tales que $\mathfrak{A}\vDash T\cup \{\sigma\}$ y $\mathfrak{B}\vDash T\cup\{\neg\sigma\}$ y de modo que $\kappa = |\mathfrak{A}| = |\mathfrak{B}|$. Entonces, al ser $\mathfrak{A} \vDash T$ y $\mathfrak{B} \vDash T$, y por $\kappa$-categoricidad, $\mathfrak{A} \approx \mathfrak{B}$, lo que es imposible, ya que $\mathfrak{A}\vDash \sigma$ y $\mathfrak{B}\vDash \neg\sigma$.
 \end{proof}
-
-
+\begin{cor}
+Sea $S$ signatura numerable. Si $T$ es una teoría satisfactible, sin modelos finitos y $\kappa$-categórica para algún cardinal $\kappa \geq\aleph_0$, entonces es completa.
+\end{cor}
+\begin{proof}
+El caso con $S$ numerable del teorema anterior
+\end{proof}
 
 
 \begin{comment}
